@@ -12,7 +12,9 @@ addpath('./functions/Optical_coefficients');
 
 
 % Path that contains results
-path = '../output_mcxlab/output_patient1/'; 
+% path = '../output_mcxlab/output_patient1/'; 
+path = '../output_mcxlab/output_pp_WMC_1/'; 
+
 
 % Load model info
 load(strcat(path,'cst.mat')) % Load constants
@@ -46,7 +48,7 @@ for i=1:length(Lambdas)
     end
     
     %Compute Image intensity and mean path length for wavelenth i
-    [Hypercube(:,:,i),Mean_path_length(:,:,i)] = reconstruct_Image(output_det,nb_pixels_x,nb_pixels_y);
+    [Hypercube(:,:,i),Mean_path_length(:,:,i)] = reconstruct_Image(output_det,nb_pixels_x,nb_pixels_y,info_model.cfg.nphoton,info_model.cfg.unitinmm);
 
 end
 

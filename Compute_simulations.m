@@ -42,7 +42,7 @@ cfg.autopilot = 1;
 
 
 %%-----------------------------------------------------------------
-%% Load image segmentation and compute mesh
+%% Load image segmentation and compute volume
 %%-----------------------------------------------------------------
 
 % path = 'images/Mouse/';
@@ -99,7 +99,6 @@ end
 % 64 w  output initial weight (1)
 % combine multiple items by using a string, or add selected numbers together
 % by default, mcx only saves detector ID (d) and partial-path data (p)
-
 
 
 %%-----------------------------------------------------------------

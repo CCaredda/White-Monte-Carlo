@@ -1,4 +1,4 @@
-function [Intensity,Mean_path_length] = reconstruct_Image(output_det,nb_pixels_x,nb_pixels_y)
+function [Intensity,Mean_path_length] = reconstruct_Image(output_det,nb_pixels_x,nb_pixels_y,nphotons,unitinmm)
     % This function calculates 2D images from the detected photons info
     % obtained via the MMC simulation. It also 
     % calculates the average photon pathlength (PPL) hyperspectral maps of the 
@@ -45,7 +45,7 @@ function [Intensity,Mean_path_length] = reconstruct_Image(output_det,nb_pixels_x
         id = find(index_photons==i);
 
         %Compute intensity for pixel i
-        Intensity(i) = sum(weights(id));
+        Intensity(i) = mcxcwdref(weights(id),nphotons,unitinmm);
 
         %Avg pathlength summed for the media
         Mean_path_length(i) = average_path_length(ppath(id,:),weights(id),output_det.unitinmm);
