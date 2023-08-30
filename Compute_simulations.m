@@ -16,7 +16,7 @@ addpath('./functions');
 
 if run_in_cluster == 1
     addpath('/pbs/home/c/ccaredda/private/mcxlab');
-    cfg.nphoton=3e8; % Number of photons
+    cfg.nphoton=3e9; % Number of photons
 else
     addpath('/home/caredda/Soft/mcxlab');
     cfg.nphoton=1e2; % Number of photons

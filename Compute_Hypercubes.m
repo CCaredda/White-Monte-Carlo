@@ -12,7 +12,7 @@ addpath('./functions/Optical_coefficients');
 
 
 % Path that contains results
-path = '../output_mcxlab/output_pp_WMC_1/'; 
+path = '../output_mcxlab/output_patient1/'; 
 
 % Load model info
 load(strcat(path,'cst.mat')) % Load constants
@@ -61,17 +61,3 @@ close all;
 for i = 1:length(Lambdas)
     figure(i); subplot(121), imagesc(Hypercube(:,:,i),[min_H max_H]), colorbar, title(strcat('Reconstructed diffuse reflectance ',num2str(Lambdas(i)),'nm')), subplot(122),   imagesc(Mean_path_length(:,:,i),[min_mp max_mp]), colorbar,title(strcat('Mean path length ',num2str(Lambdas(i)),'nm'))
 end
-
-
-%% Only plot diffuse reflectance
-
-clear
-
-% Path that contains results
-path = 'output_dref_WMC_0/'; 
-load(strcat(path,'cst.mat')) % Load constants
-load(strcat(path,'out_',num2str(Lambdas(1)),'nm.mat'))
-
-% close all
-figure
-imagesc(dref), colorbar
