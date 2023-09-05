@@ -4,12 +4,10 @@
 %%-----------------------------------------------------------------
 clear
 
-
 run_in_cluster = 0;
-white_MC = 0;
- % Save diffuse reflectance
-cfg.issaveref = 0;
 
+% Wavelength (nm)
+Lambdas = 500:10:900; %500:900;
 
 addpath('./functions/Optical_coefficients');
 addpath('./functions');
@@ -25,7 +23,8 @@ end
 % GPU processing
 cfg.gpuid=1; 
 
-
+ % Save diffuse reflectance
+cfg.issaveref = 0;
 
 % Seed for the random number generator
 %cfg.seed=1648335518; 
@@ -49,6 +48,12 @@ cfg.autopilot = 1;
 path = 'images/Patient1/';
 
 %Load image and segmentation
+% 1: Grey matter
+% 2: Large blood vessel
+% 3: Capillaries
+% 4: Activated grey matter
+% 5: Activated large vessel
+% 6: Activated capillaries
 [img,resolution_xyz] = Load_img_segmentation(path);
 
 % Voxel size in mm
@@ -116,61 +121,101 @@ cfg.srcdir=[0 0 1];
 
 
 %%-----------------------------------------------------------------
-%% Compute optical properties
+%% Compute optical properties Grey matter (GM)
 %%-----------------------------------------------------------------
 
-Lambdas = 500; %500:900;
-
-
-% MG
-
 % Anisoptropy coeff: 
-opt_prop.g_MG    = 0.85; % Ref: Optical properties of selected native and coagulated human brain tissues in vitro in the visible and near infrared spectral range
+opt_prop.g_GM    = 0.85; % Ref: Optical properties of selected native and coagulated human brain tissues in vitro in the visible and near infrared spectral range
 % Refractive index
-opt_prop.n_MG    = 1.36; % Ref: Brain refractive index measured in vivo with high-NA defocus-corrected full-field OCT and consequences for two-photon microscopy.
+opt_prop.n_GM    = 1.36; % Ref: Brain refractive index measured in vivo with high-NA defocus-corrected full-field OCT and consequences for two-photon microscopy.
 
 %Scattering coefficient % Optical properties of biological tissues: a review (Steven L Jacques) %cm-1
-musP_MG = (40.8 * (Lambdas/500).^(-3.089));
-opt_prop.mus_MG  = musP_MG/(1-opt_prop.g_MG); 
+musP = (40.8 * (Lambdas/500).^(-3.089));
+opt_prop.mus_GM  = musP/(1-opt_prop.g_GM); 
 
-%Absorption coefficient (in mm-1)
-if white_MC == 1
-    opt_prop.mua_MG = zeros(size(opt_prop.mus_MG)); %White Monte Carlo
-else
-    opt_prop.mua_MG = get_mua_values(Lambdas,22.1e-6,65.1e-6,0.7,0.1,5e-6,1e-6);
-end
+%Absorption coefficient (in mm-1) (Zerors: White Monte Carlo)
+opt_prop.mua_GM = zeros(size(opt_prop.mus_GM)); %White Monte Carlo
 
 %convert into mm-1
-opt_prop.mus_MG  = 0.1*opt_prop.mus_MG;
+opt_prop.mus_GM  = 0.1*opt_prop.mus_GM;
 
 
-
-
-
-
-
-% Blood vessel
+%%-----------------------------------------------------------------
+%% Compute optical properties Large Blood vessels (LBV)
+%%-----------------------------------------------------------------
 
 % Anisoptropy coeff
-opt_prop.g_BV    = 0.935; % Ref: Optical properties of human whole blood : changes due to slow heating
+opt_prop.g_LBV    = 0.935; % Ref: Optical properties of human whole blood : changes due to slow heating
 % Refractive index
-opt_prop.n_BV    = 1.4;  % Ref: Optical properties of human whole blood : changes due to slow heating
+opt_prop.n_LBV    = 1.4;  % Ref: Optical properties of human whole blood : changes due to slow heating
 
 %Scattering coefficient % Optical properties of biological tissues: a review (Steven L Jacques) %cm-1
-musP_BV = (22 * (Lambdas/500).^(-0.66));
-opt_prop.mus_BV  = musP_BV / (1-opt_prop.g_BV); 
+musP = (22 * (Lambdas/500).^(-0.66));
+opt_prop.mus_LBV  = musP / (1-opt_prop.g_LBV); 
 
-%Absorption coefficient (in mm-1)
-if white_MC == 1
-    opt_prop.mua_BV = zeros(size(opt_prop.mus_BV)); %White Monte Carlo
-else
-    opt_prop.mua_BV = get_mua_values(Lambdas,125,2375,0,0,0,0);
-end
+%Absorption coefficient (in mm-1) (Zerors: White Monte Carlo)
+opt_prop.mua_LBV = zeros(size(opt_prop.mus_LBV)); %White Monte Carlo
 
 %convert into mm-1
-opt_prop.mus_BV  = 0.1*opt_prop.mus_BV;
+opt_prop.mus_LBV  = 0.1*opt_prop.mus_LBV;
 
-clear musP_BV musP_MG
+%%-----------------------------------------------------------------
+%% Compute optical properties Capillaries (Cap)
+%%-----------------------------------------------------------------
+
+% Anisoptropy coeff: 
+opt_prop.g_Cap  = opt_prop.g_GM;
+% Refractive index
+opt_prop.n_Cap = opt_prop.n_GM;
+%Scattering coefficient
+opt_prop.mus_Cap = opt_prop.mus_GM;
+%Absorption coefficient (in mm-1) (Zeros: White Monte Carlo)
+opt_prop.mua_Cap = zeros(size(opt_prop.mus_Cap)); %White Monte Carlo
+
+
+%%-----------------------------------------------------------------
+%% Compute optical properties Activated grey matter (act_GM)
+%%-----------------------------------------------------------------
+
+% Anisoptropy coeff: 
+opt_prop.g_act_GM  = opt_prop.g_GM;
+% Refractive index
+opt_prop.n_act_GM = opt_prop.n_GM;
+%Scattering coefficient
+opt_prop.mus_act_GM = opt_prop.mus_GM;
+%Absorption coefficient (in mm-1) (Zeros: White Monte Carlo)
+opt_prop.mua_act_GM = zeros(size(opt_prop.mus_act_GM)); %White Monte Carlo
+
+
+%%-----------------------------------------------------------------
+%% Compute optical properties Activated large blood vessels (act_LBV)
+%%-----------------------------------------------------------------
+
+% Anisoptropy coeff
+opt_prop.g_act_LBV = opt_prop.g_LBV;
+% Refractive index
+opt_prop.n_act_LBV = opt_prop.n_LBV;
+%Scattering coefficient
+opt_prop.mus_act_LBV = opt_prop.mus_LBV;
+%Absorption coefficient (in mm-1) (Zeros: White Monte Carlo)
+opt_prop.mua_act_LBV = zeros(size(opt_prop.mus_act_LBV)); %White Monte Carlo
+
+
+%%-----------------------------------------------------------------
+%% Compute optical properties Activated Capillaries (act_Cap)
+%%-----------------------------------------------------------------
+
+% Anisoptropy coeff: 
+opt_prop.g_act_Cap = opt_prop.g_Cap;
+% Refractive index
+opt_prop.n_act_Cap = opt_prop.n_Cap;
+%Scattering coefficient
+opt_prop.mus_act_Cap = opt_prop.mus_Cap;
+%Absorption coefficient (in mm-1) (Zeros: White Monte Carlo)
+opt_prop.mua_act_Cap = zeros(size(opt_prop.mus_act_Cap)); %White Monte Carlo
+
+
+clear musP
 
 %%-----------------------------------------------------------------
 %% Store model parameters
@@ -181,7 +226,6 @@ info_model.cfg = cfg;
 info_model.resolution_xyz = resolution_xyz;
 info_model.img = img;
 info_model.opt_prop = opt_prop;
-info_model.white_MC = white_MC;
 
 
 %%-----------------------------------------------------------------
@@ -200,9 +244,20 @@ save('output/cst.mat','info_model','Lambdas');
 
 for l = 1:length(Lambdas)
     % Set optical properties % [mua,mus,g,n]
+    % 0: Air
+    % 1: Grey matter
+    % 2: Large blood vessel
+    % 3: Capillaries
+    % 4: Activated grey matter
+    % 5: Activated large vessel
+    % 6: Activated capillaries
     cfg.prop=[0 0 1 1; ...
-    info_model.opt_prop.mua_MG(l) info_model.opt_prop.mus_MG(l) info_model.opt_prop.g_MG info_model.opt_prop.n_MG; ...
-    info_model.opt_prop.mua_BV(l) info_model.opt_prop.mus_BV(l) info_model.opt_prop.g_BV info_model.opt_prop.n_BV];
+    info_model.opt_prop.mua_GM(l) info_model.opt_prop.mus_GM(l) info_model.opt_prop.g_GM info_model.opt_prop.n_GM ; ...
+    info_model.opt_prop.mua_LBV(l) info_model.opt_prop.mus_LBV(l) info_model.opt_prop.g_LBV info_model.opt_prop.n_LBV ; ...
+    info_model.opt_prop.mua_Cap(l) info_model.opt_prop.mus_Cap(l) info_model.opt_prop.g_Cap info_model.opt_prop.n_Cap ; ...
+    info_model.opt_prop.mua_act_GM(l) info_model.opt_prop.mus_act_GM(l) info_model.opt_prop.g_act_GM info_model.opt_prop.n_act_GM ; ...
+    info_model.opt_prop.mua_act_LBV(l) info_model.opt_prop.mus_act_LBV(l) info_model.opt_prop.g_act_LBV info_model.opt_prop.n_act_LBV ; ...
+    info_model.opt_prop.mua_act_Cap(l) info_model.opt_prop.mus_act_Cap(l) info_model.opt_prop.g_act_Cap info_model.opt_prop.n_act_Cap];
 
     % calculate the fluence and partial path lengths
     [flux,output_det]=mcxlab(cfg); 
