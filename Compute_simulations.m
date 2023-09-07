@@ -48,20 +48,22 @@ cfg.autopilot = 1;
 path = 'images/Patient1/';
 
 %Load image and segmentation
-% 1: Grey matter
-% 2: Large blood vessel
-% 3: Capillaries
-% 4: Activated grey matter
-% 5: Activated large vessel
-% 6: Activated capillaries
 [img,resolution_xyz] = Load_img_segmentation(path);
 
 % Voxel size in mm
 cfg.unitinmm = resolution_xyz; % Units in mm
 
 
-%Create mesh (elem_pro: 1: brain tissue, 2: Blood vessel
+% Create volume
+% 1: Grey matter
+% 2: Large blood vessel
+% 3: Capillaries
+% 4: Activated grey matter
+% 5: Activated large vessel
+% 6: Activated capillaries
 cfg.vol = create_volume(img,resolution_xyz,cfg.issaveref);
+
+
 
 %%-----------------------------------------------------------------
 %% Generate wide-field detector
@@ -216,6 +218,7 @@ opt_prop.mua_act_Cap = zeros(size(opt_prop.mus_act_Cap)); %White Monte Carlo
 
 
 clear musP
+
 
 %%-----------------------------------------------------------------
 %% Store model parameters

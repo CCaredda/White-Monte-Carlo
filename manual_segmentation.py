@@ -82,11 +82,11 @@ plt.close('all')
 plt.imshow(output)
 plt.show()
 
-## identify label of large blood vessel capillaries
+## identify label of large blood vessels and capillaries
 
 #Define Labels
-label_BV = np.array([7,4])
-label_capillaries = np.array([9])
+label_BV = np.array([9,3])
+label_capillaries = np.array([2])
 
 
 
@@ -132,23 +132,24 @@ mask_capillaries = np.bitwise_and(mask_capillaries.astype(np.uint8),mask)
 mask_GM = np.bitwise_and(np.bitwise_not(mask_large_vessels),np.bitwise_not(mask_capillaries))
 
 
-## Detect small vessels
 
-img_Eq = EqualizeHist(img_proc,mask)
-
-img_Eq = cv.cvtColor(img_Eq, cv.COLOR_RGB2GRAY)
-kernelSize = 31 # kernelSize is defined as the characteristic diameter of blood vessels in pixels
-
-mask_capillaries = cv.adaptiveThreshold(img_Eq,255,cv.ADAPTIVE_THRESH_GAUSSIAN_C,cv.THRESH_BINARY,kernelSize,0) #Segment vascular network with adaptive thresholding
-mask_capillaries = np.bitwise_not(mask_capillaries)
-mask_capillaries = mask_capillaries*mask
-mask_capillaries = np.bitwise_and(mask_capillaries,np.bitwise_not(mask_large_vessels))
-
-
-
-plt.figure()
-plt.imshow(mask_capillaries)
-plt.show()
+# ## Detect small vessels
+#
+# img_Eq = EqualizeHist(img_proc,mask)
+#
+# img_Eq = cv.cvtColor(img_Eq, cv.COLOR_RGB2GRAY)
+# kernelSize = 31 # kernelSize is defined as the characteristic diameter of blood vessels in pixels
+#
+# mask_capillaries = cv.adaptiveThreshold(img_Eq,255,cv.ADAPTIVE_THRESH_GAUSSIAN_C,cv.THRESH_BINARY,kernelSize,0) #Segment vascular network with adaptive thresholding
+# mask_capillaries = np.bitwise_not(mask_capillaries)
+# mask_capillaries = mask_capillaries*mask
+# mask_capillaries = np.bitwise_and(mask_capillaries,np.bitwise_not(mask_large_vessels))
+#
+#
+#
+# plt.figure()
+# plt.imshow(mask_capillaries)
+# plt.show()
 
 
 ## Select functional brain areas
@@ -174,7 +175,26 @@ mask_activated_large_vessels = np.bitwise_and(mask_activation,mask_large_vessels
 mask_activated_capillaries = np.bitwise_and(mask_activation,mask_capillaries)
 
 
+##
 
+
+plt.close('all')
+plt.subplot(321)
+plt.imshow(mask_GM)
+plt.subplot(322)
+plt.imshow(mask_activation)
+plt.subplot(323)
+plt.imshow(mask_large_vessels)
+plt.subplot(324)
+plt.imshow(mask_activated_large_vessels)
+plt.subplot(325)
+plt.imshow(mask_capillaries)
+plt.subplot(326)
+plt.imshow(mask_activated_capillaries)
+plt.show()
+
+
+##
 
 cMap = ListedColormap(['grey', 'red', 'magenta','green','yellow','white'])
 label = np.array(["Grey matter","Large blood vessel","Capillaries","Activated grey matter","Activated large vessel","Activated capillaries"])
@@ -192,6 +212,10 @@ mask_output[mask_activated_capillaries>0] = 6
 plt.close('all')
 plt.figure()
 plt.imshow(cv.cvtColor(img,cv.COLOR_BGR2RGB))
+
+plt.figure()
+plt.imshow(output)
+
 plt.figure()
 heatmap = plt.imshow(mask_output,cmap = cMap)
 
@@ -204,7 +228,17 @@ cbar.ax.get_yaxis().set_ticks([])
 plt.show()
 
 
-cv.imwrite(path+"mask_segmentation.png",mask_output)
+
+cv.imwrite(path+"mask_grey_matter.png",mask_GM/255)
+cv.imwrite(path+"mask_activated_grey_matter.png",mask_activation/255)
+
+cv.imwrite(path+"mask_large_vessels.png",mask_large_vessels/255)
+cv.imwrite(path+"mask_activated_large_vessels.png",mask_activated_large_vessels/255)
+
+cv.imwrite(path+"mask_capillaries.png",mask_capillaries/255)
+cv.imwrite(path+"mask_activated_capillaries.png",mask_activated_capillaries/255)
+
+# cv.imwrite(path+"mask_segmentation.png",mask_output)
 
 # plt.figure()
 # plt.imshow(mask_output)

@@ -23,7 +23,7 @@ function [Intensity,Mean_path_length] = reconstruct_Image(output_det,nb_pixels_x
     ppath = output_det.ppath;
 
     % Compute detector weights
-    weights = mcxdetweight(output_det);
+    weights = mcxdetweight(output_det,output_det.prop,unitinmm);
     
 
 
@@ -37,18 +37,35 @@ function [Intensity,Mean_path_length] = reconstruct_Image(output_det,nb_pixels_x
     col_id = ceil(output_det.p(:,2));
     index_photons = row_id + (col_id-1)*nb_pixels_x;
 
+    % unique_id = unique(index_photons);
+
+    % % Loop over detectors
+    % for i=1:length(unique_id)
+    % 
+    %     %Select the packet of photons that reach the detector i
+    %     id = find(index_photons==unique_id(i));
+    % 
+    %     %Compute intensity for pixel i
+    %     Intensity(unique_id(i)) = mcxcwdref(weights(id),nphotons,unitinmm);
+    % 
+    %     %Avg pathlength summed for the media
+    %     Mean_path_length(unique_id(i)) = average_path_length(ppath(id,:),weights(id),unitinmm);
+    % end
 
     % Loop over detectors
     for i=1:nb_pixels_x*nb_pixels_y
 
         %Select the packet of photons that reach the detector i
         id = find(index_photons==i);
-
-        %Compute intensity for pixel i
-        Intensity(i) = mcxcwdref(weights(id),nphotons,unitinmm);
-
-        %Avg pathlength summed for the media
-        Mean_path_length(i) = average_path_length(ppath(id,:),weights(id),output_det.unitinmm);
-
+        if isempty(id)
+            Intensity(i) = 0;
+            Mean_path_length(i) = 0;
+        else
+            %Compute intensity for pixel i
+            Intensity(i) = mcxcwdref(weights(id),nphotons,unitinmm);
+    
+            %Avg pathlength summed for the media
+            Mean_path_length(i) = average_path_length(ppath(id,:),weights(id),unitinmm);
+        end
     end
 
