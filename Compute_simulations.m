@@ -4,6 +4,8 @@
 %%-----------------------------------------------------------------
 clear
 
+disp('Init parameters');
+
 run_in_cluster = 0;
 
 % Wavelength (nm)
@@ -14,7 +16,7 @@ addpath('./functions');
 
 if run_in_cluster == 1
     addpath('/pbs/home/c/ccaredda/private/mcxlab');
-    cfg.nphoton=3e9; % Number of photons
+    cfg.nphoton=5e9; % Number of photons
 else
     addpath('/home/caredda/Soft/mcxlab');
     cfg.nphoton=1e2; % Number of photons
@@ -44,6 +46,9 @@ cfg.autopilot = 1;
 %% Load image segmentation and compute volume
 %%-----------------------------------------------------------------
 
+disp('Get segmentation');
+
+
 % path = 'images/Mouse/';
 path = 'images/Patient1/';
 
@@ -53,7 +58,7 @@ path = 'images/Patient1/';
 % Voxel size in mm
 cfg.unitinmm = resolution_xyz; % Units in mm
 
-
+disp('Create volume');
 % Create volume
 % 1: Grey matter
 % 2: Large blood vessel
@@ -63,12 +68,13 @@ cfg.unitinmm = resolution_xyz; % Units in mm
 % 6: Activated capillaries
 cfg.vol = create_volume(img,resolution_xyz,cfg.issaveref);
 
+clear img;
 
 
 %%-----------------------------------------------------------------
 %% Generate wide-field detector
 %%-----------------------------------------------------------------
-
+disp('Create detector');
 % Per-face boundary condition (BC), a strig of 6 letters (case insensitive) for
 % bounding box faces at -x,-y,-z,+x,+y,+z axes;
 %    overwrite cfg.isreflect if given.
@@ -111,7 +117,7 @@ end
 %%-----------------------------------------------------------------
 %% Generate planar light source
 %%-----------------------------------------------------------------
-
+disp('Create light source');
 % a uniform planar source outside the volume
 %Source type (homogeneous) a 3D quadrilateral uniform planar source, with three corners specified by srcpos, srcpos+srcparam1(1:3) and srcpos+srcparam2(1:3)
 cfg.srctype='planar';
@@ -227,7 +233,7 @@ clear musP
 %Store info into structure
 info_model.cfg = cfg;
 info_model.resolution_xyz = resolution_xyz;
-info_model.img = img;
+%info_model.img = img;
 info_model.opt_prop = opt_prop;
 
 
@@ -243,6 +249,8 @@ end
 % Save constants
 save('output/cst.mat','info_model','Lambdas');
 
+
+disp('Start simulations');
 
 
 for l = 1:length(Lambdas)

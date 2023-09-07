@@ -12,27 +12,44 @@ addpath('./functions/Optical_coefficients');
 
 
 % Path that contains results
-path = '../output_mcxlab/output_patient1/'; 
-% path = '../output_mcxlab/'; 
+% path = '../output_mcxlab/output_patient1/'; 
+path = '../output_mcxlab/'; 
 
 
 % Load model info
-load(strcat(path,'cst.mat')) % Load constants
-% load(strcat(path,'cst_500_600.mat')) % Load constants
+% load(strcat(path,'cst.mat')) % Load constants
+load(strcat(path,'cst_500_600.mat')) % Load constants
 Lambdas = 500;
 
-% Compute mu_a values for brain tissue and blood vessel (in mm-1)
-mua_GM = get_mua_values(Lambdas,22.1e-6,65.1e-6,0.7,0.1,5e-6,1e-6);
-mua_BV = get_mua_values(Lambdas,125.1e-6,2375.1e-6,0,0,0,0);
+% Compute mu_a values (in mm-1)
+% 1: Grey matter
+% 2: Large blood vessel
+% 3: Capillaries
+% 4: Activated grey matter
+% 5: Activated large vessel
+% 6: Activated capillaries
+mua_GM = get_mua_values(Lambdas,22.1e-6,65.1e-6,0.7,0.1,5e-6,1e-6); %1  
+mua_BV = get_mua_values(Lambdas,125.1e-6,2375.1e-6,0,0,0,0); %2
+mua_capilaries = mua_GM; %3
+mua_act_GM = mua_GM; %4
+mua_act_BV = mua_BV; %5
+mua_act_capilaries = mua_GM; %6
 
 
 % Define pixel resolution
-resolution_pixel = info_model.resolution_xyz;
+binning = 5;
+resolution_pixel = binning*info_model.cfg.unitinmm;
 
-% Compute the number of pixels along x and y axis according desired
-% resolution
-nb_pixels_x = size(info_model.cfg.vol,1);
-nb_pixels_y = size(info_model.cfg.vol,2);
+
+% Compute binning: number of pixels along x and y axis according desired resolution
+if (binning == 1)
+    nb_pixels_x = size(info_model.cfg.vol,1);
+    nb_pixels_y = size(info_model.cfg.vol,2);
+else
+    nb_pixels_x = floor(size(info_model.cfg.vol,1)/binning);
+    nb_pixels_y = floor(size(info_model.cfg.vol,2)/binning);
+end
+
 
 %Init Hyperspectral image and mean path length image
 Hypercube = zeros(nb_pixels_x,nb_pixels_y,length(Lambdas));
@@ -43,11 +60,21 @@ for i=1:length(Lambdas)
     load(strcat(path,'out_',num2str(Lambdas(i)),'nm.mat'))
 
     % Change mua with the correct value (White Monte Carlo)
-    output_det.prop(2,1) = mua_GM(i);
-    output_det.prop(3,1) = mua_BV(i);
+    % 1: Grey matter
+    % 2: Large blood vessel
+    % 3: Capillaries
+    % 4: Activated grey matter
+    % 5: Activated large vessel
+    % 6: Activated capillaries
+    output_det.prop(2,1) = mua_GM(i); %1
+    output_det.prop(3,1) = mua_BV(i); %2
+    output_det.prop(4,1) = mua_capilaries(i); %3
+    output_det.prop(5,1) = mua_act_GM(i); %4
+    output_det.prop(6,1) = mua_act_BV(i); %5
+    output_det.prop(7,1) = mua_act_capilaries(i); %6
    
     %Compute Image intensity and mean path length for wavelenth i
-    [Hypercube(:,:,i),Mean_path_length(:,:,i)] = reconstruct_Image(output_det,nb_pixels_x,nb_pixels_y,info_model.cfg.nphoton,info_model.cfg.unitinmm);
+    [Hypercube(:,:,i),Mean_path_length(:,:,i)] = reconstruct_Image(output_det,nb_pixels_x,nb_pixels_y,info_model.cfg.nphoton,info_model.cfg.unitinmm,binning);
 
 end
 
@@ -63,7 +90,7 @@ max_mp = max(Mean_path_length(:));
 
 close all;
 for i = 1:length(Lambdas)
-    figure(i); subplot(131),imagesc(info_model.img/max(info_model.img(:))), colorbar, title('Input model','fontsize',24),
+    figure(i); subplot(131),imagesc(info_model.cfg.vol(:,:,1)), colorbar, title('Input model','fontsize',24),
     subplot(132), imagesc(Hypercube(:,:,i),[min_H max_H]), colorbar, title(strcat('Reconstructed diffuse reflectance ',num2str(Lambdas(i)),'nm'),'fontsize',24),
     subplot(133),   imagesc(Mean_path_length(:,:,i),[min_mp max_mp]), colorbar,title(strcat('Mean path length ',num2str(Lambdas(i)),'nm'),'fontsize',24)
 end

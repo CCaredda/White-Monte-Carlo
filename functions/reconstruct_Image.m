@@ -1,4 +1,4 @@
-function [Intensity,Mean_path_length] = reconstruct_Image(output_det,nb_pixels_x,nb_pixels_y,nphotons,unitinmm)
+function [Intensity,Mean_path_length] = reconstruct_Image(output_det,nb_pixels_x,nb_pixels_y,nphotons,unitinmm,binning)
     % This function calculates 2D images from the detected photons info
     % obtained via the MMC simulation. It also 
     % calculates the average photon pathlength (PPL) hyperspectral maps of the 
@@ -13,6 +13,8 @@ function [Intensity,Mean_path_length] = reconstruct_Image(output_det,nb_pixels_x
     % nb_pixel_x and nb_pixel_y are calculated with
     % the node of the mesh and the resolution_pixel parameters
     
+    %unitinmm: size of the pixels
+    %binning: binning to rectonstruct images
     
     % % Outputs:
     % Intensity: intensity image of detected exiting photons (size nb_pixel_x.nb_pixels_y), 
@@ -33,8 +35,8 @@ function [Intensity,Mean_path_length] = reconstruct_Image(output_det,nb_pixels_x
     Mean_path_length=zeros(nb_pixels_x,nb_pixels_y); % Mean path length (in mm)
 
     % Position of photons in image
-    row_id = ceil(output_det.p(:,1));
-    col_id = ceil(output_det.p(:,2));
+    row_id = ceil(output_det.p(:,1)/binning);
+    col_id = ceil(output_det.p(:,2)/binning);
     index_photons = row_id + (col_id-1)*nb_pixels_x;
 
     % unique_id = unique(index_photons);
