@@ -22,6 +22,9 @@ else
     cfg.nphoton=1e2; % Number of photons
 end
 
+% Maximum number of photons that can be detected 
+cfg.maxdetphoton = cfg.nphoton;
+
 % GPU processing
 cfg.gpuid=1; 
 

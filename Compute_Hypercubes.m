@@ -12,14 +12,12 @@ addpath('./functions/Optical_coefficients');
 
 
 % Path that contains results
-% path = '../output_mcxlab/output_patient1/'; 
-path = '../output_mcxlab/'; 
+path = '../output_mcxlab/output_patient1/'; 
 
 
 % Load model info
 % load(strcat(path,'cst.mat')) % Load constants
 load(strcat(path,'cst_500_600.mat')) % Load constants
-Lambdas = 500;
 
 % Compute mu_a values (in mm-1)
 % 1: Grey matter
