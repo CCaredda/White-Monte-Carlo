@@ -3,6 +3,7 @@
 % to generate 3D hyperspectral data cubes at different wavelength bands
 
 clear; 
+tic
 % Reconstruct diffuse reflectance with exiting photons
 
 % Add path for using functions
@@ -16,8 +17,7 @@ path = '../output_mcxlab/output_patient1/';
 
 
 % Load model info
-% load(strcat(path,'cst.mat')) % Load constants
-load(strcat(path,'cst_500_600.mat')) % Load constants
+load(strcat(path,'cst.mat')) % Load constants
 
 % Compute mu_a values (in mm-1)
 % 1: Grey matter
@@ -53,8 +53,9 @@ end
 Hypercube = zeros(nb_pixels_x,nb_pixels_y,length(Lambdas));
 Mean_path_length = zeros(nb_pixels_x,nb_pixels_y,length(Lambdas));
 
-% Load ppl
 for i=1:length(Lambdas)
+    
+    % Load detector output
     load(strcat(path,'out_',num2str(Lambdas(i)),'nm.mat'))
 
     % Change mua with the correct value (White Monte Carlo)
@@ -76,6 +77,7 @@ for i=1:length(Lambdas)
 
 end
 
+toc
 
 min_H = min(Hypercube(:));
 max_H = max(Hypercube(:));
@@ -92,3 +94,8 @@ for i = 1:length(Lambdas)
     subplot(132), imagesc(Hypercube(:,:,i),[min_H max_H]), colorbar, title(strcat('Reconstructed diffuse reflectance ',num2str(Lambdas(i)),'nm'),'fontsize',24),
     subplot(133),   imagesc(Mean_path_length(:,:,i),[min_mp max_mp]), colorbar,title(strcat('Mean path length ',num2str(Lambdas(i)),'nm'),'fontsize',24)
 end
+
+
+%% Save results
+save(strcat(path,'results_binnin_',num2str(binning),'.mat'),'Hypercube','Mean_path_length','binning','resolution_pixel');
+
