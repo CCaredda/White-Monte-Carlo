@@ -2,7 +2,10 @@
 % DESCRIPTION: This code reads and processes data simulated with MMCLab, in order 
 % to generate 3D hyperspectral data cubes at different wavelength bands
 
-clear; 
+clear;
+
+output_is_zip = 1;
+
 tic
 % Reconstruct diffuse reflectance with exiting photons
 
@@ -13,11 +16,20 @@ addpath('./functions/Optical_coefficients');
 
 
 % Path that contains results
-path = '../output_mcxlab/output_patient1/'; 
+% path = '../output_mcxlab/output_patient1/'; 
+% path = '../output_mcxlab/test/'; 
+path = 'output/'; 
 
 
 % Load model info
 load(strcat(path,'cst.mat')) % Load constants
+Lambdas = 500;
+
+
+% Define pixel resolution
+binning = 5;
+resolution_pixel = binning*info_model.cfg.unitinmm;
+
 
 % Compute mu_a values (in mm-1)
 % 1: Grey matter
@@ -34,9 +46,6 @@ mua_act_BV = mua_BV; %5
 mua_act_capilaries = mua_GM; %6
 
 
-% Define pixel resolution
-binning = 5;
-resolution_pixel = binning*info_model.cfg.unitinmm;
 
 
 % Compute binning: number of pixels along x and y axis according desired resolution
@@ -55,8 +64,36 @@ Mean_path_length = zeros(nb_pixels_x,nb_pixels_y,length(Lambdas));
 
 for i=1:length(Lambdas)
     
+    clear output_det;
+
+
     % Load detector output
-    load(strcat(path,'out_',num2str(Lambdas(i)),'nm.mat'))
+    if output_is_zip == 1
+        %Unzip file
+        unzip(strcat(path,num2str(Lambdas(i)),'.zip'),path);
+        
+        %Read txt file
+        output_det.prop = readmatrix(strcat(path,'prop_',num2str(Lambdas(i)),'.txt'));
+        output_det.nscat = readmatrix(strcat(path,'nscat_',num2str(Lambdas(i)),'.txt'));
+        output_det.ppath = readmatrix(strcat(path,'ppath_',num2str(Lambdas(i)),'.txt'));
+        output_det.p = readmatrix(strcat(path,'p_',num2str(Lambdas(i)),'.txt'));
+        output_det.v = readmatrix(strcat(path,'v_',num2str(Lambdas(i)),'.txt'));
+
+        % remove txt files
+        delete(strcat(path,'nscat_',num2str(Lambdas(i)),'.txt'));
+        delete(strcat(path,'ppath_',num2str(Lambdas(i)),'.txt'));
+        delete(strcat(path,'p_',num2str(Lambdas(i)),'.txt'));
+        delete(strcat(path,'v_',num2str(Lambdas(i)),'.txt'));
+        delete(strcat(path,'prop_',num2str(Lambdas(i)),'.txt'));
+
+    else
+        load(strcat(path,'out_',num2str(Lambdas(i)),'nm.mat'))
+    end
+
+
+
+
+    
 
     % Change mua with the correct value (White Monte Carlo)
     % 1: Grey matter

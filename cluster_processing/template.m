@@ -5,14 +5,14 @@ clear
 
 disp('Init parameters');
 
-run_in_cluster = 0;
+run_in_cluster = 1;
 
 % Wavelength (nm)
 Lambdas = 500;
 
 
-addpath('./functions/Optical_coefficients');
-addpath('./functions');
+addpath('../functions/Optical_coefficients');
+addpath('../functions');
 
 if run_in_cluster == 1
     addpath('/pbs/home/c/ccaredda/private/mcxlab');
@@ -25,7 +25,8 @@ else
     cfg.nphoton=1e2; % Number of photons
 end
 
-
+% Repeat the simulation x times
+% cfg.respin=90;
 
 % Maximum number of photons that can be detected 
 cfg.maxdetphoton = 1e6;
@@ -57,8 +58,8 @@ cfg.autopilot = 1;
 disp('Get segmentation');
 
 
-% path = 'images/Mouse/';
-path = './images/Patient1/';
+% path = '../images/Mouse/';
+path = '../images/Patient1/';
 
 %Load image and segmentation
 [img,resolution_xyz] = Load_img_segmentation(path);
