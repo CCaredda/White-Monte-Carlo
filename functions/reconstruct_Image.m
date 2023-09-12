@@ -40,7 +40,7 @@ function [Intensity,Mean_path_length] = reconstruct_Image(output_det,nb_pixels_x
     index_photons = row_id + (col_id-1)*nb_pixels_x;
 
     % Loop over detectors
-    parfor i=1:nb_pixels_x*nb_pixels_y
+    parfor (i=1:nb_pixels_x*nb_pixels_y,32)
 
         %Select the packet of photons that reach the detector i
         id = find(index_photons==i);

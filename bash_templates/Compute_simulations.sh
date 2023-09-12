@@ -3,7 +3,7 @@
 
 # SLURM options:
 
-#SBATCH --job-name=
+#SBATCH --job-name=simulations
 #SBATCH --output=%j.log
 #SBATCH --licenses=sps
 #SBATCH -n 1
