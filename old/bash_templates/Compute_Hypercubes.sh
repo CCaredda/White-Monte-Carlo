@@ -6,7 +6,7 @@
 #SBATCH --job-name=Hypercubes
 #SBATCH --output=Hypercubes%j.log
 #SBATCH --licenses=sps
-#SBATCH --ntasks=32
+#SBATCH --ntasks=1
 #SBATCH --licenses=matlab
 #SBATCH --mem=15000
 #SBATCH --time=0-02:00:00

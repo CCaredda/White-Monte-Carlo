@@ -26,7 +26,7 @@ function [out_vol] = create_volume(img,resolution_xyz,save_diffuse_reflectance)
         img_temp(round(size(img.large_vessels,1)/16):size(img.large_vessels,1)+round(size(img.large_vessels,1)/16)-1,round(size(img.large_vessels,2)/16):size(img.large_vessels,2)+round(size(img.large_vessels,2)/16)-1) = img.large_vessels;
         vol_temp=repmat(img_temp,1,1,z); 
         vol_temp = Create_binary_blobs(vol_temp,start_z);
-
+        
         out_vol(vol_temp == 1) = 2;
 
     end

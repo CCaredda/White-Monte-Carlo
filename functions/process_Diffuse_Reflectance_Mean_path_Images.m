@@ -1,8 +1,7 @@
 function process_Diffuse_Reflectance_Mean_path_Images(wavelength,run_in_cluster,output_is_zip,data_path,binning)
     %% MCXLab HYPERSPECTRAL DATA PROCESSING CODE:
     % DESCRIPTION: This code reads and processes data simulated with MMCLab, in order 
-    % to generate 3D hyperspectral data cubes at different wavelength bands
-    
+    % to generate 3D hyperspectral data cubes at different wavelength bands 
     % INPUTS
     % wavelength: wavelength in nm
     % run_in_cluster: (0: local, 1: on cluster)
@@ -11,8 +10,6 @@ function process_Diffuse_Reflectance_Mean_path_Images(wavelength,run_in_cluster,
     % binning: binning used to reconstruct images
 
     
-
-    % tic
     % Reconstruct diffuse reflectance with exiting photons
     
     % Add path for using functions
@@ -23,7 +20,8 @@ function process_Diffuse_Reflectance_Mean_path_Images(wavelength,run_in_cluster,
     end
     
 
-        
+    disp('Init parameters');
+
     % Load model info
     load(strcat(data_path,'/cst.mat')) % Load constants
     
@@ -59,6 +57,7 @@ function process_Diffuse_Reflectance_Mean_path_Images(wavelength,run_in_cluster,
 
     clear output_det;
 
+    disp('Load data');
 
     % Load detector output
     if output_is_zip == 1
@@ -67,10 +66,10 @@ function process_Diffuse_Reflectance_Mean_path_Images(wavelength,run_in_cluster,
         
         %Read txt file
         output_det.prop = readmatrix(strcat(data_path,'prop_',num2str(wavelength),'.txt'));
-        output_det.nscat = readmatrix(strcat(data_path,'nscat_',num2str(wavelength),'.txt'));
+        %output_det.nscat = readmatrix(strcat(data_path,'nscat_',num2str(wavelength),'.txt'));
         output_det.ppath = readmatrix(strcat(data_path,'ppath_',num2str(wavelength),'.txt'));
         output_det.p = readmatrix(strcat(data_path,'p_',num2str(wavelength),'.txt'));
-        output_det.v = readmatrix(strcat(data_path,'v_',num2str(wavelength),'.txt'));
+        %output_det.v = readmatrix(strcat(data_path,'v_',num2str(wavelength),'.txt'));
 
         % remove txt files
         delete(strcat(data_path,'nscat_',num2str(wavelength),'.txt'));
@@ -102,6 +101,7 @@ function process_Diffuse_Reflectance_Mean_path_Images(wavelength,run_in_cluster,
     output_det.prop(6,1) = mua_act_BV; %5
     output_det.prop(7,1) = mua_act_capilaries; %6
    
+    disp('Reconstruct images');
     %Compute Image intensity and mean path length for wavelenth i
     [Diffuse_reflectance,Mean_path] = reconstruct_Image(output_det,nb_pixels_x,nb_pixels_y,info_model.cfg.nphoton,info_model.cfg.unitinmm,binning);
     

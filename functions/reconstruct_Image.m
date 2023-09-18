@@ -1,4 +1,4 @@
-function [Intensity,Mean_path_length] = reconstruct_Image(output_det,nb_pixels_x,nb_pixels_y,nphotons,unitinmm,binning)
+function [Intensity,Mean_path_length] = reconstruct_Image(output_det,nb_pixels_x,nb_pixels_y,nphotons,unitinmm,binning,use_parfor)
     % This function calculates 2D images from the detected photons info
     % obtained via the MMC simulation. It also 
     % calculates the average photon pathlength (PPL) hyperspectral maps of the 
@@ -20,6 +20,8 @@ function [Intensity,Mean_path_length] = reconstruct_Image(output_det,nb_pixels_x
     % Intensity: intensity image of detected exiting photons (size nb_pixel_x.nb_pixels_y), 
     % Mean_path_length: Image of mean path length of detected photons (in mm) (size nb_pixel_x.nb_pixels_y)
 
+    %Number of parallel workers
+    M = 4;
 
     % Load partial path length
     ppath = output_det.ppath;
@@ -40,19 +42,43 @@ function [Intensity,Mean_path_length] = reconstruct_Image(output_det,nb_pixels_x
     index_photons = row_id + (col_id-1)*nb_pixels_x;
 
     % Loop over detectors
-    parfor (i=1:nb_pixels_x*nb_pixels_y,32)
-
-        %Select the packet of photons that reach the detector i
-        id = find(index_photons==i);
-        if isempty(id)
-            Intensity(i) = 0;
-            Mean_path_length(i) = 0;
-        else
-            %Compute intensity for pixel i
-            Intensity(i) = mcxcwdref(weights(id),nphotons,unitinmm);
-
-            %Avg pathlength summed for the media
-            Mean_path_length(i) = average_path_length(ppath(id,:),weights(id),unitinmm);
+    if use_parfor == 1
+        parfor (i=1:nb_pixels_x*nb_pixels_y,M)
+            %Select the packet of photons that reach the detector i
+            id = find(index_photons==i);
+            if isempty(id)
+                Intensity(i) = 0;
+                Mean_path_length(i) = 0;
+            else
+                %Compute intensity for pixel i
+                Intensity(i) = mcxcwdref(weights(id),nphotons,unitinmm,binning);
+    
+                %Avg pathlength summed for the media
+                Mean_path_length(i) = average_path_length(ppath(id,:),weights(id),unitinmm);
+            end
+        end
+    else
+        for i=1:nb_pixels_x*nb_pixels_y
+            %Select the packet of photons that reach the detector i
+            id = find(index_photons==i);
+            if isempty(id)
+                Intensity(i) = 0;
+                Mean_path_length(i) = 0;
+            else
+                %Compute intensity for pixel i
+                Intensity(i) = mcxcwdref(weights(id),nphotons,unitinmm,binning);
+    
+                %Avg pathlength summed for the media
+                Mean_path_length(i) = average_path_length(ppath(id,:),weights(id),unitinmm);
+            end
+            if mod(i,100) == 0
+                disp(100*i/(nb_pixels_x*nb_pixels_y));
+            end
         end
     end
+
+
+end
+
+
 

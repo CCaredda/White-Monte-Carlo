@@ -1,4 +1,4 @@
-function [dref] = mcxcwdref(detweight, nphoton,unitinmm)
+function [dref] = mcxcwdref(detweight, nphoton,unitinmm,binning)
 
 % function [dref] = mcxcwdref(detp, cfg)
 %
@@ -34,7 +34,7 @@ function [dref] = mcxcwdref(detweight, nphoton,unitinmm)
     % dref = detweightsum ./ area / cfg.nphoton; % Eq.12 of photon replay paper[Yao2018]
 
     detweightsum = sum(detweight); % Use scalar since the fonction is computed for each pixel
-    area = (1*unitinmm).^2; % 1 pixel per detector
+    area = (binning*unitinmm).^2; % 1 pixel per detector
     dref = detweightsum ./ area / nphoton; % Eq.12 of photon replay paper[Yao2018] https://doi.org/10.1364/BOE.9.004588
     
 end

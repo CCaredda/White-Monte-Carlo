@@ -1,0 +1,10 @@
+1 line per chromophore
+The columns represent chromophore changes over time (Delimiter have to be space)
+
+1 Water content in % (0-1)
+2 Fat content in µ (0-1)
+3 C_HbO2 in (Mol)
+4 C_Hb in (Mol)
+5 C_oxCCO in (Mol)
+6 C_redCCO in (Mol)
+
