@@ -60,7 +60,186 @@ void WriteFloatImg(const QString path,const Mat img)
             {
                 stream <<ptr[col]<<" ";
             }
-            stream<<endl;
+            stream<<Qt::endl;
         }
     }
+}
+
+
+
+void WriteInfo(const QString path,QVector<QString> s)
+{
+    QFile file( path);
+
+    //Remove file if exists
+    if(file.exists())
+        file.remove();
+
+    if ( file.open(QIODevice::ReadWrite) )
+    {
+        QTextStream stream( &file );
+
+        for(int i=0;i<s.size();i++)
+            stream <<s[i]<<Qt::endl;
+
+    }
+}
+
+
+//Get image plan position for a lens configuration
+void getImagePlan(_lens_sensor &system)
+{
+    //Translation matrix before the lens
+    Mat To = Mat::ones(2,2,CV_32FC1);
+    To.at<float>(0,1) = system.working_distance_mm;
+    To.at<float>(1,0) = 0;
+
+    //Lens matrix
+    Mat Lf = Mat::ones(2,2,CV_32FC1);
+    Lf.at<float>(0,1) = 0;
+    Lf.at<float>(1,0) = -1/system.f0_mm;
+
+    //Ray at optical center
+    Mat ro = Mat::zeros(2,1,CV_32FC1);
+    ro.at<float>(1,0) = 1;
+
+
+    //Distance to sensor
+    vector<float> Z;
+    //Coordinate of ray
+    vector<float> R;
+
+    float dz=0.1;
+
+    for(int i=0;i<2000;i++)
+    {
+        float z = i*dz;
+        Z.push_back(z);
+
+        //Translation matrix to sensor
+        Mat Ti = Mat::ones(2,2,CV_32FC1);
+        Ti.at<float>(0,1) = z;
+        Ti.at<float>(1,0) = 0;
+
+        //Transfer matrix
+        Mat S = Ti*Lf*To;
+
+        //"image" ray coordinate is ri
+        Mat ri=S*ro;
+        R.push_back(abs(ri.at<float>(0,0)));
+    }
+
+    //Find min pos
+    int N =  static_cast<int>(std::distance(R.begin(), min_element(R.begin(), R.end())));
+
+    //get distance to sensor
+    system.distance_to_sensor = Z[N];
+
+}
+
+
+void getTransferMatrix(_lens_sensor &system)
+{
+    //Get image plan
+    getImagePlan(system);
+
+    //Translation matrix before the lens
+    Mat To = Mat::ones(2,2,CV_32FC1);
+    To.at<float>(0,1) = system.working_distance_mm;
+    To.at<float>(1,0) = 0;
+
+
+    //Lens matrix
+    Mat Lf = Mat::ones(2,2,CV_32FC1);
+    Lf.at<float>(0,1) = 0;
+    Lf.at<float>(1,0) = -1/system.f0_mm;
+
+    //Translation matrix to sensor
+    Mat Ti = Mat::ones(2,2,CV_32FC1);
+    Ti.at<float>(0,1) = system.distance_to_sensor;
+    Ti.at<float>(1,0) = 0;
+
+    //Transfer matrix
+    system.transfer_Matrix = Ti*Lf*To;
+
+}
+
+
+
+void get_Diffuse_reflectance_Pathlength(int binning,int nb_photons,int repetitions, const Mat &mua, int out_img_rows, int out_img_cols,
+                                        float area_detector,float unit_tissue_in_mm,Mat *ppath, Mat *p,Mat &dr, Mat &mp)
+{
+    qDebug()<<"Get diffuse reflectance and pathlength";
+    QElapsedTimer timer;
+    timer.start();
+
+    //Init mean path and diffuse reflectance img
+    mp = Mat::zeros(out_img_rows,out_img_cols,CV_32FC1);
+    dr = Mat::zeros(out_img_rows,out_img_cols,CV_32FC1);
+
+    //sum of weights
+    Mat sum_weights = Mat::zeros(mp.size(),CV_32FC1);
+
+
+    //Loop over detected photons
+    int Nb_detected_photons = (*ppath).rows;
+
+
+//    #pragma omp parallel
+//    {
+////        int nb_thread = omp_get_num_threads();
+//        #pragma omp for
+
+
+        for(int i=0;i<Nb_detected_photons;i++)
+        {
+            //Calculate weights
+            double weight = 1;
+            for(int n=0;n<mua.rows;n++)
+                weight *= exp(-mua.at<float>(n,0)*(*ppath).at<float>(i,n)*unit_tissue_in_mm);
+
+              // get row and col index
+            int row_id = floor((*p).at<float>(i,0)/binning)  ;
+            int col_id = floor((*p).at<float>(i,1)/binning)  ;
+
+            // if photon does not reach the sensor continue the for loop
+            if(row_id<0 || col_id<0 || row_id>= out_img_rows || col_id >= out_img_cols)
+                continue;
+
+            //Sum weights
+            sum_weights.at<float>(row_id,col_id) += weight;
+
+            //compute diffuse reflectance
+            float temp = weight/(area_detector*nb_photons*repetitions);
+            temp = (isnan(temp) || isinf(temp)) ? 0 : temp;
+
+            dr.at<float>(row_id,col_id) += temp;
+
+            //Compute mean path length
+            temp = float(sum((*ppath).row(i)*unit_tissue_in_mm*weight)[0]);
+            temp = (isnan(temp) || isinf(temp)) ? 0 : temp;
+
+            mp.at<float>(row_id,col_id) += temp;
+
+        }
+//    }
+
+
+    //normalize mean path length with the sum of the weights
+    qDebug()<<"Normalize";
+    #pragma omp parallel
+    {
+    //        int nb_thread = omp_get_num_threads();
+        #pragma omp for
+        for(int r=0;r<out_img_rows;r++)
+        {
+            for(int c=0;c<out_img_cols;c++)
+                mp.at<float>(r,c) /= sum_weights.at<float>(r,c);
+        }
+    }
+
+    //Remove first, last columns and rows
+    Rect rect(1,1,out_img_cols-2,out_img_rows-2);
+    mp = mp(rect);
+    dr = dr(rect);
 }

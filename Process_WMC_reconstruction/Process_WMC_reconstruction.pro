@@ -16,13 +16,13 @@ SOURCES += \
     $$PWD/src/main.cpp \
     $$PWD/src/mainwindow.cpp \
     $$PWD/src/functions.cpp \
-    $$PWD/src/data.cpp \
+    $$PWD/src/process.cpp \
     $$PWD/src/LoadData.cpp
 
 HEADERS += \
     $$PWD/inc/mainwindow.h \
     $$PWD/inc/functions.h \
-    $$PWD/inc/data.h \
+    $$PWD/inc/process.h \
     $$PWD/inc/LoadData.h
 
 FORMS += \

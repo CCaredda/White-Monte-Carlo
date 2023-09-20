@@ -1,18 +1,19 @@
 clear
 close all
 
-% model_resolution_in_mm = 0.75;
-model_resolution_in_mm = 0;
+model_resolution_in_mm = 1;
+% model_resolution_in_mm = 0.2;
 % Lambdas = 500:10:900;
 % run_in_cluster = 1;
 
 
-% Lambdas = [500 550 600 650 700 750 800 850 900];
-Lambdas = 500;
+%Lambdas = [500 550 600 650 700 750 800 850 900];
+Lambdas = [500 510 520 530];
 run_in_cluster = 0;
-nb_repeat = 50;
+nb_repeat = 1;
 % nb_repeat = 1;
 nb_photons = 1e6;
+
 out_path = 'output/';
 in_img_path = '../images/Patient1/';
 
@@ -62,7 +63,7 @@ for l=1:length(Lambdas)
     % 
     % save output
     disp('Save results')
-    writematrix(output_det.nscat,strcat(out_path,'nscat_',num2str(Lambdas(l)),'.txt'),'Delimiter',' ');
+    %writematrix(output_det.nscat,strcat(out_path,'nscat_',num2str(Lambdas(l)),'.txt'),'Delimiter',' ');
     writematrix(output_det.ppath,strcat(out_path,'ppath_',num2str(Lambdas(l)),'.txt'),'Delimiter',' ');
     writematrix(output_det.p,strcat(out_path,'p_',num2str(Lambdas(l)),'.txt'),'Delimiter',' ');
     writematrix(output_det.v,strcat(out_path,'v_',num2str(Lambdas(l)),'.txt'),'Delimiter',' ');
@@ -70,12 +71,13 @@ for l=1:length(Lambdas)
 
 
     % clear output
-    % clear output_det flux;
+    clear output_det flux;
 
     % Zip files
     disp('Zip results')
     cd(out_path);
-    zip(strcat(num2str(Lambdas(l)),'.zip'),{strcat('nscat_',num2str(Lambdas(l)),'.txt'), ...
+    zip(strcat(num2str(Lambdas(l)),'.zip'),{ ...
+    %strcat('nscat_',num2str(Lambdas(l)),'.txt'), ...
     strcat('ppath_',num2str(Lambdas(l)),'.txt'), ...
     strcat('p_',num2str(Lambdas(l)),'.txt'), ...
     strcat('v_',num2str(Lambdas(l)),'.txt'), ...
@@ -83,7 +85,7 @@ for l=1:length(Lambdas)
 
     % remove txt files
     disp('Delete temp files')
-    delete(strcat('nscat_',num2str(Lambdas(l)),'.txt'));
+    % delete(strcat('nscat_',num2str(Lambdas(l)),'.txt'));
     delete(strcat('ppath_',num2str(Lambdas(l)),'.txt'));
     delete(strcat('p_',num2str(Lambdas(l)),'.txt'));
     delete(strcat('v_',num2str(Lambdas(l)),'.txt'));

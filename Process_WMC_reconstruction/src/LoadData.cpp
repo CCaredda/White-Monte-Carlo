@@ -3,19 +3,25 @@
 LoadData::LoadData(QObject *parent)
     : QThread{parent}
 {
-    _M_data = Mat::zeros(0,0,CV_32FC1);
+    _M_data = new Mat(Mat::zeros(0,0,CV_32FC1));
     _M_path = "";
-    _M_send_data_finished_loaded = false;
+    _M_data_status = false;
+}
+
+LoadData::~LoadData()
+{
+    delete _M_data;
 }
 
 
 /** Call process in parallel thread */
 void LoadData::run()
 {
-    ReadArray(_M_path, _M_data);
+    qDebug()<<"LoadData In run";
+    _M_data_status = ReadArrayPointer();
+    _M_data_status = ((*_M_data).empty()) ? false : _M_data_status;
 
-    if(_M_send_data_finished_loaded)
-        emit data_ReadyFor_processing();
+    emit data_Loaded(_M_data_status);
 }
 
 
@@ -49,18 +55,28 @@ bool LoadData::ReadVector(const QString path,QVector<float> &out)
     return true;
 }
 
-void LoadData::ReadArray(const QString path,bool send_Data_finished_loaded)
+void LoadData::ReadArray(const QString path)
 {
+    qDebug()<<"LoadData In ReadArray";
     _M_path = path;
-    _M_send_data_finished_loaded = send_Data_finished_loaded;
     this->start();
 }
 
-
-
-
 bool LoadData::ReadArray(const QString path, Mat &out)
 {
+    //init output
+    out = Mat::zeros(0,0,CV_32FC1);
+
+    //Check if file exists
+    QFile file(path);
+    if(!file.exists())
+        return false;
+
+    if(!file.open(QIODevice::ReadOnly))
+        return false;
+    file.close();
+
+
     //get the number of lines
     boost::iostreams::mapped_file mmap(path.toStdString(), boost::iostreams::mapped_file::readonly);
     auto f = mmap.const_data();
@@ -76,11 +92,10 @@ bool LoadData::ReadArray(const QString path, Mat &out)
         }
     }
 
-     out = Mat::zeros(0,0,CV_32FC1);
+
 
      //Get nb of columns
      int nb_columns = 0;
-    QFile file(path);
     if(file.open(QIODevice::ReadOnly))
     {
         QTextStream textStream(&file);
@@ -111,8 +126,7 @@ bool LoadData::ReadArray(const QString path, Mat &out)
         }
         file.close();
     }
-    else
-        return false;
+
 
 //    qDebug()<<"Elapsed time ReadArray Qt: "<<timer.elapsed();
 
@@ -123,6 +137,86 @@ bool LoadData::ReadArray(const QString path, Mat &out)
 
     return true;
 }
+
+
+bool LoadData::ReadArrayPointer()
+{
+    qDebug()<<"Read array in pointer: "<<_M_path;
+    //init output
+    _M_data = new Mat(Mat::zeros(0,0,CV_32FC1));
+
+    //Check if file exists
+    QFile file(_M_path);
+    if(!file.exists())
+        return false;
+
+    if(!file.open(QIODevice::ReadOnly))
+        return false;
+    file.close();
+
+
+    //get the number of lines
+    boost::iostreams::mapped_file mmap(_M_path.toStdString(), boost::iostreams::mapped_file::readonly);
+    auto f = mmap.const_data();
+    auto l = f + mmap.size();
+
+    int m_numLines = 0;
+    while (f && f!=l)
+    {
+        if ((f = static_cast<const char*>(memchr(f, '\n', l-f))))
+        {
+            m_numLines++;
+            f++;
+        }
+    }
+
+
+
+     //Get nb of columns
+     int nb_columns = 0;
+    if(file.open(QIODevice::ReadOnly))
+    {
+        QTextStream textStream(&file);
+//        QStringList list = textStream.readLine().split(QRegExp(","), QString::SkipEmptyParts);
+        QStringList list = textStream.readLine().split(" ");
+        file.close();
+        nb_columns = list.size();
+        file.close();
+    }
+
+    emit loading_progess("Load data...");
+
+    //init output
+    _M_data = new Mat(Mat::zeros(m_numLines,nb_columns,CV_32FC1));
+    if(file.open(QIODevice::ReadOnly))
+    {
+        QTextStream textStream(&file);
+        for(int i=0;i<m_numLines;i++)
+        {
+            //QStringList list = textStream.readLine().split(QRegExp(","), QString::SkipEmptyParts);
+            QStringList list = textStream.readLine().split(" ");
+            for(int col=0;col<list.size();col++)
+            {
+                (*_M_data).at<float>(i,col) = list[col].toFloat();
+            }
+
+
+        }
+        file.close();
+    }
+
+
+//    qDebug()<<"Elapsed time ReadArray Qt: "<<timer.elapsed();
+
+    emit loading_progess("Data loaded...");
+
+//    if(emitSignal_after_loading)
+//        emit data_ReadyFor_processing(true);
+
+    return true;
+}
+
+
 
 bool LoadData::LoadInfoSimulation(const QString path, _info_simulations &info)
 {
@@ -230,7 +324,7 @@ void LoadData::removeDirectoryRecursively(const QString& dirPath)
     qDebug()<<"nb of lines: "<<m_numLines;
 
 }
-/*
+
     //read file
     boost::iostreams::mapped_file_source file;
     int numberOfElements = m_numLines;

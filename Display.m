@@ -80,3 +80,37 @@ figure()
 imagesc(in_img)
 
 
+%%
+% binning = 10;
+% dr_repeat_50 = readmatrix(strcat('../output_mcxlab/output_high_reso_repeat_50/results/dr_500_binning_',num2str(binning),'.txt'));
+% dr_repeat_70 = readmatrix(strcat('../output_mcxlab/output_high_reso_repeat_70/results/dr_500_binning_',num2str(binning),'.txt'));
+% 
+% half_row = round(size(dr_repeat_50,1)/2);
+% figure
+% subplot(221)
+% imagesc(dr_repeat_50)
+% subplot(222)
+% imagesc(dr_repeat_70)
+% subplot(223)
+% plot(dr_repeat_50(half_row,:))
+% subplot(224)
+% plot(dr_repeat_70(half_row,:))
+
+% path = '/home/caredda/DVP/simulation/output_mcxlab/output_reso_0_2mm_repeat_50/';
+path = '/home/caredda/DVP/simulation/output_mcxlab/output_high_reso_repeat_50/';
+
+binning = 10;
+dr = readmatrix(strcat(path,'results/dr_500_binning_',num2str(binning),'.txt'));
+mp = readmatrix(strcat(path,'/results/mp_500_binning_',num2str(binning),'.txt'));
+
+half_row = round(size(dr,1)/2);
+close all
+figure
+subplot(221)
+imagesc(dr)
+subplot(222)
+imagesc(mp)
+subplot(223)
+plot(dr(half_row,:))
+subplot(224)
+plot(mp(half_row,:))

@@ -1,5 +1,5 @@
-#ifndef DATA_H
-#define DATA_H
+#ifndef PROCESS_H
+#define PROCESS_H
 
 #include <QObject>
 #include <QThread>
@@ -8,23 +8,21 @@
 #include <QDir>
 
 #include <omp.h>
+#include <QProcess>
 
-class Data : public QThread
+class Process : public QThread
 {
     Q_OBJECT
 public:
-    explicit Data(QObject *parent = nullptr);
-
-
+    explicit Process(QObject *parent = nullptr);
 
     /** Set simulation directory */
     void setSimulationDir(QString s);
 
-    /** Set optical changes directory */
-    void setOpticalChangesDir(QString s);
+    /** New lens design */
+    void newLensSensorDesign(_lens_sensor &lens);
 
-    /** Launch reconstruction */
-    void Launch_reconstruction();
+
 
 protected:
     /** Call process in parallel thread */
@@ -35,9 +33,39 @@ signals:
     void processing(QString);
 
 
+public slots:
+
+    /** Binning of output images */
+    void onBinningChanged(int v);
+
+
+    /** Request lens modeling */
+    void requestLensSensorModeling(bool v);
+
+    /** Request processing on only one wavelength */
+    void onrequestSingleLambda(bool v);
+
+private slots:
+    /** On data finished loaded */
+    void on_ppath_data_Loaded(bool);
+    void on_p_data_Loaded(bool);
+    void on_v_data_Loaded(bool);
+
+
+    /** on new wavelength processing requested */
+    void onNewWavelengthProcessingRequested();
 
 
 private:
+
+
+    /** Reconstruction processing */
+    bool _Process(int w);
+
+
+    /** Display results */
+    void _Display_Results();
+
 
       /** Set Wavelength (in nm) */
       void _setWavelength(int);
@@ -45,19 +73,33 @@ private:
     /** Load data at selected wavelength */
     void _Load_Simulation_Data(int);
 
+    /** Set optical changes directory */
+    void _getOpticalChanges();
+
+    /** Get epsilon and mua coefficients */
+    void _get_mua_epsilon();
+
+
+
+
 
     /** calculate diffuse reflectance pathlength img */
     void _Create_Diffuse_reflectance_Pathlength_Img(const Mat &mua, int w);
 
+    void _Create_Diffuse_reflectance_Pathlength_Img_With_Lens(const Mat &mua, int w);
+
+
+    /** get output pos on sensor after lens */
+    void _get_photon_pos_after_lens(Mat *p);
 
     //Wavelength to process
     QVector<float> _M_wavelength_to_process;
-
-
+    int _M_id_wavelength_to_process;
 
     //Wavelength
     QVector<float> _M_wavelength;
     int _M_id_w;
+
 
     //extinction coefficent in (Mol.cm-1)
     QVector<float> _M_eps_HbO2;
@@ -65,18 +107,27 @@ private:
     QVector<float> _M_eps_oxCCO;
     QVector<float> _M_eps_redCCO;
 
+
+
     //Aborption coefficient (in cm-1)
     QVector<float> _M_mua_Fat;
     QVector<float> _M_mua_H2O;
 
 
+
+
     //simulations (Size: detected photons, nb of class)
-    Mat _M_ppath;
-    Mat _M_p;
+//    Mat _M_ppath;
+//    Mat _M_p;
+//    Mat _M_v;
+    LoadData _M_ppath;
+    LoadData _M_p;
+    LoadData _M_v;
+
+
 
     //Simulation directory
     QString _M_simu_dir;
-    QString _M_optical_changes_dir;
 
     //Absorption changes over time (size Nb of class; time)
     //QVector<QVector<float> > _M_mua;
@@ -90,6 +141,7 @@ private:
 
     //Name of the classes
     QStringList _M_class_names;
+
 
 
     //Flag for controlling if process can be done
@@ -117,7 +169,15 @@ private:
     //Saving directory
     QString         _M_saving_dir;
 
+    //Study only one wavelength
+    bool            _M_study_one_lambda;
+
+
+    //Lens and camera modeling
+    bool            _M_model_lens_sensor;
+    _lens_sensor    _M_lens_sensor;
+
 
 };
 
-#endif // DATA_H
+#endif // PROCESS_H

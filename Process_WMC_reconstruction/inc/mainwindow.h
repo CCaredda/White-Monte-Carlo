@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QFileDialog>
-#include "data.h"
+#include "process.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -22,17 +22,14 @@ private slots:
     /** Click on directory to select simulations output */
     void onDirSimuclicked();
 
-    /** Click on directory to select optical changes  */
-    void onDirOptical_changesclicked();
-
-    /** Start process */
-    void onStartProcess();
+    /** New lens design */
+    void onNewLensSensorDesign();
 
 private:
     Ui::MainWindow *ui;
 
     /** Data class */
-    Data _M_data;
+    Process _M_process;
 
 };
 #endif // MAINWINDOW_H
