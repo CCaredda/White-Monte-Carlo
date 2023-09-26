@@ -24,7 +24,9 @@ MainWindow::MainWindow(QWidget *parent)
     //Process single wavelength
     ui->_process_single_lambda->setChecked(true);
     connect(ui->_process_single_lambda,SIGNAL(clicked(bool)),&_M_process,SLOT(onrequestSingleLambda(bool)));
-
+    //wavelength
+    ui->_wavelength->setText("500");
+    connect(ui->_wavelength,SIGNAL(returnPressed()),this,SLOT(onNewWavelength()));
 
     //Lens system
     ui->_model_lens->setChecked(false);
@@ -32,10 +34,21 @@ MainWindow::MainWindow(QWidget *parent)
 
     //f0
     ui->_f0->setText("30");
-    connect(ui->_f0,SIGNAL(textEdited(QString)),this,SLOT(onNewLensSensorDesign()));
+    connect(ui->_f0,SIGNAL(returnPressed()),this,SLOT(onNewLensSensorDesign()));
+
     //Working distance
     ui->_working_distance->setText("400");
-    connect(ui->_working_distance,SIGNAL(textEdited(QString)),this,SLOT(onNewLensSensorDesign()));
+    connect(ui->_working_distance,SIGNAL(returnPressed()),this,SLOT(onNewLensSensorDesign()));
+
+    //sensor width (mm)
+    ui->_sensor_width_mm->setText("6");
+    ui->_sensor_height_mm->setText(QString::number(6*0.8));
+    connect(ui->_sensor_width_mm,SIGNAL(returnPressed()),this,SLOT(onNewLensSensorDesign()));
+
+    ui->_sensor_width_px->setText("100");
+    ui->_sensor_height_px->setText(QString::number(6*0.8));
+    connect(ui->_sensor_width_px,SIGNAL(returnPressed()),this,SLOT(onNewLensSensorDesign()));
+
 
 }
 
@@ -72,16 +85,26 @@ void MainWindow::onDirSimuclicked()
 /** New focal length */
 void MainWindow::onNewLensSensorDesign()
 {
-    float f0 = ui->_f0->text().toFloat();
-    float wd = ui->_working_distance->text().toFloat();
-
-    qDebug()<<"f0: "<<f0;
-    qDebug()<<"wd: "<<wd;
-
     _lens_sensor system;
-    system.f0_mm = f0;
-    system.working_distance_mm = wd;
+    system.f0_mm = ui->_f0->text().toFloat();;
+    system.working_distance_mm = ui->_working_distance->text().toFloat();
+
+    system.y_sensor_mm =ui->_sensor_width_mm->text().toFloat();
+    system.x_sensor_mm =system.y_sensor_mm*0.8;
+
+    system.y_sensor_px = floor(ui->_sensor_width_px->text().toFloat());
+    system.x_sensor_px = floor(system.y_sensor_px*0.8);
+
+
+    ui->_sensor_height_mm->setText(QString::number(system.x_sensor_mm));
+    ui->_sensor_height_px->setText(QString::number(system.x_sensor_px));
+
 
     _M_process.newLensSensorDesign(system);
+}
 
+void MainWindow::onNewWavelength()
+{
+    int w =ui->_wavelength->text().toInt();
+    _M_process.setWavelength(w);
 }

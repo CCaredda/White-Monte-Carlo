@@ -27,8 +27,13 @@ Lambdas = 500;
 
 %Change the coordinate (set the optical axis at the center of the surface)
 pos = output_det.p;
+disp('p step 0'), pos(1,:)
+disp('v step 0'), output_det.v(1,:)
+
 pos(:,1) = pos(:,1) - size(info_model.cfg.vol,1)/2;
 pos(:,2) = pos(:,2) - size(info_model.cfg.vol,2)/2;
+
+
 
 %Transpose pos vector, size (3,N photons)
 pos = pos';
@@ -39,6 +44,10 @@ pos = pos';
 Ry = [-1 0 0;0 1 0;0 0 -1];
 pos = Ry*pos;
 
+% Convert the position of exiting photons in mm
+% not required for angles
+pos = pos * info_model.cfg.unitinmm;
+
 % Get angle of exiting photons (in radian)
 angle = asin(output_det.v);
 
@@ -48,10 +57,6 @@ angle = angle';
 %Rotate angles
 angle = Ry*angle;
 
-
-% Convert the position of exiting photons in mm
-% not required for angles
-pos = pos * info_model.cfg.unitinmm;
 
 
 %% Definition of the lens system
@@ -82,10 +87,15 @@ x_pos_angle = [pos(1,:);angle(1,:)];
 y_pos_angle = [pos(2,:);angle(2,:)];
 z_pos_angle = [pos(3,:);angle(3,:)];
 
+
 %ri: image ray coordinate (in mm)
 x_pos_angle_cam = S*x_pos_angle;
 y_pos_angle_cam = S*y_pos_angle;
 %z_pos_angle_cam = S*z_pos_angle;
+
+disp('p step 4'),x_pos_angle_cam(1,1),y_pos_angle_cam(1,1)
+disp('v step 4'),x_pos_angle_cam(2,1),y_pos_angle_cam(2,1)
+
 
 %Concatenate output, size (N detected photons, 2)
 out_p_mm = horzcat(x_pos_angle_cam(1,:)', y_pos_angle_cam(1,:)');
@@ -128,12 +138,14 @@ out_p = horzcat(out_p_mm(:,1)/reso_x , out_p_mm(:,2)/reso_y);
 % out_p(:,1) = -out_p(:,1);
 out_p(:,2) = -out_p(:,2);
 
+disp('p step 5'), out_p(1,:)
+
 %Get back in mcx space (space ordinate at at a corner no at the center of
 %the surface)
 out_p(:,1) = out_p(:,1) + x_sensor/2;
 out_p(:,2) = out_p(:,2) + y_sensor/2;
 
-
+disp('p step 6'), out_p(1,:)
 
 % replace output_det.p by out_p
 output_det.p = out_p;

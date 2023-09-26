@@ -41,8 +41,8 @@ typedef struct
 
     float x_sensor_mm;
     float y_sensor_mm;
-    int x_sensor_px;
-    int y_sensor_px;
+    float x_sensor_px;
+    float y_sensor_px;
 
     float sensor_reso_x;
     float sensor_reso_y;

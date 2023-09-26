@@ -170,6 +170,18 @@ void get_Diffuse_reflectance_Pathlength(int binning,int nb_photons,int repetitio
                                         float area_detector,float unit_tissue_in_mm,Mat *ppath, Mat *p,Mat &dr, Mat &mp)
 {
     qDebug()<<"Get diffuse reflectance and pathlength";
+    qDebug()<<"get_Diffuse_reflectance_Pathlength mua "<<mua.at<float>(0,0);
+    qDebug()<<"get_Diffuse_reflectance_Pathlength ppath "<<ppath->at<float>(0,0);
+
+
+    //check size
+    if(out_img_rows<=0 || out_img_cols<=0)
+    {
+        qDebug()<<"Wrong image size";
+        return;
+    }
+
+
     QElapsedTimer timer;
     timer.start();
 
@@ -182,7 +194,7 @@ void get_Diffuse_reflectance_Pathlength(int binning,int nb_photons,int repetitio
 
 
     //Loop over detected photons
-    int Nb_detected_photons = (*ppath).rows;
+    int Nb_detected_photons = ppath->rows;
 
 
 //    #pragma omp parallel
@@ -196,7 +208,7 @@ void get_Diffuse_reflectance_Pathlength(int binning,int nb_photons,int repetitio
             //Calculate weights
             double weight = 1;
             for(int n=0;n<mua.rows;n++)
-                weight *= exp(-mua.at<float>(n,0)*(*ppath).at<float>(i,n)*unit_tissue_in_mm);
+                weight *= exp(-mua.at<float>(n,0)*ppath->at<float>(i,n)*unit_tissue_in_mm);
 
               // get row and col index
             int row_id = floor((*p).at<float>(i,0)/binning)  ;
@@ -239,6 +251,7 @@ void get_Diffuse_reflectance_Pathlength(int binning,int nb_photons,int repetitio
     }
 
     //Remove first, last columns and rows
+    qDebug()<<"rect";
     Rect rect(1,1,out_img_cols-2,out_img_rows-2);
     mp = mp(rect);
     dr = dr(rect);

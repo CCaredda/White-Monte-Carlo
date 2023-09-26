@@ -25,6 +25,9 @@ private slots:
     /** New lens design */
     void onNewLensSensorDesign();
 
+    /** New Wavelength */
+    void onNewWavelength();
+
 private:
     Ui::MainWindow *ui;
 

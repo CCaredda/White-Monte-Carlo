@@ -22,6 +22,9 @@ public:
     /** New lens design */
     void newLensSensorDesign(_lens_sensor &lens);
 
+    /** set Wavelength to analyze */
+    void setWavelength(int);
+
 
 
 protected:
@@ -129,9 +132,6 @@ private:
     //Simulation directory
     QString _M_simu_dir;
 
-    //Absorption changes over time (size Nb of class; time)
-    //QVector<QVector<float> > _M_mua;
-    Mat _M_mua; // in mm-1
 
     //Optical changes over time (size Nb of class; Nb of chromophores; time)
 //    QVector<QVector<QVector<float> > > _M_optical_changes;
@@ -150,15 +150,8 @@ private:
     bool _M_mua_eps_data_ready;
 
 
-
     //Binning for reconstuction the images
     int _M_binning;
-    //output image rows
-    int _M_out_img_rows;
-    //output image cols
-    int _M_out_img_cols;
-
-
 
     //info simulation
     _info_simulations _M_info_simus;

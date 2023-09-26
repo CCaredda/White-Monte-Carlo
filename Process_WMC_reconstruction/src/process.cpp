@@ -27,10 +27,14 @@ Process::Process(QObject *parent)
     _M_lens_sensor.working_distance_mm = 400;
     _M_lens_sensor.distance_to_sensor = 0;
     _M_lens_sensor.transfer_Matrix = Mat::zeros(0,0,CV_32FC1);
-    _M_lens_sensor.x_sensor_mm =6;
-    _M_lens_sensor.y_sensor_mm =5;
-    _M_lens_sensor.x_sensor_px = 100;
-    _M_lens_sensor.y_sensor_px = floor(_M_lens_sensor.x_sensor_px*_M_lens_sensor.x_sensor_mm/_M_lens_sensor.y_sensor_mm);
+
+    _M_lens_sensor.y_sensor_mm =6;
+    _M_lens_sensor.x_sensor_mm =_M_lens_sensor.y_sensor_mm*0.8;
+
+    _M_lens_sensor.y_sensor_px = 100;
+//    _M_lens_sensor.x_sensor_px = floor(_M_lens_sensor.y_sensor_px*(_M_lens_sensor.x_sensor_mm/_M_lens_sensor.y_sensor_mm));
+    _M_lens_sensor.x_sensor_px = floor(_M_lens_sensor.y_sensor_px*0.8);
+
     _M_lens_sensor.sensor_reso_x = _M_lens_sensor.x_sensor_mm/_M_lens_sensor.x_sensor_px;
     _M_lens_sensor.sensor_reso_y = _M_lens_sensor.y_sensor_mm/_M_lens_sensor.y_sensor_px;
 
@@ -41,10 +45,8 @@ Process::Process(QObject *parent)
 
     //Wavelenfth to process
     _M_wavelength_to_process.clear();
-//    for(int i=500;i<950;i+=50)
-//        _M_wavelength_to_process.push_back(i);
-    _M_wavelength_to_process.push_back(500);
-    _M_wavelength_to_process.push_back(510);
+    for(int i=500;i<910;i+=10)
+        _M_wavelength_to_process.push_back(i);
 
 
     // Study one lambda
@@ -58,10 +60,6 @@ Process::Process(QObject *parent)
     //Binning for reconstuction the images
     _M_binning = 1;
 
-    //output image rows
-    _M_out_img_rows = 0;
-    //output image cols
-    _M_out_img_cols = 0;
 
     //Wavelength idx
     _M_id_w = -1;
@@ -82,9 +80,6 @@ Process::Process(QObject *parent)
 
     //simulation dir
     _M_simu_dir = "";
-
-    //Optical changes over time (size Nb of class; time)
-    _M_mua = Mat::zeros(0,0,CV_32FC1);
 
     //Optical changes over time (size Nb of class; Nb of chromophores; time)
     _M_optical_changes.clear();
@@ -117,6 +112,9 @@ Process::Process(QObject *parent)
 // SLOT called when the reconstruction process finished
 void Process::onNewWavelengthProcessingRequested()
 {
+    if(!_M_simu_data_ready)
+        return;
+
     if(_M_study_one_lambda)
         return;
 
@@ -142,6 +140,7 @@ void Process::on_ppath_data_Loaded(bool v)
         _M_simu_data_ready = true;
 
         qDebug()<<"Remove temp files";
+        emit processing("Remove temp files "+QString::number(_M_wavelength_to_process[_M_id_wavelength_to_process])+"nm");
         _M_loadData.removeDirectoryRecursively(_M_simu_dir+"/"+QString::number(_M_wavelength_to_process[_M_id_wavelength_to_process]));
 
         this->start();
@@ -212,7 +211,7 @@ void Process::_Display_Results()
 /** Call process in parallel thread */
 void Process::run()
 {
-
+    emit processing("Process data "+QString::number(_M_wavelength_to_process[_M_id_wavelength_to_process])+"nm");
     bool res = _Process(_M_wavelength_to_process[_M_id_wavelength_to_process]);
 
 
@@ -226,18 +225,6 @@ bool Process::_Process(int w)
 {
     QElapsedTimer timer;
     timer.start();
-
-
-    //Define output image size
-    _M_out_img_rows = floor(_M_info_simus.modelled_volume_rows/_M_binning)+1;
-    _M_out_img_cols = floor(_M_info_simus.modelled_volume_cols/_M_binning)+1;
-
-    //check size
-    if(_M_out_img_rows<=0 || _M_out_img_cols<=0)
-    {
-        qDebug()<<"Wrong image size";
-        return false;
-    }
 
     //Check if data is ready
     if(!_M_mua_eps_data_ready)
@@ -256,7 +243,7 @@ bool Process::_Process(int w)
         return false;
     }
 
-
+    qDebug()<<"process "<<w;
 
     //Set wavelength
     _setWavelength(w);
@@ -265,17 +252,17 @@ bool Process::_Process(int w)
     if(_M_id_w==-1)
         return false;
 
-    //Calculate mua (size: (size Nb of class; time))
-    qDebug()<<"Calculate mua";
-    _M_mua = get_mua(_M_optical_changes,_M_mua_H2O[_M_id_w],_M_mua_Fat[_M_id_w],_M_eps_HbO2[_M_id_w],_M_eps_Hb[_M_id_w],_M_eps_oxCCO[_M_id_w],_M_eps_redCCO[_M_id_w]);
+    //Calculate mua (size: (size Nb of class; time)) in mm-1
+    Mat mua = get_mua(_M_optical_changes,_M_mua_H2O[_M_id_w],_M_mua_Fat[_M_id_w],_M_eps_HbO2[_M_id_w],_M_eps_Hb[_M_id_w],_M_eps_oxCCO[_M_id_w],_M_eps_redCCO[_M_id_w]);
 
+    qDebug()<<"mua "<<w<<" "<<mua.at<float>(0,0);
 
     //Check if data have been correctly loaded
-    int T = _M_mua.cols;
+    int T = mua.cols;
 
     //For loop over time
     for(int t=0;t<T;t++)
-        _Create_Diffuse_reflectance_Pathlength_Img(_M_mua.col(t),w);
+        _Create_Diffuse_reflectance_Pathlength_Img(mua.col(t),w);
 
     emit processing("Process terminated in "+QString::number(timer.elapsed()/1000)+"s");
 
@@ -284,6 +271,20 @@ bool Process::_Process(int w)
     return true;
 }
 
+/** set Wavelength to analyze */
+void Process::setWavelength(int w)
+{
+    for(int i=0;i<_M_wavelength_to_process.size();i++)
+    {
+        if(int(_M_wavelength_to_process[i]) == w)
+        {
+            _M_id_wavelength_to_process = i;
+            break;
+        }
+    }
+
+    this->start();
+}
 
 void Process::_setWavelength(int w)
 {
@@ -414,31 +415,13 @@ void Process::_Load_Simulation_Data(int w)
         return;
 
     qDebug()<<"Unzip files";
+    emit processing("Unzip files "+QString::number(_M_wavelength_to_process[_M_id_wavelength_to_process])+"nm");
     _M_loadData.unzipFiles(_M_simu_dir+"/"+QString::number(w)+".zip",_M_simu_dir+"/"+QString::number(w));
 
-//    // Load partial path length (Size: detected photons, nb of class)
-//    _M_simu_data_ready = _M_loadData.ReadArray(_M_simu_dir+"/"+QString::number(w)+"/ppath_"+QString::number(w)+".txt",_M_ppath);
-
-
-//    // Load exiting photon positions (Size: detected photons, nb of class)
-//    _M_simu_data_ready = _M_simu_data_ready && _M_loadData.ReadArray(_M_simu_dir+"/"+QString::number(w)+"/p_"+QString::number(w)+".txt",_M_p);
-
-
-//    // Load exiting photon angles (Size: detected photons, nb of class)
-//    _M_simu_data_ready = _M_simu_data_ready && _M_loadData.ReadArray(_M_simu_dir+"/"+QString::number(w)+"/v_"+QString::number(w)+".txt",_M_v);
-
-
-//    qDebug()<<"Remove temp files";
-//    _M_loadData.removeDirectoryRecursively(_M_simu_dir+"/"+QString::number(w));
-
-//    // Check data
-//    if(_M_p.empty())
-//        _M_simu_data_ready = false;
-
-//    if(_M_ppath.empty())
-//        _M_simu_data_ready = false;
 
     qDebug()<<"Load files";
+
+    emit processing("Read data "+QString::number(_M_wavelength_to_process[_M_id_wavelength_to_process])+"nm");
     // Load partial path length (Size: detected photons, nb of class)
     _M_ppath.ReadArray(_M_simu_dir+"/"+QString::number(w)+"/ppath_"+QString::number(w)+".txt");
     // Load exiting photon positions (Size: detected photons, nb of class)
@@ -450,12 +433,6 @@ void Process::_Load_Simulation_Data(int w)
 void Process::onBinningChanged(int v)
 {
     _M_binning = v;
-    _M_lens_sensor.y_sensor_px = floor(_M_lens_sensor.y_sensor_px/v);
-    _M_lens_sensor.x_sensor_px = floor(_M_lens_sensor.x_sensor_px/v);
-
-    _M_lens_sensor.sensor_reso_x = _M_lens_sensor.x_sensor_mm/_M_lens_sensor.x_sensor_px;
-    _M_lens_sensor.sensor_reso_y = _M_lens_sensor.y_sensor_mm/_M_lens_sensor.y_sensor_px;
-
     this->start();
 }
 
@@ -485,11 +462,17 @@ void Process::newLensSensorDesign(_lens_sensor &lens)
     cout<<_M_lens_sensor.transfer_Matrix<<endl;
 
     //Sensor
-    _M_lens_sensor.y_sensor_px = floor(_M_lens_sensor.y_sensor_px/_M_binning);
-    _M_lens_sensor.x_sensor_px = floor(_M_lens_sensor.x_sensor_px/_M_binning);
+//    _M_lens_sensor.y_sensor_px = floor(_M_lens_sensor.y_sensor_px/_M_binning)+1;
+//    _M_lens_sensor.x_sensor_px = floor(_M_lens_sensor.x_sensor_px/_M_binning)+1;
 
-    _M_lens_sensor.sensor_reso_x = _M_lens_sensor.x_sensor_mm/_M_lens_sensor.x_sensor_px;
-    _M_lens_sensor.sensor_reso_y = _M_lens_sensor.y_sensor_mm/_M_lens_sensor.y_sensor_px;
+    _M_lens_sensor.x_sensor_mm = lens.x_sensor_mm;
+    _M_lens_sensor.y_sensor_mm = lens.y_sensor_mm;
+
+    _M_lens_sensor.y_sensor_px = lens.y_sensor_px;
+    _M_lens_sensor.x_sensor_px = lens.x_sensor_px;
+
+    _M_lens_sensor.sensor_reso_x = lens.x_sensor_mm/lens.x_sensor_px;
+    _M_lens_sensor.sensor_reso_y = lens.y_sensor_mm/lens.y_sensor_px;
 
 
     if(!_M_lens_sensor.transfer_Matrix.empty() && _M_model_lens_sensor)
@@ -507,14 +490,19 @@ void Process::_Create_Diffuse_reflectance_Pathlength_Img(const Mat &mua,int w)
     Mat mp,dr;
 
     float reso_x,reso_y;
-
+    QString name="";
+    QString name_info="";
 
 
 
     if(!_M_lens_sensor.transfer_Matrix.empty() && _M_model_lens_sensor)
     {
+        name = "sensor_"+QString::number(_M_lens_sensor.y_sensor_mm)+"_"+QString::number(_M_lens_sensor.x_sensor_mm)+"mm"+QString::number(w)+".txt";;
+
         //Get position on sensor after lens
-        Mat *p;
+        Mat *p = new Mat(*_M_p.getData());
+
+        qDebug()<<"get photon pos on sensor after lens";
         _get_photon_pos_after_lens(p);
 
         //Area of detector
@@ -527,27 +515,45 @@ void Process::_Create_Diffuse_reflectance_Pathlength_Img(const Mat &mua,int w)
     }
     else
     {
+        //name output file
+        name = "surface_"+QString::number(w)+"_binning_"+QString::number(_M_binning)+".txt";
+
         //Area of detector
         reso_x = _M_binning*_M_info_simus.unit_in_mm;
         reso_y = _M_binning*_M_info_simus.unit_in_mm;
         float area = reso_x*reso_y;
 
-        get_Diffuse_reflectance_Pathlength(_M_binning,_M_info_simus.nb_photons,_M_info_simus.repetions,mua, _M_out_img_rows, _M_out_img_cols,
+        //Define output image size
+        int out_img_rows = floor(_M_info_simus.modelled_volume_rows/_M_binning)+1;
+        int out_img_cols = floor(_M_info_simus.modelled_volume_cols/_M_binning)+1;
+
+        get_Diffuse_reflectance_Pathlength(_M_binning,_M_info_simus.nb_photons,_M_info_simus.repetions,mua, out_img_rows, out_img_cols,
                                            area,_M_info_simus.unit_in_mm,_M_ppath.getData(), _M_p.getData(), dr, mp);
     }
 
 
 
     qDebug()<<"Write images";
-    WriteFloatImg(_M_saving_dir+"/mp_"+QString::number(w)+"_binning_"+QString::number(_M_binning)+".txt",mp);
-    WriteFloatImg(_M_saving_dir+"/dr_"+QString::number(w)+"_binning_"+QString::number(_M_binning)+".txt",mp);
+    WriteFloatImg(_M_saving_dir+"/mp_"+name,mp);
+    WriteFloatImg(_M_saving_dir+"/dr_"+name,dr);
 
     //Write info
-    QVector<QString> info;
-    info.push_back("reso x (mm): "+QString::number(reso_x));
-    info.push_back("reso y (mm): "+QString::number(reso_y));
+    QFile file(_M_saving_dir+"/info_out_"+name_info+".txt");
+    if(!file.exists())
+    {
+        file.close();
+        QVector<QString> info;
+        info.push_back("reso x (mm): "+QString::number(reso_x));
+        info.push_back("reso y (mm): "+QString::number(reso_y));
+        if(_M_model_lens_sensor)
+        {
+            info.push_back("focal length (mm): "+QString::number(_M_lens_sensor.f0_mm));
+            info.push_back("working distance (mm): "+QString::number(_M_lens_sensor.working_distance_mm));
+        }
 
-    WriteInfo(_M_saving_dir+"/info_out.txt",info);
+        WriteInfo(_M_saving_dir+"/info_out_"+name_info+".txt",info);
+    }
+
 
     //Write output
     if(_M_study_one_lambda)
@@ -566,21 +572,17 @@ void Process::_Create_Diffuse_reflectance_Pathlength_Img(const Mat &mua,int w)
 /** get output pos on sensor after lens */
 void Process::_get_photon_pos_after_lens(Mat *p)
 {
-    qDebug()<<"get photon pos on sensor after lens";
-    p = _M_p.getData();
+
+    //p = new Mat(*_M_p.getData());
     Mat *v = _M_v.getData();
 
     //nb photon
-    int nb_photons = (*p).rows;
+    int nb_photons = p->rows;
 
     //Concatenate pos and angle
     Mat x_pos_angle = Mat::zeros(2,nb_photons,CV_32FC1);
-    x_pos_angle.row(0) = (*p).col(0);
-    x_pos_angle.row(1) = (*p).col(0);
-
     Mat y_pos_angle = Mat::zeros(2,nb_photons,CV_32FC1);
-    y_pos_angle.row(0) = (*p).col(1);
-    y_pos_angle.row(1) = (*p).col(1);
+
 
     //Calculate angles in radian
     #pragma omp parallel
@@ -589,48 +591,49 @@ void Process::_get_photon_pos_after_lens(Mat *p)
         #pragma omp for
         for(int c=0;c<nb_photons;c++)
         {
-            //x angle
-            x_pos_angle.at<float>(1,c) = asin((*v).at<float>(c,0));
-            //y angle
+            //positions
+            // *_M_info_simus.unit_in_mm
+            // Convert the position of exiting photons in mm
+
+            // *(-1)
+            // Rotation around y axis (to simulate the light propagation, z+ axis was
+            //from the light to the tissue. We want the opposite so we apply the
+            //rotation matrix of 180 degrees around y axis.
+
+            // -_M_info_simus.modelled_volume_rows/2 and -_M_info_simus.modelled_volume_cols/2
+            // Change the coordinate (set the optical axis at the center of the surface)
+            x_pos_angle.at<float>(0,c) = -(p->at<float>(c,0)-_M_info_simus.modelled_volume_rows/2)*_M_info_simus.unit_in_mm; //multiply by -1 for the rotation
+            y_pos_angle.at<float>(0,c) = (p->at<float>(c,1)-_M_info_simus.modelled_volume_cols/2)*_M_info_simus.unit_in_mm;
+
+            //angle
+            x_pos_angle.at<float>(1,c) = -asin((*v).at<float>(c,0)); //multiply by -1 for the rotation
             y_pos_angle.at<float>(1,c) = asin((*v).at<float>(c,1));
         }
     }
 
 
-    //Change the coordinate (set the optical axis at the center of the surface)
-    x_pos_angle.row(0) -= _M_info_simus.modelled_volume_rows/2;
-    y_pos_angle.row(0) -= _M_info_simus.modelled_volume_cols/2;
-
-
-    //Rotation around y axis (to simulate the light propagation, z+ axis was
-    //from the light to the tissue. We want the opposite so we apply the
-    //rotation matrix of 180 degrees around y axis.
-    x_pos_angle = -x_pos_angle;
-
-    // Convert the position of exiting photons in mm
-    // not required for angles
-    x_pos_angle *= _M_info_simus.unit_in_mm;
-    y_pos_angle *= _M_info_simus.unit_in_mm;
 
 
     //Apply transfer matrix
     x_pos_angle = _M_lens_sensor.transfer_Matrix*x_pos_angle;
     y_pos_angle = _M_lens_sensor.transfer_Matrix*y_pos_angle;
 
-
     //get output position in sensor (in mm)
-    *p = Mat::zeros(nb_photons,2,CV_32FC1);
-    transpose(x_pos_angle.row(0),(*p).col(0));
-    transpose(y_pos_angle.row(0),(*p).col(1));
+    delete p;
+    p = new Mat(Mat::zeros(nb_photons,2,CV_32FC1));
+    transpose(x_pos_angle.row(0),p->col(0));
+    transpose(y_pos_angle.row(0),p->col(1));
 
     //Convert positions in pixels
-    (*p).col(0) /= _M_lens_sensor.sensor_reso_x;
-    (*p).col(1) /= -_M_lens_sensor.sensor_reso_y; //-1 for rotation
+    p->col(0) /= _M_lens_sensor.sensor_reso_x;
+    p->col(1) /= -_M_lens_sensor.sensor_reso_y; //-1 for rotation
 
 
     //Get back in mcx space (space ordinate at at a corner no at the center of the surface)
-    (*p).col(0) += _M_lens_sensor.x_sensor_px/2;
-    (*p).col(1) += _M_lens_sensor.y_sensor_px/2;
+    p->col(0) += _M_lens_sensor.x_sensor_px/2;
+    p->col(1) += _M_lens_sensor.y_sensor_px/2;
+
+
 
 
 //    qDebug()<<"Input p(x,y): "<<_M_p.at<float>(0,0)<<" "<<_M_p.at<float>(0,1);

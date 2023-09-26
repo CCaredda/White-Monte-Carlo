@@ -106,8 +106,6 @@ bool LoadData::ReadArray(const QString path, Mat &out)
         file.close();
     }
 
-    emit loading_progess("Load data...");
-
     //init output
     out = Mat::zeros(m_numLines,nb_columns,CV_32FC1);
     if(file.open(QIODevice::ReadOnly))
@@ -130,7 +128,6 @@ bool LoadData::ReadArray(const QString path, Mat &out)
 
 //    qDebug()<<"Elapsed time ReadArray Qt: "<<timer.elapsed();
 
-    emit loading_progess("Data loaded...");
 
 //    if(emitSignal_after_loading)
 //        emit data_ReadyFor_processing(true);
@@ -143,6 +140,7 @@ bool LoadData::ReadArrayPointer()
 {
     qDebug()<<"Read array in pointer: "<<_M_path;
     //init output
+    delete _M_data;
     _M_data = new Mat(Mat::zeros(0,0,CV_32FC1));
 
     //Check if file exists
@@ -184,8 +182,6 @@ bool LoadData::ReadArrayPointer()
         file.close();
     }
 
-    emit loading_progess("Load data...");
-
     //init output
     _M_data = new Mat(Mat::zeros(m_numLines,nb_columns,CV_32FC1));
     if(file.open(QIODevice::ReadOnly))
@@ -208,7 +204,6 @@ bool LoadData::ReadArrayPointer()
 
 //    qDebug()<<"Elapsed time ReadArray Qt: "<<timer.elapsed();
 
-    emit loading_progess("Data loaded...");
 
 //    if(emitSignal_after_loading)
 //        emit data_ReadyFor_processing(true);
@@ -271,9 +266,6 @@ void LoadData::unzipFiles(QString file,QString extract_dir)
     arguments << file<< "-d" << extract_dir;
     unzipProcess.setArguments(arguments);
 
-    // Start the unzip process
-    emit loading_progess("Unzip data");
-
     unzipProcess.start();
     unzipProcess.waitForFinished();
 
@@ -292,10 +284,8 @@ void LoadData::removeDirectoryRecursively(const QString& dirPath)
 
     // Check if the directory exists
     if (!dir.exists())
-    {
-        qDebug() << "Directory does not exist: " << dirPath;
         return;
-    }
+
 
     dir.removeRecursively();
 }

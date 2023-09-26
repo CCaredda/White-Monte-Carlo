@@ -1,14 +1,14 @@
 clear
 close all
 
-model_resolution_in_mm = 1;
+model_resolution_in_mm = 0;
 % model_resolution_in_mm = 0.2;
 % Lambdas = 500:10:900;
 % run_in_cluster = 1;
 
 
 %Lambdas = [500 550 600 650 700 750 800 850 900];
-Lambdas = [500 510 520 530];
+Lambdas = 500;
 run_in_cluster = 0;
 nb_repeat = 1;
 % nb_repeat = 1;
