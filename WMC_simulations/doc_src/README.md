@@ -21,6 +21,9 @@ Contact: caredda.c@gmail.com
 This program has be tested under Fedora 38 and Ubuntu. Problem may occur under other operating system.
 This program is coded in Python and Matlab. Matlab and Python need to be installed.
 
+The matlab software MCXLab need to be downloaded: https://mcx.space/wiki/?Get
+Please download the latest version.
+
 For Python, several libraries need to be installed: 
 
 - sudo dnf install python3-pip python3-pyqt5
