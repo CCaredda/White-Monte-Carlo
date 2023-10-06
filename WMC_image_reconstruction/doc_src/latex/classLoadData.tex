@@ -1,0 +1,230 @@
+\hypertarget{classLoadData}{}\doxysection{Load\+Data Class Reference}
+\label{classLoadData}\index{LoadData@{LoadData}}
+Inheritance diagram for Load\+Data\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classLoadData}
+\end{center}
+\end{figure}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classLoadData_aa6e8a4146998056ea4ff6beda0c77c4f}{loading\+\_\+progess}} (QString)
+\item 
+void \mbox{\hyperlink{classLoadData_adacddd2ceda11454996ce2dff7450848}{data\+\_\+\+Loaded}} (bool)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classLoadData_ac0ee2d35f8e8c5fcb011797493f0b3af}{Load\+Data}} (QObject $\ast$parent=nullptr)
+\item 
+\mbox{\hyperlink{classLoadData_ab5704407ffc3caa1ffd335e68e9fea2f}{$\sim$\+Load\+Data}} ()
+\item 
+bool \mbox{\hyperlink{classLoadData_a4510c3d192906ab72db736545bfaf5ab}{Read\+Vector}} (const QString path, QVector$<$ float $>$ \&out)
+\item 
+bool \mbox{\hyperlink{classLoadData_ab3e83c50fe4135b57711561ab4106453}{Read\+Array}} (const QString path, Mat \&out)
+\item 
+void \mbox{\hyperlink{classLoadData_ad3e57fd986cf85104865c91b53f32b2c}{Read\+Array}} (const QString path)
+\item 
+bool \mbox{\hyperlink{classLoadData_a780b576e70b7bcd8efe2fcf2c132f1d1}{Load\+Info\+Simulation}} (const QString path, \mbox{\hyperlink{struct__info__simulations}{\+\_\+info\+\_\+simulations}} \&info)
+\item 
+void \mbox{\hyperlink{classLoadData_a7b0af90d2532c5f3ee9641937433107f}{unzip\+Files}} (QString file, QString extract\+\_\+dir)
+\item 
+void \mbox{\hyperlink{classLoadData_a161e8aae1bd3a54c15fded4ba0cd2c7b}{remove\+Directory\+Recursively}} (const QString \&dir\+Path)
+\item 
+bool \mbox{\hyperlink{classLoadData_a6195d64ad0f60da1b67ab7b8db30cecc}{get\+Data\+Status}} ()
+\item 
+Mat $\ast$ \mbox{\hyperlink{classLoadData_afbd19fe4b2fed8ed247a539a3426c333}{get\+Data}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classLoadData_a28c539997b16a69698e46e6ee719e2e4}{run}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{classLoadData_a3420a8c7738554a2c80ea4293bd5e040}{Read\+Array\+Pointer}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+QString \mbox{\hyperlink{classLoadData_a9b84e5e012db695b93c34043f492b0f4}{\+\_\+\+M\+\_\+path}}
+\item 
+Mat $\ast$ \mbox{\hyperlink{classLoadData_acd8c994d99843ccb1f7f7bc87ff212af}{\+\_\+\+M\+\_\+data}}
+\item 
+bool \mbox{\hyperlink{classLoadData_a5ccb0506c4b8f099cb5178125955fafb}{\+\_\+\+M\+\_\+data\+\_\+status}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classLoadData_ac0ee2d35f8e8c5fcb011797493f0b3af}\label{classLoadData_ac0ee2d35f8e8c5fcb011797493f0b3af}} 
+\index{LoadData@{LoadData}!LoadData@{LoadData}}
+\index{LoadData@{LoadData}!LoadData@{LoadData}}
+\doxysubsubsection{\texorpdfstring{LoadData()}{LoadData()}}
+{\footnotesize\ttfamily Load\+Data\+::\+Load\+Data (\begin{DoxyParamCaption}\item[{QObject $\ast$}]{parent = {\ttfamily nullptr} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+Class constructor \mbox{\Hypertarget{classLoadData_ab5704407ffc3caa1ffd335e68e9fea2f}\label{classLoadData_ab5704407ffc3caa1ffd335e68e9fea2f}} 
+\index{LoadData@{LoadData}!````~LoadData@{$\sim$LoadData}}
+\index{````~LoadData@{$\sim$LoadData}!LoadData@{LoadData}}
+\doxysubsubsection{\texorpdfstring{$\sim$LoadData()}{~LoadData()}}
+{\footnotesize\ttfamily Load\+Data\+::$\sim$\+Load\+Data (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Class destructor\+: delete pointers 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classLoadData_adacddd2ceda11454996ce2dff7450848}\label{classLoadData_adacddd2ceda11454996ce2dff7450848}} 
+\index{LoadData@{LoadData}!data\_Loaded@{data\_Loaded}}
+\index{data\_Loaded@{data\_Loaded}!LoadData@{LoadData}}
+\doxysubsubsection{\texorpdfstring{data\_Loaded}{data\_Loaded}}
+{\footnotesize\ttfamily void Load\+Data\+::data\+\_\+\+Loaded (\begin{DoxyParamCaption}\item[{bool}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+Signal that indicates that data have been read 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em boolean} & flag that indicates that data have been read \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classLoadData_afbd19fe4b2fed8ed247a539a3426c333}\label{classLoadData_afbd19fe4b2fed8ed247a539a3426c333}} 
+\index{LoadData@{LoadData}!getData@{getData}}
+\index{getData@{getData}!LoadData@{LoadData}}
+\doxysubsubsection{\texorpdfstring{getData()}{getData()}}
+{\footnotesize\ttfamily Mat $\ast$ Load\+Data\+::get\+Data (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get data \begin{DoxyReturn}{Returns}
+pointer that points on a Mat containing data 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classLoadData_a6195d64ad0f60da1b67ab7b8db30cecc}\label{classLoadData_a6195d64ad0f60da1b67ab7b8db30cecc}} 
+\index{LoadData@{LoadData}!getDataStatus@{getDataStatus}}
+\index{getDataStatus@{getDataStatus}!LoadData@{LoadData}}
+\doxysubsubsection{\texorpdfstring{getDataStatus()}{getDataStatus()}}
+{\footnotesize\ttfamily bool Load\+Data\+::get\+Data\+Status (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get data status (correctly loaded) \begin{DoxyReturn}{Returns}
+boolean that indicates the correct loading of data 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classLoadData_a780b576e70b7bcd8efe2fcf2c132f1d1}\label{classLoadData_a780b576e70b7bcd8efe2fcf2c132f1d1}} 
+\index{LoadData@{LoadData}!LoadInfoSimulation@{LoadInfoSimulation}}
+\index{LoadInfoSimulation@{LoadInfoSimulation}!LoadData@{LoadData}}
+\doxysubsubsection{\texorpdfstring{LoadInfoSimulation()}{LoadInfoSimulation()}}
+{\footnotesize\ttfamily bool Load\+Data\+::\+Load\+Info\+Simulation (\begin{DoxyParamCaption}\item[{const QString}]{path,  }\item[{\mbox{\hyperlink{struct__info__simulations}{\+\_\+info\+\_\+simulations}} \&}]{info }\end{DoxyParamCaption})}
+
+Load simulation info and store it into a \mbox{\hyperlink{struct__info__simulations}{\+\_\+info\+\_\+simulations}} structure 
+\begin{DoxyParams}{Parameters}
+{\em path} & path of the txt file that contains the information \\
+\hline
+{\em info} & structured that is used to store the simulation information \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classLoadData_aa6e8a4146998056ea4ff6beda0c77c4f}\label{classLoadData_aa6e8a4146998056ea4ff6beda0c77c4f}} 
+\index{LoadData@{LoadData}!loading\_progess@{loading\_progess}}
+\index{loading\_progess@{loading\_progess}!LoadData@{LoadData}}
+\doxysubsubsection{\texorpdfstring{loading\_progess}{loading\_progess}}
+{\footnotesize\ttfamily void Load\+Data\+::loading\+\_\+progess (\begin{DoxyParamCaption}\item[{QString}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+Signal that indicates the status of data loading 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em string} & to indicate the status of data loading \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classLoadData_ad3e57fd986cf85104865c91b53f32b2c}\label{classLoadData_ad3e57fd986cf85104865c91b53f32b2c}} 
+\index{LoadData@{LoadData}!ReadArray@{ReadArray}}
+\index{ReadArray@{ReadArray}!LoadData@{LoadData}}
+\doxysubsubsection{\texorpdfstring{ReadArray()}{ReadArray()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Load\+Data\+::\+Read\+Array (\begin{DoxyParamCaption}\item[{const QString}]{path }\end{DoxyParamCaption})}
+
+Read an array of data in a parallel thread (used for large txt files) 
+\begin{DoxyParams}{Parameters}
+{\em path\mbox{[}in\mbox{]}} & path of the txt file that contains data \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classLoadData_ab3e83c50fe4135b57711561ab4106453}\label{classLoadData_ab3e83c50fe4135b57711561ab4106453}} 
+\index{LoadData@{LoadData}!ReadArray@{ReadArray}}
+\index{ReadArray@{ReadArray}!LoadData@{LoadData}}
+\doxysubsubsection{\texorpdfstring{ReadArray()}{ReadArray()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily bool Load\+Data\+::\+Read\+Array (\begin{DoxyParamCaption}\item[{const QString}]{path,  }\item[{Mat \&}]{out }\end{DoxyParamCaption})}
+
+Read an array of data 
+\begin{DoxyParams}{Parameters}
+{\em path\mbox{[}in\mbox{]}} & path of the txt file that contains data \\
+\hline
+{\em out\mbox{[}out\mbox{]}} & array of float in which data will be stored \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classLoadData_a3420a8c7738554a2c80ea4293bd5e040}\label{classLoadData_a3420a8c7738554a2c80ea4293bd5e040}} 
+\index{LoadData@{LoadData}!ReadArrayPointer@{ReadArrayPointer}}
+\index{ReadArrayPointer@{ReadArrayPointer}!LoadData@{LoadData}}
+\doxysubsubsection{\texorpdfstring{ReadArrayPointer()}{ReadArrayPointer()}}
+{\footnotesize\ttfamily bool Load\+Data\+::\+Read\+Array\+Pointer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Private functions to read data that is called when the parallel thread started. \begin{DoxyReturn}{Returns}
+boolean flag that indicates if data have been correctly read 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classLoadData_a4510c3d192906ab72db736545bfaf5ab}\label{classLoadData_a4510c3d192906ab72db736545bfaf5ab}} 
+\index{LoadData@{LoadData}!ReadVector@{ReadVector}}
+\index{ReadVector@{ReadVector}!LoadData@{LoadData}}
+\doxysubsubsection{\texorpdfstring{ReadVector()}{ReadVector()}}
+{\footnotesize\ttfamily bool Load\+Data\+::\+Read\+Vector (\begin{DoxyParamCaption}\item[{const QString}]{path,  }\item[{QVector$<$ float $>$ \&}]{out }\end{DoxyParamCaption})}
+
+Read a float vector 
+\begin{DoxyParams}{Parameters}
+{\em path\mbox{[}in\mbox{]}} & path of the txt file that contains data \\
+\hline
+{\em out\mbox{[}out\mbox{]}} & vector of float in which data will be stored \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classLoadData_a161e8aae1bd3a54c15fded4ba0cd2c7b}\label{classLoadData_a161e8aae1bd3a54c15fded4ba0cd2c7b}} 
+\index{LoadData@{LoadData}!removeDirectoryRecursively@{removeDirectoryRecursively}}
+\index{removeDirectoryRecursively@{removeDirectoryRecursively}!LoadData@{LoadData}}
+\doxysubsubsection{\texorpdfstring{removeDirectoryRecursively()}{removeDirectoryRecursively()}}
+{\footnotesize\ttfamily void Load\+Data\+::remove\+Directory\+Recursively (\begin{DoxyParamCaption}\item[{const QString \&}]{dir\+Path }\end{DoxyParamCaption})}
+
+Remove directory recursively from an input path 
+\begin{DoxyParams}{Parameters}
+{\em dir\+Path} & path from which data are removed \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classLoadData_a28c539997b16a69698e46e6ee719e2e4}\label{classLoadData_a28c539997b16a69698e46e6ee719e2e4}} 
+\index{LoadData@{LoadData}!run@{run}}
+\index{run@{run}!LoadData@{LoadData}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily void Load\+Data\+::run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Call process in parallel thread \mbox{\Hypertarget{classLoadData_a7b0af90d2532c5f3ee9641937433107f}\label{classLoadData_a7b0af90d2532c5f3ee9641937433107f}} 
+\index{LoadData@{LoadData}!unzipFiles@{unzipFiles}}
+\index{unzipFiles@{unzipFiles}!LoadData@{LoadData}}
+\doxysubsubsection{\texorpdfstring{unzipFiles()}{unzipFiles()}}
+{\footnotesize\ttfamily void Load\+Data\+::unzip\+Files (\begin{DoxyParamCaption}\item[{QString}]{file,  }\item[{QString}]{extract\+\_\+dir }\end{DoxyParamCaption})}
+
+Unzip .zip files 
+\begin{DoxyParams}{Parameters}
+{\em file} & file to be unzipped \\
+\hline
+{\em extract\+\_\+dir} & directory that will containes data \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classLoadData_acd8c994d99843ccb1f7f7bc87ff212af}\label{classLoadData_acd8c994d99843ccb1f7f7bc87ff212af}} 
+\index{LoadData@{LoadData}!\_M\_data@{\_M\_data}}
+\index{\_M\_data@{\_M\_data}!LoadData@{LoadData}}
+\doxysubsubsection{\texorpdfstring{\_M\_data}{\_M\_data}}
+{\footnotesize\ttfamily Mat$\ast$ Load\+Data\+::\+\_\+\+M\+\_\+data\hspace{0.3cm}{\ttfamily [private]}}
+
+Pointer on Mat file in which data will be stored \mbox{\Hypertarget{classLoadData_a5ccb0506c4b8f099cb5178125955fafb}\label{classLoadData_a5ccb0506c4b8f099cb5178125955fafb}} 
+\index{LoadData@{LoadData}!\_M\_data\_status@{\_M\_data\_status}}
+\index{\_M\_data\_status@{\_M\_data\_status}!LoadData@{LoadData}}
+\doxysubsubsection{\texorpdfstring{\_M\_data\_status}{\_M\_data\_status}}
+{\footnotesize\ttfamily bool Load\+Data\+::\+\_\+\+M\+\_\+data\+\_\+status\hspace{0.3cm}{\ttfamily [private]}}
+
+Boolean flag to indicate that data has been correctly loaded \mbox{\Hypertarget{classLoadData_a9b84e5e012db695b93c34043f492b0f4}\label{classLoadData_a9b84e5e012db695b93c34043f492b0f4}} 
+\index{LoadData@{LoadData}!\_M\_path@{\_M\_path}}
+\index{\_M\_path@{\_M\_path}!LoadData@{LoadData}}
+\doxysubsubsection{\texorpdfstring{\_M\_path}{\_M\_path}}
+{\footnotesize\ttfamily QString Load\+Data\+::\+\_\+\+M\+\_\+path\hspace{0.3cm}{\ttfamily [private]}}
+
+Path of the txt file that contains the data 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/caredda/\+DVP/simulation/\+CREATIS-\/\+UCL-\/\+White-\/\+Monte-\/\+Carlo-\/\+Framework/\+WMC\+\_\+image\+\_\+reconstruction/inc/\mbox{\hyperlink{LoadData_8h}{Load\+Data.\+h}}\end{DoxyCompactItemize}

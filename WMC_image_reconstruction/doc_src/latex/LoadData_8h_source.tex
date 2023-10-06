@@ -1,0 +1,68 @@
+\hypertarget{LoadData_8h_source}{}\doxysection{Load\+Data.\+h}
+\label{LoadData_8h_source}\index{/home/caredda/DVP/simulation/CREATIS-\/UCL-\/White-\/Monte-\/Carlo-\/Framework/WMC\_image\_reconstruction/inc/LoadData.h@{/home/caredda/DVP/simulation/CREATIS-\/UCL-\/White-\/Monte-\/Carlo-\/Framework/WMC\_image\_reconstruction/inc/LoadData.h}}
+\mbox{\hyperlink{LoadData_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#ifndef\ LOADDATA\_H}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#define\ LOADDATA\_H}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <QObject>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <QThread>}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <QProcess>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <QDir>}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ <boost/iostreams/device/mapped\_file.hpp>}\ \textcolor{comment}{//\ for\ mmap}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{functions_8h}{functions.h}}"{}}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classLoadData}{LoadData}}\ :\ \textcolor{keyword}{public}\ QThread}
+\DoxyCodeLine{00024\ \{}
+\DoxyCodeLine{00025\ \ \ \ \ Q\_OBJECT}
+\DoxyCodeLine{00026\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classLoadData_ac0ee2d35f8e8c5fcb011797493f0b3af}{LoadData}}(QObject\ *parent\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00031\ \ \ \ \ \mbox{\hyperlink{classLoadData_ab5704407ffc3caa1ffd335e68e9fea2f}{\string~LoadData}}();}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classLoadData_a4510c3d192906ab72db736545bfaf5ab}{ReadVector}}(\textcolor{keyword}{const}\ QString\ path,QVector<float>\ \&out);}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classLoadData_ab3e83c50fe4135b57711561ab4106453}{ReadArray}}(\textcolor{keyword}{const}\ QString\ path,\ Mat\ \&out);}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classLoadData_ad3e57fd986cf85104865c91b53f32b2c}{ReadArray}}(\textcolor{keyword}{const}\ QString\ path);}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classLoadData_a780b576e70b7bcd8efe2fcf2c132f1d1}{LoadInfoSimulation}}(\textcolor{keyword}{const}\ QString\ path,\ \mbox{\hyperlink{struct__info__simulations}{\_info\_simulations}}\ \&info);}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classLoadData_a7b0af90d2532c5f3ee9641937433107f}{unzipFiles}}(QString\ file,\ QString\ extract\_dir);}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classLoadData_a161e8aae1bd3a54c15fded4ba0cd2c7b}{removeDirectoryRecursively}}(\textcolor{keyword}{const}\ QString\&\ dirPath);}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classLoadData_a6195d64ad0f60da1b67ab7b8db30cecc}{getDataStatus}}()\ \ \ \ \{\textcolor{keywordflow}{return}\ \mbox{\hyperlink{classLoadData_a5ccb0506c4b8f099cb5178125955fafb}{\_M\_data\_status}};\}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00079\ \ \ \ \ Mat*\ \mbox{\hyperlink{classLoadData_afbd19fe4b2fed8ed247a539a3426c333}{getData}}()\ \ \ \ \ \ \ \ \ \ \ \{\textcolor{keywordflow}{return}\ \mbox{\hyperlink{classLoadData_acd8c994d99843ccb1f7f7bc87ff212af}{\_M\_data}};\}}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00085\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classLoadData_a28c539997b16a69698e46e6ee719e2e4}{run}}();}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ signals:}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classLoadData_aa6e8a4146998056ea4ff6beda0c77c4f}{loading\_progess}}(QString);}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classLoadData_adacddd2ceda11454996ce2dff7450848}{data\_Loaded}}(\textcolor{keywordtype}{bool});}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classLoadData_a3420a8c7738554a2c80ea4293bd5e040}{ReadArrayPointer}}();}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00106\ \ \ \ \ QString\ \mbox{\hyperlink{classLoadData_a9b84e5e012db695b93c34043f492b0f4}{\_M\_path}};}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00109\ \ \ \ \ Mat\ *\mbox{\hyperlink{classLoadData_acd8c994d99843ccb1f7f7bc87ff212af}{\_M\_data}};}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classLoadData_a5ccb0506c4b8f099cb5178125955fafb}{\_M\_data\_status}};}
+\DoxyCodeLine{00113\ \};}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ LOADDATA\_H}}
+
+\end{DoxyCode}

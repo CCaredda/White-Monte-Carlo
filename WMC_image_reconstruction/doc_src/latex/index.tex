@@ -1,0 +1,63 @@
+\hypertarget{index_intro_sec}{}\doxysection{Introduction}\label{index_intro_sec}
+This software allows to reconstruct images of mean path length and diffuse reflectance from simulations obtained with a White Monte Carlo model. Images can be reconstructed at the tissue surface or using a lens to reconstruct the image on a camera sensor.
+
+This software has been developed for the European project Hyperprobe which aims at transforming neuronavigation during glioma resection using novel hyperspectral imaging technology\+:
+\begin{DoxyItemize}
+\item \href{https://hyperprobe.eu/}{\texttt{ https\+://hyperprobe.\+eu/}}
+\item \href{https://cordis.europa.eu/project/id/101071040}{\texttt{ https\+://cordis.\+europa.\+eu/project/id/101071040}}
+\end{DoxyItemize}
+
+Author\+: Charly Caredda Contact\+: \href{mailto:caredda.c@gmail.com}{\texttt{ caredda.\+c@gmail.\+com}}\hypertarget{index_install_sec}{}\doxysection{Installation}\label{index_install_sec}
+This program has be tested under Fedora 38 and Ubuntu. Problem may occur under other operating system. This program is coded in C++ with the framework Qt and the compiler g++.
+
+First Qt should be installed.
+\begin{DoxyItemize}
+\item Download the Qt online installer \+: \href{https://www.qt.io/download-qt-installer?hsCtaTracking=99d9dd4f-5681-48d2-b096-470725510d34\%7C074ddad0-fdef-4e53-8aa8-5e8a876d6ab4}{\texttt{ https\+://www.\+qt.\+io/download-\/qt-\/installer?hs\+Cta\+Tracking=99d9dd4f-\/5681-\/48d2-\/b096-\/470725510d34\%7\+C074ddad0-\/fdef-\/4e53-\/8aa8-\/5e8a876d6ab4}}
+\item Install the proper Qt version \+: \texorpdfstring{$>$}{>}5 and \texorpdfstring{$<$}{<}6.
+\end{DoxyItemize}
+
+Different libraries and framework should be installed in order to use the softwares properly.\hypertarget{index_Details}{}\doxysubsection{Details}\label{index_Details}
+This program uses open sources libraries such as Open\+CV and Boost.
+
+In order to compile this program using Qt, theses libraries has to be installed.
+
+
+\begin{DoxyItemize}
+\item Opencv (latest version)\+: sudo dnf install opencv opencv-\/contrib opencv-\/doc python3-\/opencv python3-\/matplotlib python3-\/numpy
+\item Boost (latest version)\+: sudo dnf install boost boost-\/devel To install Boost from the sources, follow the guide here\+: \href{https://www.boost.org/doc/libs/1_63_0/more/getting_started/unix-variants.html}{\texttt{ https\+://www.\+boost.\+org/doc/libs/1\+\_\+63\+\_\+0/more/getting\+\_\+started/unix-\/variants.\+html}}
+\item sudo dnf install python3-\/pip python3-\/pyqt5;
+\end{DoxyItemize}
+
+Then install python libraries\+:
+
+
+\begin{DoxyItemize}
+\item pip install opencv-\/python numpy matplotlib
+\end{DoxyItemize}\hypertarget{index_sec_guide}{}\doxysection{User guide}\label{index_sec_guide}
+This software aims to reconstruct hypercubes \+: images of diffuse reflectance and mean path length for N wavelengths. It is also possible to generate T hypercubes for modeling optical changes over time such as\+:
+\begin{DoxyItemize}
+\item Hemodynamic and metabolic responses following cerebral activity
+\item Hemodynamic changes due to heartbeat and respiratory
+\end{DoxyItemize}
+
+Optical changes are indicated in directory \textquotesingle{}optical\+\_\+changes\textquotesingle{}. In this directory, six txt files contain the optical changes of six modeled classes\+:
+\begin{DoxyItemize}
+\item activated\+\_\+capillaries.\+txt
+\item activated\+\_\+large\+\_\+blood\+\_\+vessels.\+txt
+\item grey\+\_\+matter.\+txt
+\item activated\+\_\+grey\+\_\+matter.\+txt
+\item capillaries.\+txt
+\item large\+\_\+blood\+\_\+vessels.\+txt
+\end{DoxyItemize}
+
+For these six files, each line correspond to the temporal evolution of each chromophore\+:
+\begin{DoxyItemize}
+\item Line 1 Water content in \% (0-\/1)
+\item Line 2 Fat content in \% (0-\/1)
+\item Line 3 C\+\_\+\+Hb\+O2 in (Mol)
+\item Line 4 C\+\_\+\+Hb in (Mol)
+\item Line 5 C\+\_\+ox\+CCO in (Mol)
+\item Line 6 C\+\_\+red\+CCO in (Mol)
+\end{DoxyItemize}
+
+The columns represent chromophore changes over time (Delimiters have to be space) 

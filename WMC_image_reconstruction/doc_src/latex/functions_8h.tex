@@ -1,0 +1,158 @@
+\hypertarget{functions_8h}{}\doxysection{/home/caredda/\+DVP/simulation/\+CREATIS-\/\+UCL-\/\+White-\/\+Monte-\/\+Carlo-\/\+Framework/\+WMC\+\_\+image\+\_\+reconstruction/inc/functions.h File Reference}
+\label{functions_8h}\index{/home/caredda/DVP/simulation/CREATIS-\/UCL-\/White-\/Monte-\/Carlo-\/Framework/WMC\_image\_reconstruction/inc/functions.h@{/home/caredda/DVP/simulation/CREATIS-\/UCL-\/White-\/Monte-\/Carlo-\/Framework/WMC\_image\_reconstruction/inc/functions.h}}
+
+
+This file contains the usefull functions and structures to reconstruct diffuse reflectance and mean path length images using White Monte Carlo Simulations.  
+
+
+{\ttfamily \#include $<$QFile$>$}\newline
+{\ttfamily \#include $<$QText\+Stream$>$}\newline
+{\ttfamily \#include $<$QDebug$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$QElapsed\+Timer$>$}\newline
+{\ttfamily \#include \char`\"{}opencv2/imgproc/imgproc.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}opencv2/imgproc/types\+\_\+c.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}opencv2/highgui/highgui.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}opencv2/core/core.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}opencv2/opencv.\+hpp\char`\"{}}\newline
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct__info__simulations}{\+\_\+info\+\_\+simulations}}
+\item 
+struct \mbox{\hyperlink{struct__lens__sensor}{\+\_\+lens\+\_\+sensor}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+Mat \mbox{\hyperlink{functions_8h_aa5c1120dda494c8e6756b0b444d50261}{get\+\_\+mua}} (QVector$<$ Mat $>$ \&Optical\+\_\+changes, float mua\+\_\+W, float mua\+\_\+F, float eps\+\_\+\+Hb\+O2, float eps\+\_\+\+Hb, float eps\+\_\+ox\+CCO, float eps\+\_\+red\+CCO)
+\item 
+void \mbox{\hyperlink{functions_8h_a7c1a56be0cc9e765dd34d8c22b239f06}{Write\+Float\+Img}} (const QString path, const Mat img)
+\item 
+void \mbox{\hyperlink{functions_8h_ad212dfa1c99b3680cde18624b9c5f090}{Write\+Info}} (const QString path, QVector$<$ QString $>$ s)
+\item 
+void \mbox{\hyperlink{functions_8h_aff695b061be0f8b1eb92130f814f2b99}{get\+Transfer\+Matrix}} (\mbox{\hyperlink{struct__lens__sensor}{\+\_\+lens\+\_\+sensor}} \&system)
+\item 
+void \mbox{\hyperlink{functions_8h_aa25bc67b527061f03feb99ed3d2d8918}{get\+Image\+Plan}} (\mbox{\hyperlink{struct__lens__sensor}{\+\_\+lens\+\_\+sensor}} \&system)
+\item 
+void \mbox{\hyperlink{functions_8h_a5181dd2ca9ec808a48be15cc316855d2}{get\+\_\+\+Diffuse\+\_\+reflectance\+\_\+\+Pathlength}} (int binning, int nb\+\_\+photons, int repetitions, const Mat \&mua, int out\+\_\+img\+\_\+rows, int out\+\_\+img\+\_\+cols, float area\+\_\+detector, float unit\+\_\+tissue\+\_\+in\+\_\+mm, Mat $\ast$ppath, Mat $\ast$p, Mat \&dr, Mat \&mp)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This file contains the usefull functions and structures to reconstruct diffuse reflectance and mean path length images using White Monte Carlo Simulations. 
+
+\begin{DoxyAuthor}{Author}
+Charly Caredda Contact\+: \href{mailto:caredda.c@gmail.com}{\texttt{ caredda.\+c@gmail.\+com}} 
+\end{DoxyAuthor}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{functions_8h_a5181dd2ca9ec808a48be15cc316855d2}\label{functions_8h_a5181dd2ca9ec808a48be15cc316855d2}} 
+\index{functions.h@{functions.h}!get\_Diffuse\_reflectance\_Pathlength@{get\_Diffuse\_reflectance\_Pathlength}}
+\index{get\_Diffuse\_reflectance\_Pathlength@{get\_Diffuse\_reflectance\_Pathlength}!functions.h@{functions.h}}
+\doxysubsubsection{\texorpdfstring{get\_Diffuse\_reflectance\_Pathlength()}{get\_Diffuse\_reflectance\_Pathlength()}}
+{\footnotesize\ttfamily void get\+\_\+\+Diffuse\+\_\+reflectance\+\_\+\+Pathlength (\begin{DoxyParamCaption}\item[{int}]{binning,  }\item[{int}]{nb\+\_\+photons,  }\item[{int}]{repetitions,  }\item[{const Mat \&}]{mua,  }\item[{int}]{out\+\_\+img\+\_\+rows,  }\item[{int}]{out\+\_\+img\+\_\+cols,  }\item[{float}]{area\+\_\+detector,  }\item[{float}]{unit\+\_\+tissue\+\_\+in\+\_\+mm,  }\item[{Mat $\ast$}]{ppath,  }\item[{Mat $\ast$}]{p,  }\item[{Mat \&}]{dr,  }\item[{Mat \&}]{mp }\end{DoxyParamCaption})}
+
+Get diffuse reflectance and mean path length Input\+: 
+\begin{DoxyParams}{Parameters}
+{\em binning} & binning of the detector for image reconstruction (integer) \\
+\hline
+{\em nb\+\_\+photons} & Number of photons used for the simulations \\
+\hline
+{\em repetitions} & Number of repetions used for the simulations \\
+\hline
+{\em mua} & Absorpiton coeffcient (in mm-\/1, calculated with get\+\_\+mua function \\
+\hline
+{\em out\+\_\+img\+\_\+rows} & Number of rows of the reconstructed image \\
+\hline
+{\em out\+\_\+img\+\_\+cols} & Number of cols of the reconstructed image \\
+\hline
+{\em area\+\_\+detector} & Area of the detector in mm-\/2 \\
+\hline
+{\em unit\+\_\+tissue\+\_\+in\+\_\+mm} & Resolution of the modelled tissue used in the simulations (in mm) \\
+\hline
+{\em ppath} & pointer on partial path length data (in mm) pointer on matrix of dimension (number of detected photons x nb of classes +1) \\
+\hline
+{\em p} & pointer on exiting photons positions (in pixel units) pointer on matrix of dimension (number of detected photons x 3 (x;y;z) positions) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+dr output matrix that contains the reconstructed diffuse reflectance (in mm-\/2). Dimension out\+\_\+img\+\_\+rows x out\+\_\+img\+\_\+cols 
+
+mp output matrix that contains the reconstructed mean path length (in mm). Dimension out\+\_\+img\+\_\+rows x out\+\_\+img\+\_\+cols 
+\end{DoxyReturn}
+\mbox{\Hypertarget{functions_8h_aa5c1120dda494c8e6756b0b444d50261}\label{functions_8h_aa5c1120dda494c8e6756b0b444d50261}} 
+\index{functions.h@{functions.h}!get\_mua@{get\_mua}}
+\index{get\_mua@{get\_mua}!functions.h@{functions.h}}
+\doxysubsubsection{\texorpdfstring{get\_mua()}{get\_mua()}}
+{\footnotesize\ttfamily Mat get\+\_\+mua (\begin{DoxyParamCaption}\item[{QVector$<$ Mat $>$ \&}]{Optical\+\_\+changes,  }\item[{float}]{mua\+\_\+W,  }\item[{float}]{mua\+\_\+F,  }\item[{float}]{eps\+\_\+\+Hb\+O2,  }\item[{float}]{eps\+\_\+\+Hb,  }\item[{float}]{eps\+\_\+ox\+CCO,  }\item[{float}]{eps\+\_\+red\+CCO }\end{DoxyParamCaption})}
+
+Calculate absorption coefficient (in mm-\/1) 
+\begin{DoxyParams}{Parameters}
+{\em Optical\+\_\+changes} & Vector of matrices that contains the optical changes (proportion of water and Fat (in \%) and concentration changes of Hb\+O2, Hb, ox\+CCO and red\+CCO (in mol.\+L-\/1)). Vector size\+: number of class (grey matter, blood vessel, capillaries, ...) Matrix size\+: number of chromophores x time \\
+\hline
+{\em mua\+\_\+W} & Absorption coefficient of Water (in cm-\/1) \\
+\hline
+{\em mua\+\_\+F} & Absorption coefficient of Fat (in cm-\/1) \\
+\hline
+{\em eps\+\_\+\+Hb\+O2} & Molar extinction coefficient of Hb\+O2 (in cm-\/1.\+mol-\/1.\+L) \\
+\hline
+{\em eps\+Hb} & Molar extinction coefficient of Hb (in cm-\/1.\+mol-\/1.\+L) \\
+\hline
+{\em eps\+\_\+ox\+CCO} & Molar extinction coefficient of ox\+CCO (in cm-\/1.\+mol-\/1.\+L) \\
+\hline
+{\em eps\+\_\+red\+CCO} & Molar extinction coefficient of red\+CCO (in cm-\/1.\+mol-\/1.\+L) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Matrix of absorption coefficient (in mm-\/1) Size\+: number of class x time 
+\end{DoxyReturn}
+\mbox{\Hypertarget{functions_8h_aa25bc67b527061f03feb99ed3d2d8918}\label{functions_8h_aa25bc67b527061f03feb99ed3d2d8918}} 
+\index{functions.h@{functions.h}!getImagePlan@{getImagePlan}}
+\index{getImagePlan@{getImagePlan}!functions.h@{functions.h}}
+\doxysubsubsection{\texorpdfstring{getImagePlan()}{getImagePlan()}}
+{\footnotesize\ttfamily void get\+Image\+Plan (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct__lens__sensor}{\+\_\+lens\+\_\+sensor}} \&}]{system }\end{DoxyParamCaption})}
+
+Get image plan position for a lens configuration 
+\begin{DoxyParams}{Parameters}
+{\em system} & otpics system \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{functions_8h_aff695b061be0f8b1eb92130f814f2b99}\label{functions_8h_aff695b061be0f8b1eb92130f814f2b99}} 
+\index{functions.h@{functions.h}!getTransferMatrix@{getTransferMatrix}}
+\index{getTransferMatrix@{getTransferMatrix}!functions.h@{functions.h}}
+\doxysubsubsection{\texorpdfstring{getTransferMatrix()}{getTransferMatrix()}}
+{\footnotesize\ttfamily void get\+Transfer\+Matrix (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct__lens__sensor}{\+\_\+lens\+\_\+sensor}} \&}]{system }\end{DoxyParamCaption})}
+
+Get transfer matrix of a lens system 
+\begin{DoxyParams}{Parameters}
+{\em system} & otpics system \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{functions_8h_a7c1a56be0cc9e765dd34d8c22b239f06}\label{functions_8h_a7c1a56be0cc9e765dd34d8c22b239f06}} 
+\index{functions.h@{functions.h}!WriteFloatImg@{WriteFloatImg}}
+\index{WriteFloatImg@{WriteFloatImg}!functions.h@{functions.h}}
+\doxysubsubsection{\texorpdfstring{WriteFloatImg()}{WriteFloatImg()}}
+{\footnotesize\ttfamily void Write\+Float\+Img (\begin{DoxyParamCaption}\item[{const QString}]{path,  }\item[{const Mat}]{img }\end{DoxyParamCaption})}
+
+Write a floating point image on hardrive 
+\begin{DoxyParams}{Parameters}
+{\em path} & path for writing results \\
+\hline
+{\em img} & image to be written to hardrive \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{functions_8h_ad212dfa1c99b3680cde18624b9c5f090}\label{functions_8h_ad212dfa1c99b3680cde18624b9c5f090}} 
+\index{functions.h@{functions.h}!WriteInfo@{WriteInfo}}
+\index{WriteInfo@{WriteInfo}!functions.h@{functions.h}}
+\doxysubsubsection{\texorpdfstring{WriteInfo()}{WriteInfo()}}
+{\footnotesize\ttfamily void Write\+Info (\begin{DoxyParamCaption}\item[{const QString}]{path,  }\item[{QVector$<$ QString $>$}]{s }\end{DoxyParamCaption})}
+
+Write information contains in a vector of string hardrive 
+\begin{DoxyParams}{Parameters}
+{\em path} & path for writing results \\
+\hline
+{\em s} & vector of string to be written to hardrive \\
+\hline
+\end{DoxyParams}

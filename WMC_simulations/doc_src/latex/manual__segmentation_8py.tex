@@ -1,0 +1,175 @@
+\hypertarget{manual__segmentation_8py}{}\doxysection{/home/caredda/\+DVP/simulation/\+CREATIS-\/\+UCL-\/\+White-\/\+Monte-\/\+Carlo-\/\+Framework/\+WMC\+\_\+simulations/manual\+\_\+segmentation.py File Reference}
+\label{manual__segmentation_8py}\index{/home/caredda/DVP/simulation/CREATIS-\/UCL-\/White-\/Monte-\/Carlo-\/Framework/WMC\_simulations/manual\_segmentation.py@{/home/caredda/DVP/simulation/CREATIS-\/UCL-\/White-\/Monte-\/Carlo-\/Framework/WMC\_simulations/manual\_segmentation.py}}
+
+
+Python script to segment RGB image of brain cortex into six classes\+:  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_ab2b802a83691224647489db7b7df34bf}\label{manual__segmentation_8py_ab2b802a83691224647489db7b7df34bf}} 
+def {\bfseries manual\+\_\+segmentation.\+Equalize\+Hist} (img, mask)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_a1ddfbbb8d0a84e04a35bd2dd447757ea}\label{manual__segmentation_8py_a1ddfbbb8d0a84e04a35bd2dd447757ea}} 
+str {\bfseries manual\+\_\+segmentation.\+directory\+\_\+path} = \char`\"{}/home/caredda/DVP/simulation/CREATIS-\/UCL-\/White-\/Monte-\/Carlo-\/Framework/WMC\+\_\+simulations/\char`\"{}
+\begin{DoxyCompactList}\small\item\em Process K-\/\+MEans. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{manual__segmentation_8py_acd576bd2051c4f89e94404ddd6d9a7fa}\label{manual__segmentation_8py_acd576bd2051c4f89e94404ddd6d9a7fa}} 
+str {\bfseries manual\+\_\+segmentation.\+path} = directory\+\_\+path+\char`\"{}images/Patient1/\char`\"{}
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_acef0b65c3095b8b0064f3ad8958f3dc4}\label{manual__segmentation_8py_acef0b65c3095b8b0064f3ad8958f3dc4}} 
+cv {\bfseries manual\+\_\+segmentation.\+img} = cv.\+imread(path+\char`\"{}initial\+\_\+img.\+png\char`\"{})
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_a2e526c18e8ee0328b6750f61cbd9d676}\label{manual__segmentation_8py_a2e526c18e8ee0328b6750f61cbd9d676}} 
+cv {\bfseries manual\+\_\+segmentation.\+mask} = cv.\+imread(path+\char`\"{}mask.\+png\char`\"{},cv.\+IMREAD\+\_\+\+GRAYSCALE)
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_a9eef376722345701a2812300918e1a81}\label{manual__segmentation_8py_a9eef376722345701a2812300918e1a81}} 
+{\bfseries manual\+\_\+segmentation.\+contours}
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_a1e39bc8aecc4b62321fbd830065c95c2}\label{manual__segmentation_8py_a1e39bc8aecc4b62321fbd830065c95c2}} 
+{\bfseries manual\+\_\+segmentation.\+hierarchy}
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_a41fd20b4d06eae9aa0d314808d579b40}\label{manual__segmentation_8py_a41fd20b4d06eae9aa0d314808d579b40}} 
+{\bfseries manual\+\_\+segmentation.\+x}
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_a656b7d8c6ab1b92779bda2ac540b927b}\label{manual__segmentation_8py_a656b7d8c6ab1b92779bda2ac540b927b}} 
+{\bfseries manual\+\_\+segmentation.\+y}
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_a113257dabb903e880e3987c43ff7a8de}\label{manual__segmentation_8py_a113257dabb903e880e3987c43ff7a8de}} 
+{\bfseries manual\+\_\+segmentation.\+w}
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_a665d4fd5d24c04dc1bcff1e4810fdb04}\label{manual__segmentation_8py_a665d4fd5d24c04dc1bcff1e4810fdb04}} 
+{\bfseries manual\+\_\+segmentation.\+h}
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_a13fb82955d8e43e16d02f1f4c63a8ffd}\label{manual__segmentation_8py_a13fb82955d8e43e16d02f1f4c63a8ffd}} 
+cv {\bfseries manual\+\_\+segmentation.\+img\+\_\+proc} = img
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_a85b009c02c70e83b8ca347ba8370f54a}\label{manual__segmentation_8py_a85b009c02c70e83b8ca347ba8370f54a}} 
+np {\bfseries manual\+\_\+segmentation.\+r} = np.\+copy(img\+\_\+proc\mbox{[}\+:,\+:,0\mbox{]})
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_a3472a87161e8a86e159ed4e5fef5fc09}\label{manual__segmentation_8py_a3472a87161e8a86e159ed4e5fef5fc09}} 
+np {\bfseries manual\+\_\+segmentation.\+g} = np.\+copy(img\+\_\+proc\mbox{[}\+:,\+:,1\mbox{]})
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_a3dbfcfee7764554e9e05b19c17a68b56}\label{manual__segmentation_8py_a3dbfcfee7764554e9e05b19c17a68b56}} 
+np {\bfseries manual\+\_\+segmentation.\+b} = np.\+copy(img\+\_\+proc\mbox{[}\+:,\+:,2\mbox{]})
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_a3c46b17daebfa095033796ce97303fa3}\label{manual__segmentation_8py_a3c46b17daebfa095033796ce97303fa3}} 
+np {\bfseries manual\+\_\+segmentation.\+coord} = np.\+where(mask==255)
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_a8538f5639827278f4ccec88fccb3c3fd}\label{manual__segmentation_8py_a8538f5639827278f4ccec88fccb3c3fd}} 
+np {\bfseries manual\+\_\+segmentation.\+r\+\_\+pixels} = r\mbox{[}coord\mbox{]}
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_aafe9d7628ccea667e1aeda0acac2929a}\label{manual__segmentation_8py_aafe9d7628ccea667e1aeda0acac2929a}} 
+np {\bfseries manual\+\_\+segmentation.\+g\+\_\+pixels} = g\mbox{[}coord\mbox{]}
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_ae618db5ebdffbcc193d470fe1fa9df87}\label{manual__segmentation_8py_ae618db5ebdffbcc193d470fe1fa9df87}} 
+np {\bfseries manual\+\_\+segmentation.\+b\+\_\+pixels} = b\mbox{[}coord\mbox{]}
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_a9dcbcd8997dce596d32ecfb75c5f297e}\label{manual__segmentation_8py_a9dcbcd8997dce596d32ecfb75c5f297e}} 
+np {\bfseries manual\+\_\+segmentation.\+Z} = np.\+squeeze(np.\+dstack(\mbox{[}r\+\_\+pixels,g\+\_\+pixels,b\+\_\+pixels\mbox{]}))
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_a954037e161c0712aff6c522ac68c9ceb}\label{manual__segmentation_8py_a954037e161c0712aff6c522ac68c9ceb}} 
+int {\bfseries manual\+\_\+segmentation.\+K} = 10
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_acb57af960bcf1d4cd9e45850e69b9b31}\label{manual__segmentation_8py_acb57af960bcf1d4cd9e45850e69b9b31}} 
+tuple {\bfseries manual\+\_\+segmentation.\+criteria} = (cv.\+TERM\+\_\+\+CRITERIA\+\_\+\+EPS + cv.\+TERM\+\_\+\+CRITERIA\+\_\+\+MAX\+\_\+\+ITER, 500, 1.\+0)
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_a26e7f5923a84fa75687004f0e6110539}\label{manual__segmentation_8py_a26e7f5923a84fa75687004f0e6110539}} 
+{\bfseries manual\+\_\+segmentation.\+ret}
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_a07ca90cacb669226205da54239b23da3}\label{manual__segmentation_8py_a07ca90cacb669226205da54239b23da3}} 
+{\bfseries manual\+\_\+segmentation.\+label} = np.\+array(\mbox{[}\char`\"{}Grey matter\char`\"{},\char`\"{}Large blood vessel\char`\"{},\char`\"{}Capillaries\char`\"{},\char`\"{}Activated grey matter\char`\"{},\char`\"{}Activated large vessel\char`\"{},\char`\"{}Activated capillaries\char`\"{}\mbox{]})
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_aff952f9f051193dc583d96dd205f4729}\label{manual__segmentation_8py_aff952f9f051193dc583d96dd205f4729}} 
+{\bfseries manual\+\_\+segmentation.\+center}
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_acab4af60b6a4828b32ecf53ae49f3695}\label{manual__segmentation_8py_acab4af60b6a4828b32ecf53ae49f3695}} 
+np {\bfseries manual\+\_\+segmentation.\+output} = np.\+zeros(mask.\+shape)
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_a9003334d75a76591c25a68f02a4a66d8}\label{manual__segmentation_8py_a9003334d75a76591c25a68f02a4a66d8}} 
+np {\bfseries manual\+\_\+segmentation.\+label\+\_\+\+BV} = np.\+array(\mbox{[}9,3\mbox{]})
+\begin{DoxyCompactList}\small\item\em identify label of large blood vessels and capillaries \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{manual__segmentation_8py_ae5134f29c9b8c8c7290e4c1402d8257e}\label{manual__segmentation_8py_ae5134f29c9b8c8c7290e4c1402d8257e}} 
+np {\bfseries manual\+\_\+segmentation.\+label\+\_\+capillaries} = np.\+array(\mbox{[}2\mbox{]})
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_ac7b6b1879ef3263fe9eb90a758c49849}\label{manual__segmentation_8py_ac7b6b1879ef3263fe9eb90a758c49849}} 
+np {\bfseries manual\+\_\+segmentation.\+mask\+\_\+large\+\_\+vessels} = np.\+zeros(mask.\+shape)
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_a6af1bebe8a87bf1f38e3daaa5f9ee6f1}\label{manual__segmentation_8py_a6af1bebe8a87bf1f38e3daaa5f9ee6f1}} 
+cv {\bfseries manual\+\_\+segmentation.\+kernel} = cv.\+get\+Structuring\+Element(cv.\+MORPH\+\_\+\+ELLIPSE,(3,3))
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_af812b7ba1e07b3593600e8cfb44a8135}\label{manual__segmentation_8py_af812b7ba1e07b3593600e8cfb44a8135}} 
+int {\bfseries manual\+\_\+segmentation.\+area\+\_\+min} = 101
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_a2b24d76d25c74624c7290c6b8e642788}\label{manual__segmentation_8py_a2b24d76d25c74624c7290c6b8e642788}} 
+np {\bfseries manual\+\_\+segmentation.\+mask\+\_\+capillaries} = np.\+zeros(mask.\+shape)
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_ae2360e594bf3635c35ff26de94766076}\label{manual__segmentation_8py_ae2360e594bf3635c35ff26de94766076}} 
+np {\bfseries manual\+\_\+segmentation.\+mask\+\_\+\+GM} = np.\+bitwise\+\_\+and(np.\+bitwise\+\_\+not(mask\+\_\+large\+\_\+vessels),np.\+bitwise\+\_\+not(mask\+\_\+capillaries))
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_ac45c03c1498c72c1c4c11dc457351cb1}\label{manual__segmentation_8py_ac45c03c1498c72c1c4c11dc457351cb1}} 
+np {\bfseries manual\+\_\+segmentation.\+rows} = np.\+array(\mbox{[}198, 56, 187, 336\mbox{]})
+\begin{DoxyCompactList}\small\item\em Select functional brain areas. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{manual__segmentation_8py_a5061fff3a4c228cdd90efde0caf7d384}\label{manual__segmentation_8py_a5061fff3a4c228cdd90efde0caf7d384}} 
+np {\bfseries manual\+\_\+segmentation.\+cols} = np.\+array(\mbox{[}101, 231, 236, 143\mbox{]})
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_a3ad5587adb2e85dc1d9a9875b83e46db}\label{manual__segmentation_8py_a3ad5587adb2e85dc1d9a9875b83e46db}} 
+int {\bfseries manual\+\_\+segmentation.\+radius} = 30
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_aaaf77531ba1b44cd06d539834abb1bcb}\label{manual__segmentation_8py_aaaf77531ba1b44cd06d539834abb1bcb}} 
+np {\bfseries manual\+\_\+segmentation.\+mask\+\_\+activation} = np.\+zeros(mask.\+shape)
+\begin{DoxyCompactList}\small\item\em Create segmentation mask. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{manual__segmentation_8py_a5eefa5f9bc65288278f20c8f93ebded0}\label{manual__segmentation_8py_a5eefa5f9bc65288278f20c8f93ebded0}} 
+np {\bfseries manual\+\_\+segmentation.\+mask\+\_\+activated\+\_\+grey\+\_\+matter} = np.\+bitwise\+\_\+and(mask\+\_\+activation,mask\+\_\+\+GM)
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_a3a20e2752a63849d1f3d745d5373ec74}\label{manual__segmentation_8py_a3a20e2752a63849d1f3d745d5373ec74}} 
+np {\bfseries manual\+\_\+segmentation.\+mask\+\_\+activated\+\_\+large\+\_\+vessels} = np.\+bitwise\+\_\+and(mask\+\_\+activation,mask\+\_\+large\+\_\+vessels)
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_ac9bac13879cae76bf12f294a891599c0}\label{manual__segmentation_8py_ac9bac13879cae76bf12f294a891599c0}} 
+np {\bfseries manual\+\_\+segmentation.\+mask\+\_\+activated\+\_\+capillaries} = np.\+bitwise\+\_\+and(mask\+\_\+activation,mask\+\_\+capillaries)
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_ab8d042160d8b32230b2a98ae8b374dc0}\label{manual__segmentation_8py_ab8d042160d8b32230b2a98ae8b374dc0}} 
+Listed\+Colormap {\bfseries manual\+\_\+segmentation.\+c\+Map} = Listed\+Colormap(\mbox{[}\textquotesingle{}grey\textquotesingle{}, \textquotesingle{}red\textquotesingle{}, \textquotesingle{}magenta\textquotesingle{},\textquotesingle{}green\textquotesingle{},\textquotesingle{}yellow\textquotesingle{},\textquotesingle{}white\textquotesingle{}\mbox{]})
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_a2a774de400f06a2452f5e85013192d0b}\label{manual__segmentation_8py_a2a774de400f06a2452f5e85013192d0b}} 
+np {\bfseries manual\+\_\+segmentation.\+index} = np.\+linspace(1 + 1/label.\+shape\mbox{[}0\mbox{]} ,6-\/1/label.\+shape\mbox{[}0\mbox{]},6)
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_a4362088c9faf41bac8eba7d79214fe56}\label{manual__segmentation_8py_a4362088c9faf41bac8eba7d79214fe56}} 
+np {\bfseries manual\+\_\+segmentation.\+mask\+\_\+output} = np.\+ones(mask.\+shape)
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_a2a6838b3bb476b27e28c2d55aa04d47d}\label{manual__segmentation_8py_a2a6838b3bb476b27e28c2d55aa04d47d}} 
+plt {\bfseries manual\+\_\+segmentation.\+heatmap} = plt.\+imshow(mask\+\_\+output,cmap = c\+Map)
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_a451209b667c913d4ccb874967417ed5f}\label{manual__segmentation_8py_a451209b667c913d4ccb874967417ed5f}} 
+plt {\bfseries manual\+\_\+segmentation.\+cbar} = plt.\+colorbar(heatmap)
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_a5db98b8361b70abe49816463ac3ff07b}\label{manual__segmentation_8py_a5db98b8361b70abe49816463ac3ff07b}} 
+{\bfseries manual\+\_\+segmentation.\+ha}
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_a4dec606652019a986b6aee4355fc364c}\label{manual__segmentation_8py_a4dec606652019a986b6aee4355fc364c}} 
+{\bfseries manual\+\_\+segmentation.\+va}
+\item 
+\mbox{\Hypertarget{manual__segmentation_8py_a8f10df46fea840d48afbed851081b10b}\label{manual__segmentation_8py_a8f10df46fea840d48afbed851081b10b}} 
+{\bfseries manual\+\_\+segmentation.\+labelpad}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Python script to segment RGB image of brain cortex into six classes\+: 
+
+
+\begin{DoxyItemize}
+\item Non activated grey matter
+\item Non activated large blood vessels
+\item Non activated capillaries
+\item Activated grey matter
+\item Activated large blood vessels
+\item Activated capillaries
+\end{DoxyItemize}
+
+\begin{DoxyAuthor}{Author}
+Charly Caredda Contact\+: \href{mailto:caredda.c@gmail.com}{\texttt{ caredda.\+c@gmail.\+com}} 
+\end{DoxyAuthor}

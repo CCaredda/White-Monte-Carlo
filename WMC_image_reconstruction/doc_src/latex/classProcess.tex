@@ -1,0 +1,471 @@
+\hypertarget{classProcess}{}\doxysection{Process Class Reference}
+\label{classProcess}\index{Process@{Process}}
+Inheritance diagram for Process\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classProcess}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classProcess_abdfddb4cfa01cc6a3deea5ad5c18c4f7}{on\+Binning\+Changed}} (int v)
+\item 
+void \mbox{\hyperlink{classProcess_acdf7bcf538af186407b9f679745f484b}{request\+Lens\+Sensor\+Modeling}} (bool v)
+\item 
+void \mbox{\hyperlink{classProcess_ac0021ebe383a6bd5648f9f7ed3c6e2d2}{onrequest\+Single\+Lambda}} (bool v)
+\end{DoxyCompactItemize}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classProcess_a6fcb93378e035c9ca4f8f37b5105dc44}{processing}} (QString msg)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classProcess_a76c77b35549469b93230417e78550d04}{Process}} (QObject $\ast$parent=nullptr)
+\item 
+void \mbox{\hyperlink{classProcess_aadec7aa2dc78661c60ce00674b18573b}{set\+Simulation\+Dir}} (QString s)
+\item 
+void \mbox{\hyperlink{classProcess_a84a2a573ead3f28649e66951af984f44}{new\+Lens\+Sensor\+Design}} (\mbox{\hyperlink{struct__lens__sensor}{\+\_\+lens\+\_\+sensor}} \&lens)
+\item 
+void \mbox{\hyperlink{classProcess_a2c535f78c1dd552d620394aabec119da}{set\+Wavelength}} (int w)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classProcess_a56201c2a36a7f0177f21cd61deaaf848}{run}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classProcess_a899d4cc7d41ae35e0ba79ac04114cf40}{on\+\_\+ppath\+\_\+data\+\_\+\+Loaded}} (bool)
+\item 
+void \mbox{\hyperlink{classProcess_abe0cd79ce399b5dc2a5aee4aad3574ff}{on\+\_\+p\+\_\+data\+\_\+\+Loaded}} (bool)
+\item 
+void \mbox{\hyperlink{classProcess_aea37db6e01432808ef73725337ad7f87}{on\+\_\+v\+\_\+data\+\_\+\+Loaded}} (bool)
+\item 
+void \mbox{\hyperlink{classProcess_a21efaca907d3d3d7f1690782c567439d}{on\+New\+Wavelength\+Processing\+Requested}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{classProcess_a19fc3530529657cc20b556e93f0908f4}{\+\_\+\+Process}} (int w)
+\item 
+void \mbox{\hyperlink{classProcess_ab956a64a836cb8664da864f389b529b3}{\+\_\+\+Display\+\_\+\+Results}} ()
+\item 
+void \mbox{\hyperlink{classProcess_a1bc1561a95dc609471cd5961934b54a0}{\+\_\+set\+Wavelength}} (int w)
+\item 
+void \mbox{\hyperlink{classProcess_af4f3eaf8d2ea971ce688ffa91aebb433}{\+\_\+\+Load\+\_\+\+Simulation\+\_\+\+Data}} (int w)
+\item 
+void \mbox{\hyperlink{classProcess_a98cd9c532c911eb1c9596b2f68f80a78}{\+\_\+get\+Optical\+Changes}} ()
+\item 
+void \mbox{\hyperlink{classProcess_aa9a2638e3f1d0b72c8a3a70178e16316}{\+\_\+get\+\_\+mua\+\_\+epsilon}} ()
+\item 
+void \mbox{\hyperlink{classProcess_a51fbccc06951ea0b7969009991230664}{\+\_\+\+Create\+\_\+\+Diffuse\+\_\+reflectance\+\_\+\+Pathlength\+\_\+\+Img}} (const Mat \&mua, int w)
+\item 
+void \mbox{\hyperlink{classProcess_a55d3276f25585ee46f212361b99d1bbc}{\+\_\+\+Create\+\_\+\+Diffuse\+\_\+reflectance\+\_\+\+Pathlength\+\_\+\+Img\+\_\+\+With\+\_\+\+Lens}} (const Mat \&mua, int w)
+\item 
+void \mbox{\hyperlink{classProcess_a017987aab2d4d2e25795e2483a09f688}{\+\_\+get\+\_\+photon\+\_\+pos\+\_\+after\+\_\+lens}} (Mat $\ast$p)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+QVector$<$ float $>$ \mbox{\hyperlink{classProcess_a3d21107c9d4594338952bf2df13e8311}{\+\_\+\+M\+\_\+wavelength\+\_\+to\+\_\+process}}
+\item 
+int \mbox{\hyperlink{classProcess_a2ce369b06e1d59e264399a002e265420}{\+\_\+\+M\+\_\+id\+\_\+wavelength\+\_\+to\+\_\+process}}
+\item 
+QVector$<$ float $>$ \mbox{\hyperlink{classProcess_a06cfd18c055ad24433aae71384dd569f}{\+\_\+\+M\+\_\+wavelength}}
+\item 
+int \mbox{\hyperlink{classProcess_a87043c6907fe72b4d6513be4ff64c3ce}{\+\_\+\+M\+\_\+id\+\_\+w}}
+\item 
+QVector$<$ float $>$ \mbox{\hyperlink{classProcess_a8383659674d865ffa2a0f479bf271c27}{\+\_\+\+M\+\_\+eps\+\_\+\+Hb\+O2}}
+\item 
+QVector$<$ float $>$ \mbox{\hyperlink{classProcess_a75d1ce2fbf192f689d4db7f8c2f67671}{\+\_\+\+M\+\_\+eps\+\_\+\+Hb}}
+\item 
+QVector$<$ float $>$ \mbox{\hyperlink{classProcess_add3cc77f4aa3b95546f2d1197bb0b905}{\+\_\+\+M\+\_\+eps\+\_\+ox\+CCO}}
+\item 
+QVector$<$ float $>$ \mbox{\hyperlink{classProcess_ab3b0203a2858ef15eeae0c6874b73fbe}{\+\_\+\+M\+\_\+eps\+\_\+red\+CCO}}
+\item 
+QVector$<$ float $>$ \mbox{\hyperlink{classProcess_a5f3170417b98703fa3240a1daf4ca135}{\+\_\+\+M\+\_\+mua\+\_\+\+Fat}}
+\item 
+QVector$<$ float $>$ \mbox{\hyperlink{classProcess_a959707194c0ccf4adc2067cc30467f18}{\+\_\+\+M\+\_\+mua\+\_\+\+H2O}}
+\item 
+\mbox{\hyperlink{classLoadData}{Load\+Data}} \mbox{\hyperlink{classProcess_a7a5aa0020482165fb7083ebb663b357b}{\+\_\+\+M\+\_\+ppath}}
+\item 
+\mbox{\hyperlink{classLoadData}{Load\+Data}} \mbox{\hyperlink{classProcess_ab25c7cc17321792000dd9732ef03ec38}{\+\_\+\+M\+\_\+p}}
+\item 
+\mbox{\hyperlink{classLoadData}{Load\+Data}} \mbox{\hyperlink{classProcess_a35acf0c6dc2b000207259f24672ff4cc}{\+\_\+\+M\+\_\+v}}
+\item 
+QString \mbox{\hyperlink{classProcess_a0b323e54915ee1525e6035b7f6734ae1}{\+\_\+\+M\+\_\+simu\+\_\+dir}}
+\item 
+QVector$<$ Mat $>$ \mbox{\hyperlink{classProcess_ac333d7c5fd0eaf1267bfa2af01cf34ff}{\+\_\+\+M\+\_\+optical\+\_\+changes}}
+\item 
+QString\+List \mbox{\hyperlink{classProcess_a578ad8dba8aef881e6b00f82b888d01e}{\+\_\+\+M\+\_\+class\+\_\+names}}
+\item 
+bool \mbox{\hyperlink{classProcess_a67345670b59d8ef81f62f1205841390e}{\+\_\+\+M\+\_\+simu\+\_\+data\+\_\+ready}}
+\item 
+bool \mbox{\hyperlink{classProcess_ac78a5e44c0f07fc81f6f1e676d371df6}{\+\_\+\+M\+\_\+optical\+\_\+changes\+\_\+data\+\_\+ready}}
+\item 
+bool \mbox{\hyperlink{classProcess_a589256cd99d9ba9e87dee6d468489fb8}{\+\_\+\+M\+\_\+mua\+\_\+eps\+\_\+data\+\_\+ready}}
+\item 
+int \mbox{\hyperlink{classProcess_a974e1c51e023c3a65f6c944780730a44}{\+\_\+\+M\+\_\+binning}}
+\item 
+\mbox{\hyperlink{struct__info__simulations}{\+\_\+info\+\_\+simulations}} \mbox{\hyperlink{classProcess_aa090eeedb1585a79914c789e912c077f}{\+\_\+\+M\+\_\+info\+\_\+simus}}
+\item 
+\mbox{\hyperlink{classLoadData}{Load\+Data}} \mbox{\hyperlink{classProcess_a733c9f99c1e77ce181cb70692b6b94f7}{\+\_\+\+M\+\_\+load\+Data}}
+\item 
+QString \mbox{\hyperlink{classProcess_ae1bc7d1d406de73672a4323c1cd48d57}{\+\_\+\+M\+\_\+saving\+\_\+dir}}
+\item 
+bool \mbox{\hyperlink{classProcess_a05af4886bb5e8645a30328d41d88e638}{\+\_\+\+M\+\_\+study\+\_\+one\+\_\+lambda}}
+\item 
+bool \mbox{\hyperlink{classProcess_a714dc9f41793cbbace450b0cdebcde79}{\+\_\+\+M\+\_\+model\+\_\+lens\+\_\+sensor}}
+\item 
+\mbox{\hyperlink{struct__lens__sensor}{\+\_\+lens\+\_\+sensor}} \mbox{\hyperlink{classProcess_a8f973855bec2f48a6568e777f557791f}{\+\_\+\+M\+\_\+lens\+\_\+sensor}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classProcess_a76c77b35549469b93230417e78550d04}\label{classProcess_a76c77b35549469b93230417e78550d04}} 
+\index{Process@{Process}!Process@{Process}}
+\index{Process@{Process}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{Process()}{Process()}}
+{\footnotesize\ttfamily Process\+::\+Process (\begin{DoxyParamCaption}\item[{QObject $\ast$}]{parent = {\ttfamily nullptr} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+Constructor of the class 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classProcess_a51fbccc06951ea0b7969009991230664}\label{classProcess_a51fbccc06951ea0b7969009991230664}} 
+\index{Process@{Process}!\_Create\_Diffuse\_reflectance\_Pathlength\_Img@{\_Create\_Diffuse\_reflectance\_Pathlength\_Img}}
+\index{\_Create\_Diffuse\_reflectance\_Pathlength\_Img@{\_Create\_Diffuse\_reflectance\_Pathlength\_Img}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_Create\_Diffuse\_reflectance\_Pathlength\_Img()}{\_Create\_Diffuse\_reflectance\_Pathlength\_Img()}}
+{\footnotesize\ttfamily void Process\+::\+\_\+\+Create\+\_\+\+Diffuse\+\_\+reflectance\+\_\+\+Pathlength\+\_\+\+Img (\begin{DoxyParamCaption}\item[{const Mat \&}]{mua,  }\item[{int}]{w }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+calculate diffuse reflectance pathlength img without lens and sensor optics. Images are reconstructed at the tissue surface 
+\begin{DoxyParams}{Parameters}
+{\em mua} & matrix of absorption changes (in mm-\/1). Size\+: number of class x time \\
+\hline
+{\em w} & wavelength (in nm) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classProcess_a55d3276f25585ee46f212361b99d1bbc}\label{classProcess_a55d3276f25585ee46f212361b99d1bbc}} 
+\index{Process@{Process}!\_Create\_Diffuse\_reflectance\_Pathlength\_Img\_With\_Lens@{\_Create\_Diffuse\_reflectance\_Pathlength\_Img\_With\_Lens}}
+\index{\_Create\_Diffuse\_reflectance\_Pathlength\_Img\_With\_Lens@{\_Create\_Diffuse\_reflectance\_Pathlength\_Img\_With\_Lens}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_Create\_Diffuse\_reflectance\_Pathlength\_Img\_With\_Lens()}{\_Create\_Diffuse\_reflectance\_Pathlength\_Img\_With\_Lens()}}
+{\footnotesize\ttfamily void Process\+::\+\_\+\+Create\+\_\+\+Diffuse\+\_\+reflectance\+\_\+\+Pathlength\+\_\+\+Img\+\_\+\+With\+\_\+\+Lens (\begin{DoxyParamCaption}\item[{const Mat \&}]{mua,  }\item[{int}]{w }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+calculate diffuse reflectance pathlength img with lens and sensor modelling. 
+\begin{DoxyParams}{Parameters}
+{\em mua} & matrix of absorption changes (in mm-\/1). Size\+: number of class x time \\
+\hline
+{\em w} & wavelength (in nm) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classProcess_ab956a64a836cb8664da864f389b529b3}\label{classProcess_ab956a64a836cb8664da864f389b529b3}} 
+\index{Process@{Process}!\_Display\_Results@{\_Display\_Results}}
+\index{\_Display\_Results@{\_Display\_Results}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_Display\_Results()}{\_Display\_Results()}}
+{\footnotesize\ttfamily void Process\+::\+\_\+\+Display\+\_\+\+Results (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Display results \mbox{\Hypertarget{classProcess_aa9a2638e3f1d0b72c8a3a70178e16316}\label{classProcess_aa9a2638e3f1d0b72c8a3a70178e16316}} 
+\index{Process@{Process}!\_get\_mua\_epsilon@{\_get\_mua\_epsilon}}
+\index{\_get\_mua\_epsilon@{\_get\_mua\_epsilon}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_get\_mua\_epsilon()}{\_get\_mua\_epsilon()}}
+{\footnotesize\ttfamily void Process\+::\+\_\+get\+\_\+mua\+\_\+epsilon (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Get epsilon and mua coefficients \mbox{\Hypertarget{classProcess_a017987aab2d4d2e25795e2483a09f688}\label{classProcess_a017987aab2d4d2e25795e2483a09f688}} 
+\index{Process@{Process}!\_get\_photon\_pos\_after\_lens@{\_get\_photon\_pos\_after\_lens}}
+\index{\_get\_photon\_pos\_after\_lens@{\_get\_photon\_pos\_after\_lens}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_get\_photon\_pos\_after\_lens()}{\_get\_photon\_pos\_after\_lens()}}
+{\footnotesize\ttfamily void Process\+::\+\_\+get\+\_\+photon\+\_\+pos\+\_\+after\+\_\+lens (\begin{DoxyParamCaption}\item[{Mat $\ast$}]{p }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+get output pos on sensor after lens 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em p} & pointer on matrix that contanins the position of exiting photons after the lens \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classProcess_a98cd9c532c911eb1c9596b2f68f80a78}\label{classProcess_a98cd9c532c911eb1c9596b2f68f80a78}} 
+\index{Process@{Process}!\_getOpticalChanges@{\_getOpticalChanges}}
+\index{\_getOpticalChanges@{\_getOpticalChanges}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_getOpticalChanges()}{\_getOpticalChanges()}}
+{\footnotesize\ttfamily void Process\+::\+\_\+get\+Optical\+Changes (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Get optical changes \mbox{\Hypertarget{classProcess_af4f3eaf8d2ea971ce688ffa91aebb433}\label{classProcess_af4f3eaf8d2ea971ce688ffa91aebb433}} 
+\index{Process@{Process}!\_Load\_Simulation\_Data@{\_Load\_Simulation\_Data}}
+\index{\_Load\_Simulation\_Data@{\_Load\_Simulation\_Data}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_Load\_Simulation\_Data()}{\_Load\_Simulation\_Data()}}
+{\footnotesize\ttfamily void Process\+::\+\_\+\+Load\+\_\+\+Simulation\+\_\+\+Data (\begin{DoxyParamCaption}\item[{int}]{w }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Load data at selected wavelength \mbox{\Hypertarget{classProcess_a19fc3530529657cc20b556e93f0908f4}\label{classProcess_a19fc3530529657cc20b556e93f0908f4}} 
+\index{Process@{Process}!\_Process@{\_Process}}
+\index{\_Process@{\_Process}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_Process()}{\_Process()}}
+{\footnotesize\ttfamily bool Process\+::\+\_\+\+Process (\begin{DoxyParamCaption}\item[{int}]{w }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Reconstruction processing 
+\begin{DoxyParams}{Parameters}
+{\em w} & Wavelength to process (in nm) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classProcess_a1bc1561a95dc609471cd5961934b54a0}\label{classProcess_a1bc1561a95dc609471cd5961934b54a0}} 
+\index{Process@{Process}!\_setWavelength@{\_setWavelength}}
+\index{\_setWavelength@{\_setWavelength}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_setWavelength()}{\_setWavelength()}}
+{\footnotesize\ttfamily void Process\+::\+\_\+set\+Wavelength (\begin{DoxyParamCaption}\item[{int}]{w }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Set Wavelength (in nm) \mbox{\Hypertarget{classProcess_a84a2a573ead3f28649e66951af984f44}\label{classProcess_a84a2a573ead3f28649e66951af984f44}} 
+\index{Process@{Process}!newLensSensorDesign@{newLensSensorDesign}}
+\index{newLensSensorDesign@{newLensSensorDesign}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{newLensSensorDesign()}{newLensSensorDesign()}}
+{\footnotesize\ttfamily void Process\+::new\+Lens\+Sensor\+Design (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct__lens__sensor}{\+\_\+lens\+\_\+sensor}} \&}]{lens }\end{DoxyParamCaption})}
+
+New lens design defined for the GUI 
+\begin{DoxyParams}{Parameters}
+{\em lens} & structure that contains the optics device definition \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classProcess_abe0cd79ce399b5dc2a5aee4aad3574ff}\label{classProcess_abe0cd79ce399b5dc2a5aee4aad3574ff}} 
+\index{Process@{Process}!on\_p\_data\_Loaded@{on\_p\_data\_Loaded}}
+\index{on\_p\_data\_Loaded@{on\_p\_data\_Loaded}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{on\_p\_data\_Loaded}{on\_p\_data\_Loaded}}
+{\footnotesize\ttfamily void Process\+::on\+\_\+p\+\_\+data\+\_\+\+Loaded (\begin{DoxyParamCaption}\item[{bool}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+On exiting photons positions finished loaded SLOT called when data finished loaded. Once data is loaded start reconstruction \mbox{\Hypertarget{classProcess_a899d4cc7d41ae35e0ba79ac04114cf40}\label{classProcess_a899d4cc7d41ae35e0ba79ac04114cf40}} 
+\index{Process@{Process}!on\_ppath\_data\_Loaded@{on\_ppath\_data\_Loaded}}
+\index{on\_ppath\_data\_Loaded@{on\_ppath\_data\_Loaded}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{on\_ppath\_data\_Loaded}{on\_ppath\_data\_Loaded}}
+{\footnotesize\ttfamily void Process\+::on\+\_\+ppath\+\_\+data\+\_\+\+Loaded (\begin{DoxyParamCaption}\item[{bool}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+On ppath data finished loaded SLOT called when data finished loaded. Once data is loaded start reconstruction \mbox{\Hypertarget{classProcess_aea37db6e01432808ef73725337ad7f87}\label{classProcess_aea37db6e01432808ef73725337ad7f87}} 
+\index{Process@{Process}!on\_v\_data\_Loaded@{on\_v\_data\_Loaded}}
+\index{on\_v\_data\_Loaded@{on\_v\_data\_Loaded}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{on\_v\_data\_Loaded}{on\_v\_data\_Loaded}}
+{\footnotesize\ttfamily void Process\+::on\+\_\+v\+\_\+data\+\_\+\+Loaded (\begin{DoxyParamCaption}\item[{bool}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+On exiting photons angles finished loaded SLOT called when data finished loaded. Once data is loaded start reconstruction \mbox{\Hypertarget{classProcess_abdfddb4cfa01cc6a3deea5ad5c18c4f7}\label{classProcess_abdfddb4cfa01cc6a3deea5ad5c18c4f7}} 
+\index{Process@{Process}!onBinningChanged@{onBinningChanged}}
+\index{onBinningChanged@{onBinningChanged}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{onBinningChanged}{onBinningChanged}}
+{\footnotesize\ttfamily void Process\+::on\+Binning\+Changed (\begin{DoxyParamCaption}\item[{int}]{v }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+Binning of output images \mbox{\Hypertarget{classProcess_a21efaca907d3d3d7f1690782c567439d}\label{classProcess_a21efaca907d3d3d7f1690782c567439d}} 
+\index{Process@{Process}!onNewWavelengthProcessingRequested@{onNewWavelengthProcessingRequested}}
+\index{onNewWavelengthProcessingRequested@{onNewWavelengthProcessingRequested}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{onNewWavelengthProcessingRequested}{onNewWavelengthProcessingRequested}}
+{\footnotesize\ttfamily void Process\+::on\+New\+Wavelength\+Processing\+Requested (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+on new wavelength processing requested \mbox{\Hypertarget{classProcess_ac0021ebe383a6bd5648f9f7ed3c6e2d2}\label{classProcess_ac0021ebe383a6bd5648f9f7ed3c6e2d2}} 
+\index{Process@{Process}!onrequestSingleLambda@{onrequestSingleLambda}}
+\index{onrequestSingleLambda@{onrequestSingleLambda}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{onrequestSingleLambda}{onrequestSingleLambda}}
+{\footnotesize\ttfamily void Process\+::onrequest\+Single\+Lambda (\begin{DoxyParamCaption}\item[{bool}]{v }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+Request processing on only one wavelength \mbox{\Hypertarget{classProcess_a6fcb93378e035c9ca4f8f37b5105dc44}\label{classProcess_a6fcb93378e035c9ca4f8f37b5105dc44}} 
+\index{Process@{Process}!processing@{processing}}
+\index{processing@{processing}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{processing}{processing}}
+{\footnotesize\ttfamily void Process\+::processing (\begin{DoxyParamCaption}\item[{QString}]{msg }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+Emit signal to infotm the GUI the processing status 
+\begin{DoxyParams}{Parameters}
+{\em msg} & string that contains the status \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classProcess_acdf7bcf538af186407b9f679745f484b}\label{classProcess_acdf7bcf538af186407b9f679745f484b}} 
+\index{Process@{Process}!requestLensSensorModeling@{requestLensSensorModeling}}
+\index{requestLensSensorModeling@{requestLensSensorModeling}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{requestLensSensorModeling}{requestLensSensorModeling}}
+{\footnotesize\ttfamily void Process\+::request\+Lens\+Sensor\+Modeling (\begin{DoxyParamCaption}\item[{bool}]{v }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+Request lens modeling \mbox{\Hypertarget{classProcess_a56201c2a36a7f0177f21cd61deaaf848}\label{classProcess_a56201c2a36a7f0177f21cd61deaaf848}} 
+\index{Process@{Process}!run@{run}}
+\index{run@{run}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily void Process\+::run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Call process in parallel thread \mbox{\Hypertarget{classProcess_aadec7aa2dc78661c60ce00674b18573b}\label{classProcess_aadec7aa2dc78661c60ce00674b18573b}} 
+\index{Process@{Process}!setSimulationDir@{setSimulationDir}}
+\index{setSimulationDir@{setSimulationDir}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{setSimulationDir()}{setSimulationDir()}}
+{\footnotesize\ttfamily void Process\+::set\+Simulation\+Dir (\begin{DoxyParamCaption}\item[{QString}]{s }\end{DoxyParamCaption})}
+
+Set simulation directory 
+\begin{DoxyParams}{Parameters}
+{\em s} & directory that contains the simulation files \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classProcess_a2c535f78c1dd552d620394aabec119da}\label{classProcess_a2c535f78c1dd552d620394aabec119da}} 
+\index{Process@{Process}!setWavelength@{setWavelength}}
+\index{setWavelength@{setWavelength}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{setWavelength()}{setWavelength()}}
+{\footnotesize\ttfamily void Process\+::set\+Wavelength (\begin{DoxyParamCaption}\item[{int}]{w }\end{DoxyParamCaption})}
+
+set Wavelength to analyze 
+\begin{DoxyParams}{Parameters}
+{\em w} & wavelength that is required to be anlyzed (in nm) \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classProcess_a974e1c51e023c3a65f6c944780730a44}\label{classProcess_a974e1c51e023c3a65f6c944780730a44}} 
+\index{Process@{Process}!\_M\_binning@{\_M\_binning}}
+\index{\_M\_binning@{\_M\_binning}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_M\_binning}{\_M\_binning}}
+{\footnotesize\ttfamily int Process\+::\+\_\+\+M\+\_\+binning\hspace{0.3cm}{\ttfamily [private]}}
+
+Binning for reconstuction the images \mbox{\Hypertarget{classProcess_a578ad8dba8aef881e6b00f82b888d01e}\label{classProcess_a578ad8dba8aef881e6b00f82b888d01e}} 
+\index{Process@{Process}!\_M\_class\_names@{\_M\_class\_names}}
+\index{\_M\_class\_names@{\_M\_class\_names}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_M\_class\_names}{\_M\_class\_names}}
+{\footnotesize\ttfamily QString\+List Process\+::\+\_\+\+M\+\_\+class\+\_\+names\hspace{0.3cm}{\ttfamily [private]}}
+
+Name of the classes \mbox{\Hypertarget{classProcess_a75d1ce2fbf192f689d4db7f8c2f67671}\label{classProcess_a75d1ce2fbf192f689d4db7f8c2f67671}} 
+\index{Process@{Process}!\_M\_eps\_Hb@{\_M\_eps\_Hb}}
+\index{\_M\_eps\_Hb@{\_M\_eps\_Hb}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_M\_eps\_Hb}{\_M\_eps\_Hb}}
+{\footnotesize\ttfamily QVector$<$float$>$ Process\+::\+\_\+\+M\+\_\+eps\+\_\+\+Hb\hspace{0.3cm}{\ttfamily [private]}}
+
+Molar extinction coefficent of Hb in (mol-\/1.\+L.\+cm-\/1) \mbox{\Hypertarget{classProcess_a8383659674d865ffa2a0f479bf271c27}\label{classProcess_a8383659674d865ffa2a0f479bf271c27}} 
+\index{Process@{Process}!\_M\_eps\_HbO2@{\_M\_eps\_HbO2}}
+\index{\_M\_eps\_HbO2@{\_M\_eps\_HbO2}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_M\_eps\_HbO2}{\_M\_eps\_HbO2}}
+{\footnotesize\ttfamily QVector$<$float$>$ Process\+::\+\_\+\+M\+\_\+eps\+\_\+\+Hb\+O2\hspace{0.3cm}{\ttfamily [private]}}
+
+Molar extinction coefficent of Hb\+O2 in (mol-\/1.\+L.\+cm-\/1) \mbox{\Hypertarget{classProcess_add3cc77f4aa3b95546f2d1197bb0b905}\label{classProcess_add3cc77f4aa3b95546f2d1197bb0b905}} 
+\index{Process@{Process}!\_M\_eps\_oxCCO@{\_M\_eps\_oxCCO}}
+\index{\_M\_eps\_oxCCO@{\_M\_eps\_oxCCO}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_M\_eps\_oxCCO}{\_M\_eps\_oxCCO}}
+{\footnotesize\ttfamily QVector$<$float$>$ Process\+::\+\_\+\+M\+\_\+eps\+\_\+ox\+CCO\hspace{0.3cm}{\ttfamily [private]}}
+
+Molar extinction coefficent of ox\+CCO in (mol-\/1.\+L.\+cm-\/1) \mbox{\Hypertarget{classProcess_ab3b0203a2858ef15eeae0c6874b73fbe}\label{classProcess_ab3b0203a2858ef15eeae0c6874b73fbe}} 
+\index{Process@{Process}!\_M\_eps\_redCCO@{\_M\_eps\_redCCO}}
+\index{\_M\_eps\_redCCO@{\_M\_eps\_redCCO}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_M\_eps\_redCCO}{\_M\_eps\_redCCO}}
+{\footnotesize\ttfamily QVector$<$float$>$ Process\+::\+\_\+\+M\+\_\+eps\+\_\+red\+CCO\hspace{0.3cm}{\ttfamily [private]}}
+
+Molar extinction coefficent of red\+CO in (mol-\/1.\+L.\+cm-\/1) \mbox{\Hypertarget{classProcess_a87043c6907fe72b4d6513be4ff64c3ce}\label{classProcess_a87043c6907fe72b4d6513be4ff64c3ce}} 
+\index{Process@{Process}!\_M\_id\_w@{\_M\_id\_w}}
+\index{\_M\_id\_w@{\_M\_id\_w}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_M\_id\_w}{\_M\_id\_w}}
+{\footnotesize\ttfamily int Process\+::\+\_\+\+M\+\_\+id\+\_\+w\hspace{0.3cm}{\ttfamily [private]}}
+
+Id of the wavelength that can be used to define mua coefficients (in nm) \mbox{\Hypertarget{classProcess_a2ce369b06e1d59e264399a002e265420}\label{classProcess_a2ce369b06e1d59e264399a002e265420}} 
+\index{Process@{Process}!\_M\_id\_wavelength\_to\_process@{\_M\_id\_wavelength\_to\_process}}
+\index{\_M\_id\_wavelength\_to\_process@{\_M\_id\_wavelength\_to\_process}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_M\_id\_wavelength\_to\_process}{\_M\_id\_wavelength\_to\_process}}
+{\footnotesize\ttfamily int Process\+::\+\_\+\+M\+\_\+id\+\_\+wavelength\+\_\+to\+\_\+process\hspace{0.3cm}{\ttfamily [private]}}
+
+Id of the wavelength for which simulations have been done \mbox{\Hypertarget{classProcess_aa090eeedb1585a79914c789e912c077f}\label{classProcess_aa090eeedb1585a79914c789e912c077f}} 
+\index{Process@{Process}!\_M\_info\_simus@{\_M\_info\_simus}}
+\index{\_M\_info\_simus@{\_M\_info\_simus}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_M\_info\_simus}{\_M\_info\_simus}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct__info__simulations}{\+\_\+info\+\_\+simulations}} Process\+::\+\_\+\+M\+\_\+info\+\_\+simus\hspace{0.3cm}{\ttfamily [private]}}
+
+Structure that contains the information of the simulation \mbox{\Hypertarget{classProcess_a8f973855bec2f48a6568e777f557791f}\label{classProcess_a8f973855bec2f48a6568e777f557791f}} 
+\index{Process@{Process}!\_M\_lens\_sensor@{\_M\_lens\_sensor}}
+\index{\_M\_lens\_sensor@{\_M\_lens\_sensor}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_M\_lens\_sensor}{\_M\_lens\_sensor}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct__lens__sensor}{\+\_\+lens\+\_\+sensor}} Process\+::\+\_\+\+M\+\_\+lens\+\_\+sensor\hspace{0.3cm}{\ttfamily [private]}}
+
+Structure that contains lens and sensor parameters \mbox{\Hypertarget{classProcess_a733c9f99c1e77ce181cb70692b6b94f7}\label{classProcess_a733c9f99c1e77ce181cb70692b6b94f7}} 
+\index{Process@{Process}!\_M\_loadData@{\_M\_loadData}}
+\index{\_M\_loadData@{\_M\_loadData}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_M\_loadData}{\_M\_loadData}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classLoadData}{Load\+Data}} Process\+::\+\_\+\+M\+\_\+load\+Data\hspace{0.3cm}{\ttfamily [private]}}
+
+Load data class \mbox{\Hypertarget{classProcess_a714dc9f41793cbbace450b0cdebcde79}\label{classProcess_a714dc9f41793cbbace450b0cdebcde79}} 
+\index{Process@{Process}!\_M\_model\_lens\_sensor@{\_M\_model\_lens\_sensor}}
+\index{\_M\_model\_lens\_sensor@{\_M\_model\_lens\_sensor}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_M\_model\_lens\_sensor}{\_M\_model\_lens\_sensor}}
+{\footnotesize\ttfamily bool Process\+::\+\_\+\+M\+\_\+model\+\_\+lens\+\_\+sensor\hspace{0.3cm}{\ttfamily [private]}}
+
+Enable lens and camera modeling \mbox{\Hypertarget{classProcess_a589256cd99d9ba9e87dee6d468489fb8}\label{classProcess_a589256cd99d9ba9e87dee6d468489fb8}} 
+\index{Process@{Process}!\_M\_mua\_eps\_data\_ready@{\_M\_mua\_eps\_data\_ready}}
+\index{\_M\_mua\_eps\_data\_ready@{\_M\_mua\_eps\_data\_ready}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_M\_mua\_eps\_data\_ready}{\_M\_mua\_eps\_data\_ready}}
+{\footnotesize\ttfamily bool Process\+::\+\_\+\+M\+\_\+mua\+\_\+eps\+\_\+data\+\_\+ready\hspace{0.3cm}{\ttfamily [private]}}
+
+Flag for controlling if process can be done \mbox{\Hypertarget{classProcess_a5f3170417b98703fa3240a1daf4ca135}\label{classProcess_a5f3170417b98703fa3240a1daf4ca135}} 
+\index{Process@{Process}!\_M\_mua\_Fat@{\_M\_mua\_Fat}}
+\index{\_M\_mua\_Fat@{\_M\_mua\_Fat}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_M\_mua\_Fat}{\_M\_mua\_Fat}}
+{\footnotesize\ttfamily QVector$<$float$>$ Process\+::\+\_\+\+M\+\_\+mua\+\_\+\+Fat\hspace{0.3cm}{\ttfamily [private]}}
+
+Aborption coefficient of Fat (in cm-\/1) \mbox{\Hypertarget{classProcess_a959707194c0ccf4adc2067cc30467f18}\label{classProcess_a959707194c0ccf4adc2067cc30467f18}} 
+\index{Process@{Process}!\_M\_mua\_H2O@{\_M\_mua\_H2O}}
+\index{\_M\_mua\_H2O@{\_M\_mua\_H2O}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_M\_mua\_H2O}{\_M\_mua\_H2O}}
+{\footnotesize\ttfamily QVector$<$float$>$ Process\+::\+\_\+\+M\+\_\+mua\+\_\+\+H2O\hspace{0.3cm}{\ttfamily [private]}}
+
+Aborption coefficient of Water (in cm-\/1) \mbox{\Hypertarget{classProcess_ac333d7c5fd0eaf1267bfa2af01cf34ff}\label{classProcess_ac333d7c5fd0eaf1267bfa2af01cf34ff}} 
+\index{Process@{Process}!\_M\_optical\_changes@{\_M\_optical\_changes}}
+\index{\_M\_optical\_changes@{\_M\_optical\_changes}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_M\_optical\_changes}{\_M\_optical\_changes}}
+{\footnotesize\ttfamily QVector$<$Mat$>$ Process\+::\+\_\+\+M\+\_\+optical\+\_\+changes\hspace{0.3cm}{\ttfamily [private]}}
+
+Optical changes over time (QVector size Nb of class; Mat size\+: size Nb of chromophores; time) \mbox{\Hypertarget{classProcess_ac78a5e44c0f07fc81f6f1e676d371df6}\label{classProcess_ac78a5e44c0f07fc81f6f1e676d371df6}} 
+\index{Process@{Process}!\_M\_optical\_changes\_data\_ready@{\_M\_optical\_changes\_data\_ready}}
+\index{\_M\_optical\_changes\_data\_ready@{\_M\_optical\_changes\_data\_ready}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_M\_optical\_changes\_data\_ready}{\_M\_optical\_changes\_data\_ready}}
+{\footnotesize\ttfamily bool Process\+::\+\_\+\+M\+\_\+optical\+\_\+changes\+\_\+data\+\_\+ready\hspace{0.3cm}{\ttfamily [private]}}
+
+Flag for controlling if process can be done \mbox{\Hypertarget{classProcess_ab25c7cc17321792000dd9732ef03ec38}\label{classProcess_ab25c7cc17321792000dd9732ef03ec38}} 
+\index{Process@{Process}!\_M\_p@{\_M\_p}}
+\index{\_M\_p@{\_M\_p}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_M\_p}{\_M\_p}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classLoadData}{Load\+Data}} Process\+::\+\_\+\+M\+\_\+p\hspace{0.3cm}{\ttfamily [private]}}
+
+Class used to read and sotre exiting photons positions data \mbox{\Hypertarget{classProcess_a7a5aa0020482165fb7083ebb663b357b}\label{classProcess_a7a5aa0020482165fb7083ebb663b357b}} 
+\index{Process@{Process}!\_M\_ppath@{\_M\_ppath}}
+\index{\_M\_ppath@{\_M\_ppath}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_M\_ppath}{\_M\_ppath}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classLoadData}{Load\+Data}} Process\+::\+\_\+\+M\+\_\+ppath\hspace{0.3cm}{\ttfamily [private]}}
+
+Class used to read and sotre partial path length data \mbox{\Hypertarget{classProcess_ae1bc7d1d406de73672a4323c1cd48d57}\label{classProcess_ae1bc7d1d406de73672a4323c1cd48d57}} 
+\index{Process@{Process}!\_M\_saving\_dir@{\_M\_saving\_dir}}
+\index{\_M\_saving\_dir@{\_M\_saving\_dir}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_M\_saving\_dir}{\_M\_saving\_dir}}
+{\footnotesize\ttfamily QString Process\+::\+\_\+\+M\+\_\+saving\+\_\+dir\hspace{0.3cm}{\ttfamily [private]}}
+
+Saving directory \mbox{\Hypertarget{classProcess_a67345670b59d8ef81f62f1205841390e}\label{classProcess_a67345670b59d8ef81f62f1205841390e}} 
+\index{Process@{Process}!\_M\_simu\_data\_ready@{\_M\_simu\_data\_ready}}
+\index{\_M\_simu\_data\_ready@{\_M\_simu\_data\_ready}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_M\_simu\_data\_ready}{\_M\_simu\_data\_ready}}
+{\footnotesize\ttfamily bool Process\+::\+\_\+\+M\+\_\+simu\+\_\+data\+\_\+ready\hspace{0.3cm}{\ttfamily [private]}}
+
+Flag for controlling if process can be done \mbox{\Hypertarget{classProcess_a0b323e54915ee1525e6035b7f6734ae1}\label{classProcess_a0b323e54915ee1525e6035b7f6734ae1}} 
+\index{Process@{Process}!\_M\_simu\_dir@{\_M\_simu\_dir}}
+\index{\_M\_simu\_dir@{\_M\_simu\_dir}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_M\_simu\_dir}{\_M\_simu\_dir}}
+{\footnotesize\ttfamily QString Process\+::\+\_\+\+M\+\_\+simu\+\_\+dir\hspace{0.3cm}{\ttfamily [private]}}
+
+Simulation directory \mbox{\Hypertarget{classProcess_a05af4886bb5e8645a30328d41d88e638}\label{classProcess_a05af4886bb5e8645a30328d41d88e638}} 
+\index{Process@{Process}!\_M\_study\_one\_lambda@{\_M\_study\_one\_lambda}}
+\index{\_M\_study\_one\_lambda@{\_M\_study\_one\_lambda}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_M\_study\_one\_lambda}{\_M\_study\_one\_lambda}}
+{\footnotesize\ttfamily bool Process\+::\+\_\+\+M\+\_\+study\+\_\+one\+\_\+lambda\hspace{0.3cm}{\ttfamily [private]}}
+
+Study only one wavelength \mbox{\Hypertarget{classProcess_a35acf0c6dc2b000207259f24672ff4cc}\label{classProcess_a35acf0c6dc2b000207259f24672ff4cc}} 
+\index{Process@{Process}!\_M\_v@{\_M\_v}}
+\index{\_M\_v@{\_M\_v}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_M\_v}{\_M\_v}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classLoadData}{Load\+Data}} Process\+::\+\_\+\+M\+\_\+v\hspace{0.3cm}{\ttfamily [private]}}
+
+Class used to read and sotre exiting photons angles data \mbox{\Hypertarget{classProcess_a06cfd18c055ad24433aae71384dd569f}\label{classProcess_a06cfd18c055ad24433aae71384dd569f}} 
+\index{Process@{Process}!\_M\_wavelength@{\_M\_wavelength}}
+\index{\_M\_wavelength@{\_M\_wavelength}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_M\_wavelength}{\_M\_wavelength}}
+{\footnotesize\ttfamily QVector$<$float$>$ Process\+::\+\_\+\+M\+\_\+wavelength\hspace{0.3cm}{\ttfamily [private]}}
+
+Wavelength that can be used to define mua coefficients (in nm) \mbox{\Hypertarget{classProcess_a3d21107c9d4594338952bf2df13e8311}\label{classProcess_a3d21107c9d4594338952bf2df13e8311}} 
+\index{Process@{Process}!\_M\_wavelength\_to\_process@{\_M\_wavelength\_to\_process}}
+\index{\_M\_wavelength\_to\_process@{\_M\_wavelength\_to\_process}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{\_M\_wavelength\_to\_process}{\_M\_wavelength\_to\_process}}
+{\footnotesize\ttfamily QVector$<$float$>$ Process\+::\+\_\+\+M\+\_\+wavelength\+\_\+to\+\_\+process\hspace{0.3cm}{\ttfamily [private]}}
+
+Wavelength for which simulations have been done (in nm) 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/caredda/\+DVP/simulation/\+CREATIS-\/\+UCL-\/\+White-\/\+Monte-\/\+Carlo-\/\+Framework/\+WMC\+\_\+image\+\_\+reconstruction/inc/\mbox{\hyperlink{process_8h}{process.\+h}}\end{DoxyCompactItemize}

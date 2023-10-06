@@ -1,0 +1,72 @@
+\hypertarget{functions_8h_source}{}\doxysection{functions.\+h}
+\label{functions_8h_source}\index{/home/caredda/DVP/simulation/CREATIS-\/UCL-\/White-\/Monte-\/Carlo-\/Framework/WMC\_image\_reconstruction/inc/functions.h@{/home/caredda/DVP/simulation/CREATIS-\/UCL-\/White-\/Monte-\/Carlo-\/Framework/WMC\_image\_reconstruction/inc/functions.h}}
+\mbox{\hyperlink{functions_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#ifndef\ FUNCTIONS\_H}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#define\ FUNCTIONS\_H}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <QFile>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <QTextStream>}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <QDebug>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <math.h>}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ <QElapsedTimer>}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#include\ "{}opencv2/imgproc/imgproc.hpp"{}}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#include\ "{}opencv2/imgproc/types\_c.h"{}}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#include\ "{}opencv2/highgui/highgui.hpp"{}}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ "{}opencv2/core/core.hpp"{}}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#include\ "{}opencv2/opencv.hpp"{}}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{keyword}{using\ namespace\ }cv;}
+\DoxyCodeLine{00031\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00035\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00036\ \{}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{int}\ nb\_photons;}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{int}\ repetions;}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{int}\ modelled\_volume\_rows;}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{int}\ modelled\_volume\_cols;}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{float}\ unit\_in\_mm;}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \}\mbox{\hyperlink{struct__info__simulations}{\_info\_simulations}};}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00047\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00048\ \{}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{float}\ working\_distance\_mm;}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{float}\ f0\_mm;}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{float}\ distance\_to\_sensor;}
+\DoxyCodeLine{00052\ \ \ \ \ Mat\ transfer\_Matrix;}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{float}\ x\_sensor\_mm;}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{float}\ y\_sensor\_mm;}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{float}\ x\_sensor\_px;}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{float}\ y\_sensor\_px;}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{float}\ sensor\_reso\_x;}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{float}\ sensor\_reso\_y;}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \}\mbox{\hyperlink{struct__lens__sensor}{\_lens\_sensor}};}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00076\ Mat\ \mbox{\hyperlink{functions_8h_aa5c1120dda494c8e6756b0b444d50261}{get\_mua}}(QVector<Mat>\ \&Optical\_changes,\ \textcolor{keywordtype}{float}\ mua\_W,\textcolor{keywordtype}{float}\ mua\_F,\textcolor{keywordtype}{float}\ eps\_HbO2,\textcolor{keywordtype}{float}\ eps\_Hb,\textcolor{keywordtype}{float}\ eps\_oxCCO,\textcolor{keywordtype}{float}\ eps\_redCCO);}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00082\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{functions_8h_a7c1a56be0cc9e765dd34d8c22b239f06}{WriteFloatImg}}(\textcolor{keyword}{const}\ QString\ path,\textcolor{keyword}{const}\ Mat\ img);}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00087\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{functions_8h_ad212dfa1c99b3680cde18624b9c5f090}{WriteInfo}}(\textcolor{keyword}{const}\ QString\ path,QVector<QString>\ s);}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00091\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{functions_8h_aff695b061be0f8b1eb92130f814f2b99}{getTransferMatrix}}(\mbox{\hyperlink{struct__lens__sensor}{\_lens\_sensor}}\ \&system);}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00096\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{functions_8h_aa25bc67b527061f03feb99ed3d2d8918}{getImagePlan}}(\mbox{\hyperlink{struct__lens__sensor}{\_lens\_sensor}}\ \&system);}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00112\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{functions_8h_a5181dd2ca9ec808a48be15cc316855d2}{get\_Diffuse\_reflectance\_Pathlength}}(\textcolor{keywordtype}{int}\ binning,\ \textcolor{keywordtype}{int}\ nb\_photons,\ \textcolor{keywordtype}{int}\ repetitions,\ \textcolor{keyword}{const}\ Mat\ \&mua,\ \textcolor{keywordtype}{int}\ out\_img\_rows,\ \textcolor{keywordtype}{int}\ out\_img\_cols,}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ area\_detector,\ \textcolor{keywordtype}{float}\ unit\_tissue\_in\_mm,\ Mat\ *ppath,\ Mat\ *p,\ Mat\ \&dr,\ Mat\ \&mp);}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00116\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ FUNCTIONS\_H}}
+
+\end{DoxyCode}

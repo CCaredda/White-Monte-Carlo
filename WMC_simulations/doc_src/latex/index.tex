@@ -1,0 +1,72 @@
+\hypertarget{index_intro_sec}{}\doxysection{Introduction}\label{index_intro_sec}
+This software allows the propagation of light within brain tissue and the modeling of the acquisition of retro-\/diffused light.
+
+This software is a digital phantom that can be used as an instrument simulator (DIS). The main objective of this simulator is to develop a computational tool able to simulate brain tissue optical parameters and incorporate realistic instrument specifications, in order to (i) assist the development of the hyperspectral imaging prototypes, and (ii) generate synthetic data to help the development of the machine learning algorithm.
+
+This software has been developed for the European project Hyperprobe which aims at transforming neuronavigation during glioma resection using novel hyperspectral imaging technology\+:
+\begin{DoxyItemize}
+\item \href{https://hyperprobe.eu/}{\texttt{ https\+://hyperprobe.\+eu/}}
+\item \href{https://cordis.europa.eu/project/id/101071040}{\texttt{ https\+://cordis.\+europa.\+eu/project/id/101071040}}
+\end{DoxyItemize}
+
+Author\+: Charly Caredda Contact\+: \href{mailto:caredda.c@gmail.com}{\texttt{ caredda.\+c@gmail.\+com}}\hypertarget{index_install_sec}{}\doxysection{Installation}\label{index_install_sec}
+This program has be tested under Fedora 38 and Ubuntu. Problem may occur under other operating system. This program is coded in Python and Matlab. Matlab and Python need to be installed.
+
+For Python, several libraries need to be installed\+:
+
+
+\begin{DoxyItemize}
+\item sudo dnf install python3-\/pip python3-\/pyqt5
+\item pip install opencv-\/python numpy matplotlib
+\end{DoxyItemize}\hypertarget{index_sec_guide}{}\doxysection{User guide}\label{index_sec_guide}
+The software is separated in three parts\+:
+\begin{DoxyItemize}
+\item Image segmentation
+\item White Monte Carlo simulations
+\item 
+\end{DoxyItemize}\hypertarget{index_img_seg}{}\doxysubsection{1) Image segmentation}\label{index_img_seg}
+To simulate the light propagation within the brain tissue, a model of brain tissue needs to be created. A real RGB image of brain exposed cortex is taken as the input. This image is then segmented into six classes using the python script\+: \char`\"{}manual\+\_\+segmentation.\+py\char`\"{}\+:
+\begin{DoxyItemize}
+\item Non activated grey matter
+\item Non activated large blood vessels
+\item Non activated capillaries
+\item Activated grey matter
+\item Activated large blood vessels
+\item Activated capillaries
+\end{DoxyItemize}
+
+The results of this segmentation step are written in the folder \char`\"{}images\char`\"{}.\hypertarget{index_sec_simu}{}\doxysubsection{2) Simulations}\label{index_sec_simu}
+In the folder \char`\"{}run\+\_\+simulations\char`\"{} several scripts can be used to process white Monte Carlo simulations\+:
+
+a) \char`\"{}run\+\_\+simulations.\+m\char`\"{} This script is used to compute White Monte Carlo simulations. This script can be executed on a cluster. For this purpose, the bash script \char`\"{}run\+\_\+simulations.\+sh\char`\"{} need to be used.
+
+The input that need to be indicated in the matlab script are\+:
+
+
+\begin{DoxyItemize}
+\item The resolution of the volume in mm (parameter model\+\_\+resolution\+\_\+in\+\_\+mm). If 0, the resolution is the same as the input image.
+\item Wavelength to be simulated, array or scalar (parameter Lambdas)
+\item Parameter run\+\_\+in\+\_\+cluster, set 0 to process locally and set 1 to use a cluster
+\item Number of Monte Carlo repetitions. Used to increase the SNR (parameter nb\+\_\+repeat)
+\item Number of packets of photons launched on the tissue (parameter nb\+\_\+photons)
+\item Path for outputs (parameter out\+\_\+path)
+\item Input image path that contain images creates at step 1) (parameter in\+\_\+img\+\_\+path)
+\end{DoxyItemize}
+
+The outputs are\+:
+\begin{DoxyItemize}
+\item zip file for each simulated wavelength. A zip file contain 4 txt files (partial path length, position of exiting photons, angle of exiting photons, tissue optical properties at the considered wavelength).
+\item mat and txt file that contain simulation information
+\end{DoxyItemize}
+
+b) \char`\"{}process\+\_\+\+Hypercubes.\+m\char`\"{}
+
+This script can be used to reconstruct hypercubes (diffuse reflectance and mean path length images) after the execution of script a) \char`\"{}run\+\_\+simulations.\+m\char`\"{} !!!! Caution !!!! This script can only be executed when using a small number of photons. Otherwise please use the C++ software.
+
+b) \char`\"{}process\+\_\+\+Hypercubes.\+m\char`\"{}
+
+This script can be used to reconstruct hypercubes (diffuse reflectance and mean path length images) after the execution of script a) \char`\"{}run\+\_\+simulations.\+m\char`\"{} !!!! Caution !!!! This script can only be executed when using a small number of photons. Otherwise please use the C++ software.
+
+c) \char`\"{}run\+\_\+simu\+\_\+and\+\_\+process\+\_\+\+Hypercubes.\+m\char`\"{}
+
+This script can be used to simulate light propagation in tissue and reconstruct hypercubes (diffuse reflectance and mean path length images). !!!! Caution !!!! This script can only be executed when using a small number of photons. Otherwise please use the C++ software. 
