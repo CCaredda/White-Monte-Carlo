@@ -1,8 +1,8 @@
 clear
 close all
 
-model_resolution_in_mm = 0;
-% model_resolution_in_mm = 0.2;
+% model_resolution_in_mm = 0;
+model_resolution_in_mm = 0.2;
 % Lambdas = 500:10:900;
 % run_in_cluster = 1;
 
@@ -12,7 +12,7 @@ Lambdas = 500;
 run_in_cluster = 0;
 nb_repeat = 1;
 % nb_repeat = 1;
-nb_photons = 1e6;
+nb_photons = 1e2;% 1e6;
 
 out_path = 'output/';
 in_img_path = '../images/Patient1/';
@@ -21,7 +21,6 @@ in_img_path = '../images/Patient1/';
 
 % Add path
 addpath('../functions');
-addpath('../functions/Optical_coefficients');
 if run_in_cluster == 1
     addpath('/pbs/home/c/ccaredda/private/mcx/utils');
     addpath('/pbs/home/c/ccaredda/private/mcxlab');
@@ -49,10 +48,13 @@ fprintf(f,'%s %d\n','vol_rows ',size(info_model.cfg.vol,1));
 fprintf(f,'%s %d\n','vol_cols ',size(info_model.cfg.vol,2));
 fclose(f);
 
+%Process optical properties
+Optical_prop = process_optical_properties(Lambdas);
+
 % process simulations
 for l=1:length(Lambdas)
     disp(strcat("Similation lambda ",num2str(Lambdas(l))))
-    output_det = process_simulations(Lambdas(l),info_model.cfg);
+    output_det = process_simulations(squeeze(Optical_prop(l,:,:)),info_model.cfg);
 
     % %  % detector output
     % % output_det.ppath = detphoton.ppath; % cummulative path lengths in each medium (partial pathlength) one need to multiply cfg.unitinmm with ppath to convert it to mm.

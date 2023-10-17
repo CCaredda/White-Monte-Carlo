@@ -18,7 +18,6 @@ use_parfor = 1;
 
 
 % Add path
-addpath('../functions');
 addpath('../functions/Optical_coefficients');
 if run_in_cluster == 1
     addpath('/pbs/home/c/ccaredda/private/mcx/utils');

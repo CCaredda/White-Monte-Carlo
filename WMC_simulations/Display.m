@@ -1,7 +1,3 @@
-%%
-
-## @brief test
-
 %% get Hypercube
 
 clear
