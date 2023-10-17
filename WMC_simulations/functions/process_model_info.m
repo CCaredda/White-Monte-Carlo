@@ -1,7 +1,5 @@
 function [info_model] = process_model_info(nb_photons,nb_repeat,in_img_path,model_resolution_in_mm)
 
-
-
     % Number of photons
     cfg.nphoton=nb_photons; 
 

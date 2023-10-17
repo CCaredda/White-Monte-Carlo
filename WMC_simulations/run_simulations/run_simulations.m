@@ -39,6 +39,7 @@ end
 
 %Process model info
 info_model = process_model_info(nb_photons,nb_repeat,in_img_path,model_resolution_in_mm);
+
 save(strcat(out_path,'cst.mat'),'info_model');
 f = fopen(strcat(out_path,'cst.txt'),'w');
 fprintf(f,'%s %d\n','nb_photons ',nb_photons);
