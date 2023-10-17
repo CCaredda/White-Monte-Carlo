@@ -103,17 +103,17 @@ function [optical_prop] = process_optical_properties(Lambdas)
         %Air
         optical_prop(l,1,:) = [0 0 1 1];
         %Grey matter
-        optical_prop(l,2,:) = [mua_GM mus_GM g_GM n_GM];
+        optical_prop(l,2,:) = [mua_GM(l) mus_GM(l) g_GM n_GM];
         %Large blood vessels
-        optical_prop(l,3,:) = [mua_LBV mus_LBV g_LBV n_LBV];
+        optical_prop(l,3,:) = [mua_LBV(l) mus_LBV(l) g_LBV n_LBV];
         %Capillaries
-        optical_prop(l,4,:) = [mua_Cap mus_Cap g_Cap n_Cap];
+        optical_prop(l,4,:) = [mua_Cap(l) mus_Cap(l) g_Cap n_Cap];
         %Activated grey matter
-        optical_prop(l,5,:) = [mua_act_GM mus_act_GM g_act_GM n_act_GM];
+        optical_prop(l,5,:) = [mua_act_GM(l) mus_act_GM(l) g_act_GM n_act_GM];
         %Activated Large blood vessels
-        optical_prop(l,6,:) = [mua_act_LBV mus_act_LBV g_act_LBV n_act_LBV];
+        optical_prop(l,6,:) = [mua_act_LBV(l) mus_act_LBV(l) g_act_LBV n_act_LBV];
         %Activated Capillaries
-        optical_prop(l,7,:) = [mua_act_Cap mus_act_Cap g_act_Cap n_act_Cap];
+        optical_prop(l,7,:) = [mua_act_Cap(l) mus_act_Cap(l) g_act_Cap n_act_Cap];
 
     end  
     

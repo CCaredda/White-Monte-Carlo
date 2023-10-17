@@ -43,6 +43,7 @@ function [info_model] = process_model_info(nb_photons,nb_repeat,in_img_path,mode
 
         % Voxel size in mm
         cfg.unitinmm = 1;
+        resolution_xyz = 1;
         
         % Create volume
         radius = 4;
