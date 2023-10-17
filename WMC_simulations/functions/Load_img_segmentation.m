@@ -5,103 +5,81 @@ function [mask_segmentation,resolution_xyz] = Load_img_segmentation(path,output_
 %output_resolution_in_mm: desired resolution in mm. If 0, use input image
 %resolution
 
-    if (strcmp(path,'Simple shape') || isempty(path)) %Define simple shape 
-        resolution_xyz = 1;
-        mask_segmentation.large_vessels = zeros(32,32);
-        mask_segmentation.activated_large_vessels = zeros(32,32);
-        mask_segmentation.capillaries = zeros(32,32);
-        mask_segmentation.activated_capillaries = zeros(32,32);
+    %Resolution in x,y and z axes
+    if ~ isfile(strcat(path,'resolution.txt'))
+        disp('resolution.txt is missing');
+        exit
+    end
+    
+     % Load resolution
+     resolution_xyz = dlmread(strcat(path,'resolution.txt')); 
+     
+     
 
-        mask_segmentation.grey_matter = ones(32,32);
-        %Activated grey matter
-        radius = 4;
-        act_GM = zeros(32,32);
-        act_GM(16-radius:16+radius,16-radius:16+radius) = 1;
-        mask_segmentation.activated_grey_matter = act_GM;
+    if ~ isfile(strcat(path,'mask_large_vessels.png'))
+         disp('mask_large_vessels.png is missing');
+         exit
+    end
 
-    else %Load segmentation
-        
-        %Resolution in x,y and z axes
-        if ~ isfile(strcat(path,'resolution.txt'))
-            disp('resolution.txt is missing');
-            exit
-        end
-        
-         % Load resolution
-         resolution_xyz = dlmread(strcat(path,'resolution.txt')); 
-         
-         
-    
-        if ~ isfile(strcat(path,'mask_large_vessels.png'))
-             disp('mask_large_vessels.png is missing');
-             exit
-        end
-    
-        mask_segmentation.large_vessels = imread(strcat(path,'mask_large_vessels.png'));
-    
-    
-        if isfile(strcat(path,'mask_activated_large_vessels.png'))
-            mask_segmentation.activated_large_vessels = imread(strcat(path,'mask_activated_large_vessels.png'));
-        else
-            mask_segmentation.activated_large_vessels = zeros(size(mask_segmentation.large_vessels));
-        end
-    
-    
-        if isfile(strcat(path,'mask_grey_matter.png'))
-            mask_segmentation.grey_matter = imread(strcat(path,'mask_grey_matter.png'));
-        else
-            mask_segmentation.grey_matter = zeros(size(mask_segmentation.large_vessels));
-        end
-    
-    
-        if isfile(strcat(path,'mask_activated_grey_matter.png'))
-            mask_segmentation.activated_grey_matter = imread(strcat(path,'mask_activated_grey_matter.png'));
-        else
-            mask_segmentation.activated_grey_matter = zeros(size(mask_segmentation.large_vessels));
-        end
-    
-    
-        if isfile(strcat(path,'mask_capillaries.png'))
-            mask_segmentation.capillaries = imread(strcat(path,'mask_capillaries.png'));
-        else
-            mask_segmentation.capillaries = zeros(size(mask_segmentation.large_vessels));
-        end
-    
-    
-        if isfile(strcat(path,'mask_activated_capillaries.png'))
-            mask_segmentation.activated_capillaries = imread(strcat(path,'mask_activated_capillaries.png'));
-        else
-            mask_segmentation.activated_capillaries = zeros(size(mask_segmentation.large_vessels));
-        end
-    
-    
-        % Change the resolution 
-        if output_resolution_in_mm > 0 && output_resolution_in_mm>resolution_xyz && floor(output_resolution_in_mm/resolution_xyz)>1   
-    
-            disp('Resize segmentations');
-            %compute new image size
-            binning = floor(output_resolution_in_mm/resolution_xyz);
-    
-            rows = floor(size(mask_segmentation.large_vessels,1)/binning);
-            cols = floor(size(mask_segmentation.large_vessels,2)/binning);
-    
-            resolution_xyz = binning*resolution_xyz;
-    
-    
-            % Resize segmentation masks
-            mask_segmentation.large_vessels = imresize(mask_segmentation.large_vessels,[rows,cols]);
-            mask_segmentation.activated_large_vessels = imresize(mask_segmentation.activated_large_vessels,[rows,cols]);
-            mask_segmentation.grey_matter = imresize(mask_segmentation.grey_matter,[rows,cols]);
-            mask_segmentation.activated_grey_matter = imresize(mask_segmentation.activated_grey_matter,[rows,cols]);
-            mask_segmentation.capillaries = imresize(mask_segmentation.capillaries,[rows,cols]);
-            mask_segmentation.activated_capillaries = imresize(mask_segmentation.activated_capillaries,[rows,cols]);
-        end
+    mask_segmentation.large_vessels = imread(strcat(path,'mask_large_vessels.png'));
 
 
+    if isfile(strcat(path,'mask_activated_large_vessels.png'))
+        mask_segmentation.activated_large_vessels = imread(strcat(path,'mask_activated_large_vessels.png'));
+    else
+        mask_segmentation.activated_large_vessels = zeros(size(mask_segmentation.large_vessels));
     end
 
 
-    
+    if isfile(strcat(path,'mask_grey_matter.png'))
+        mask_segmentation.grey_matter = imread(strcat(path,'mask_grey_matter.png'));
+    else
+        mask_segmentation.grey_matter = zeros(size(mask_segmentation.large_vessels));
+    end
+
+
+    if isfile(strcat(path,'mask_activated_grey_matter.png'))
+        mask_segmentation.activated_grey_matter = imread(strcat(path,'mask_activated_grey_matter.png'));
+    else
+        mask_segmentation.activated_grey_matter = zeros(size(mask_segmentation.large_vessels));
+    end
+
+
+    if isfile(strcat(path,'mask_capillaries.png'))
+        mask_segmentation.capillaries = imread(strcat(path,'mask_capillaries.png'));
+    else
+        mask_segmentation.capillaries = zeros(size(mask_segmentation.large_vessels));
+    end
+
+
+    if isfile(strcat(path,'mask_activated_capillaries.png'))
+        mask_segmentation.activated_capillaries = imread(strcat(path,'mask_activated_capillaries.png'));
+    else
+        mask_segmentation.activated_capillaries = zeros(size(mask_segmentation.large_vessels));
+    end
+
+
+    % Change the resolution 
+    if output_resolution_in_mm > 0 && output_resolution_in_mm>resolution_xyz && floor(output_resolution_in_mm/resolution_xyz)>1   
+
+        disp('Resize segmentations');
+        %compute new image size
+        binning = floor(output_resolution_in_mm/resolution_xyz);
+
+        rows = floor(size(mask_segmentation.large_vessels,1)/binning);
+        cols = floor(size(mask_segmentation.large_vessels,2)/binning);
+
+        resolution_xyz = binning*resolution_xyz;
+
+
+        % Resize segmentation masks
+        mask_segmentation.large_vessels = imresize(mask_segmentation.large_vessels,[rows,cols]);
+        mask_segmentation.activated_large_vessels = imresize(mask_segmentation.activated_large_vessels,[rows,cols]);
+        mask_segmentation.grey_matter = imresize(mask_segmentation.grey_matter,[rows,cols]);
+        mask_segmentation.activated_grey_matter = imresize(mask_segmentation.activated_grey_matter,[rows,cols]);
+        mask_segmentation.capillaries = imresize(mask_segmentation.capillaries,[rows,cols]);
+        mask_segmentation.activated_capillaries = imresize(mask_segmentation.activated_capillaries,[rows,cols]);
+    end 
 
 
 end

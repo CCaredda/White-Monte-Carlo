@@ -30,28 +30,47 @@ function [info_model] = process_model_info(nb_photons,nb_repeat,in_img_path,mode
     %% Load image segmentation and compute volume
     %%-----------------------------------------------------------------
     
-    disp('Get segmentation');
-
-    %Load image and segmentation
-    [img,resolution_xyz] = Load_img_segmentation(in_img_path,model_resolution_in_mm);
-
-    % img.activated_large_vessels = zeros(size(img.activated_large_vessels)); 
-    % img.activated_grey_matter = zeros(size(img.activated_large_vessels)); 
-    % img.activated_capillaries = zeros(size(img.activated_large_vessels)); 
-
-    % Voxel size in mm
-    cfg.unitinmm = resolution_xyz; % Units in mm
-    
-    disp('Create volume');
-    % Create volume
+    % Volume
     % 1: Grey matter
     % 2: Large blood vessel
     % 3: Capillaries
     % 4: Activated grey matter
     % 5: Activated large vessel
     % 6: Activated capillaries
-    cfg.vol = create_volume(img,resolution_xyz,cfg.issaveref);
+
+    if (strcmp(in_img_path,"Simple shape") || isempty(in_img_path))
+        disp('Compute simple shape');
+
+        % Voxel size in mm
+        cfg.unitinmm = 1;
+        
+        % Create volume
+        radius = 4;
+        cfg.vol = ones(32,32,30); %grey matter
+        cfg.vol(floor(size(cfg.vol,1)/2)-radius:floor(size(cfg.vol,1)/2)+radius, ...
+            floor(size(cfg.vol,2)/2)-radius:floor(size(cfg.vol,2)/2)+radius, ...
+            1:radius) = 4; %activated grey matter
+
+    else
+        disp('Get segmentation');
+
+        %Load image and segmentation
+        [img,resolution_xyz] = Load_img_segmentation(in_img_path,model_resolution_in_mm);
     
+        % Voxel size in mm
+        cfg.unitinmm = resolution_xyz; % Units in mm
+        
+        disp('Create volume');
+        % Create volume
+        % 1: Grey matter
+        % 2: Large blood vessel
+        % 3: Capillaries
+        % 4: Activated grey matter
+        % 5: Activated large vessel
+        % 6: Activated capillaries
+        cfg.vol = create_volume(img,resolution_xyz,cfg.issaveref);
+    end
+
     clear img;
     
     
