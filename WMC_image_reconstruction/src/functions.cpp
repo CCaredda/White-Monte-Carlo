@@ -200,9 +200,9 @@ void getTransferMatrix(_lens_sensor &system)
 void get_Diffuse_reflectance_Pathlength(int binning,int nb_photons,int repetitions, const Mat &mua, int out_img_rows, int out_img_cols,
                                         float area_detector,float unit_tissue_in_mm,Mat *ppath, Mat *p,Mat &dr, Mat &mp)
 {
-    qDebug()<<"Get diffuse reflectance and pathlength";
-    qDebug()<<"get_Diffuse_reflectance_Pathlength mua "<<mua.at<float>(0,0);
-    qDebug()<<"get_Diffuse_reflectance_Pathlength ppath "<<ppath->at<float>(0,0);
+//    qDebug()<<"Get diffuse reflectance and pathlength";
+//    qDebug()<<"get_Diffuse_reflectance_Pathlength mua "<<mua.at<float>(0,0);
+//    qDebug()<<"get_Diffuse_reflectance_Pathlength ppath "<<ppath->at<float>(0,0);
 
 
     //check size
@@ -213,8 +213,8 @@ void get_Diffuse_reflectance_Pathlength(int binning,int nb_photons,int repetitio
     }
 
 
-    QElapsedTimer timer;
-    timer.start();
+//    QElapsedTimer timer;
+//    timer.start();
 
     //Init mean path and diffuse reflectance img
     mp = Mat::zeros(out_img_rows,out_img_cols,CV_32FC1);
@@ -269,7 +269,7 @@ void get_Diffuse_reflectance_Pathlength(int binning,int nb_photons,int repetitio
 
 
     //normalize mean path length with the sum of the weights
-    qDebug()<<"Normalize";
+//    qDebug()<<"Normalize";
     #pragma omp parallel
     {
     //        int nb_thread = omp_get_num_threads();
@@ -282,7 +282,7 @@ void get_Diffuse_reflectance_Pathlength(int binning,int nb_photons,int repetitio
     }
 
     //Remove first, last columns and rows
-    qDebug()<<"rect";
+//    qDebug()<<"rect";
     Rect rect(1,1,out_img_cols-2,out_img_rows-2);
     mp = mp(rect);
     dr = dr(rect);

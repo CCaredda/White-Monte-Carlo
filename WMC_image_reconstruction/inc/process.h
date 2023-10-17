@@ -112,8 +112,9 @@ private:
     /** calculate diffuse reflectance pathlength img without lens and sensor optics.
      *  Images are reconstructed at the tissue surface
      *  @param mua matrix of absorption changes (in mm-1). Size: number of class x time
-     *  @param w wavelength (in nm) */
-    void _Create_Diffuse_reflectance_Pathlength_Img(const Mat &mua, int w);
+     *  @param w wavelength (in nm)
+     *  @param t temporal index */
+    void _Create_Diffuse_reflectance_Pathlength_Img(const Mat &mua, int w, int t);
 
     /** calculate diffuse reflectance pathlength img with lens and sensor modelling.
      *  @param mua matrix of absorption changes (in mm-1). Size: number of class x time

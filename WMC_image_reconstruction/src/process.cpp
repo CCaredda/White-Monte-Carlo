@@ -261,14 +261,18 @@ bool Process::_Process(int w)
     //Calculate mua (size: (size Nb of class; time)) in mm-1
     Mat mua = get_mua(_M_optical_changes,_M_mua_H2O[_M_id_w],_M_mua_Fat[_M_id_w],_M_eps_HbO2[_M_id_w],_M_eps_Hb[_M_id_w],_M_eps_oxCCO[_M_id_w],_M_eps_redCCO[_M_id_w]);
 
-    qDebug()<<"mua "<<w<<" "<<mua.at<float>(0,0);
 
     //Check if data have been correctly loaded
     int T = mua.cols;
 
     //For loop over time
-    for(int t=0;t<T;t++)
-        _Create_Diffuse_reflectance_Pathlength_Img(mua.col(t),w);
+    #pragma omp parallel
+    {
+//        int nb_thread = omp_get_num_threads();
+        #pragma omp for
+        for(int t=0;t<T;t++)
+            _Create_Diffuse_reflectance_Pathlength_Img(mua.col(t),w,t);
+    }
 
     emit processing("Process terminated in "+QString::number(timer.elapsed()/1000)+"s");
 
@@ -276,6 +280,7 @@ bool Process::_Process(int w)
 
     return true;
 }
+
 
 /** set Wavelength to analyze
  *  @param w wavelength that is required to be anlyzed (in nm) */
@@ -496,10 +501,10 @@ void Process::newLensSensorDesign(_lens_sensor &lens)
  *  Images are reconstructed at the tissue surface
  *  @param mua matrix of absorption changes (in mm-1). Size: number of class x time
  *  @param w wavelength (in nm) */
-void Process::_Create_Diffuse_reflectance_Pathlength_Img(const Mat &mua,int w)
+void Process::_Create_Diffuse_reflectance_Pathlength_Img(const Mat &mua,int w,int t)
 {
-    QElapsedTimer timer;
-    timer.start();
+//    QElapsedTimer timer;
+//    timer.start();
 
     //outputs
     Mat mp,dr;
@@ -512,7 +517,7 @@ void Process::_Create_Diffuse_reflectance_Pathlength_Img(const Mat &mua,int w)
 
     if(!_M_lens_sensor.transfer_Matrix.empty() && _M_model_lens_sensor)
     {
-        name = "sensor_"+QString::number(_M_lens_sensor.y_sensor_mm)+"_"+QString::number(_M_lens_sensor.x_sensor_mm)+"mm"+QString::number(w)+".txt";;
+        name = "sensor_"+QString::number(_M_lens_sensor.y_sensor_mm)+"_"+QString::number(_M_lens_sensor.x_sensor_mm)+"mm"+QString::number(w)+"_t_"+QString::number(t)+".txt";;
 
         //Get position on sensor after lens
         Mat *p = new Mat(*_M_p.getData());
@@ -531,7 +536,7 @@ void Process::_Create_Diffuse_reflectance_Pathlength_Img(const Mat &mua,int w)
     else
     {
         //name output file
-        name = "surface_"+QString::number(w)+"_binning_"+QString::number(_M_binning)+".txt";
+        name = "surface_"+QString::number(w)+"_binning_"+QString::number(_M_binning)+"_t_"+QString::number(t)+".txt";
 
         //Area of detector
         reso_x = _M_binning*_M_info_simus.unit_in_mm;
@@ -548,7 +553,7 @@ void Process::_Create_Diffuse_reflectance_Pathlength_Img(const Mat &mua,int w)
 
 
 
-    qDebug()<<"Write images";
+//    qDebug()<<"Write images";
     WriteFloatImg(_M_saving_dir+"/mp_"+name,mp);
     WriteFloatImg(_M_saving_dir+"/dr_"+name,dr);
 
@@ -579,7 +584,7 @@ void Process::_Create_Diffuse_reflectance_Pathlength_Img(const Mat &mua,int w)
     }
 
 
-    qDebug()<<"Compute diffuse reflectance and mean path length images: "<<timer.elapsed()/1000<<"s";
+//    qDebug()<<"Compute diffuse reflectance and mean path length images: "<<timer.elapsed()/1000<<"s";
 
 }
 
