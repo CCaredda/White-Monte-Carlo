@@ -48,6 +48,8 @@ directory_path = "/home/caredda/DVP/simulation/CREATIS-UCL-White-Monte-Carlo-Fra
 path = directory_path+"images/Patient1/"
 img = cv.imread(path+"initial_img.png")
 mask = cv.imread(path+"mask.png",cv.IMREAD_GRAYSCALE)
+mask_act_temp = cv.imread(path+"mask_activity.png")
+
 
 #find boundrect of the contour of mask
 contours, hierarchy = cv.findContours(np.copy(mask), cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
@@ -55,7 +57,7 @@ x,y,w,h = cv.boundingRect(contours[0])
 
 mask = mask[y:y+h,x:x+w]
 img = img[y:y+h,x:x+w,:]
-
+mask_act_temp = mask_act_temp[y:y+h,x:x+w,:]
 
 
 # Apply histrogtamm equalization
@@ -98,8 +100,8 @@ plt.show()
 ## identify label of large blood vessels and capillaries
 
 #Define Labels
-label_BV = np.array([9,3])
-label_capillaries = np.array([2])
+label_BV = np.array([7,4])
+label_capillaries = np.array([9])
 
 
 
@@ -167,20 +169,15 @@ mask_GM = np.bitwise_and(np.bitwise_not(mask_large_vessels),np.bitwise_not(mask_
 
 ## Select functional brain areas
 
-plt.close('all')
-plt.imshow(img)
-plt.show()
+mask_act_temp = cv.cvtColor(mask_act_temp,cv.COLOR_BGR2GRAY)
+mask_activation = np.zeros(mask_act_temp.shape)
+mask_activation[mask_act_temp==0] = 255
+mask_activation = mask_activation.astype(np.uint8)
+mask_activation = np.bitwise_and(mask,mask_activation)
 
-rows = np.array([198, 56, 187, 336])
-cols = np.array([101, 231, 236, 143])
-radius = 30
 
 ## Create segmentation mask
 
-mask_activation = np.zeros(mask.shape)
-for i in range(rows.shape[0]):
-    cv.circle(mask_activation,(cols[i],rows[i]),radius,255,cv.FILLED)
-mask_activation = mask_activation.astype(np.uint8)
 
 #mask actvated grey matter
 mask_activated_grey_matter = np.bitwise_and(mask_activation,mask_GM)

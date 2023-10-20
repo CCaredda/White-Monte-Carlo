@@ -38,6 +38,9 @@ public:
      *  @param w wavelength that is required to be anlyzed (in nm) */
     void setWavelength(int w);
 
+    /** Read optical changes */
+    void ReadOpticalChanges(QString dir);
+
 
 
 protected:
@@ -98,9 +101,6 @@ private:
 
     /** Load data at selected wavelength */
     void _Load_Simulation_Data(int w);
-
-    /** Get optical changes */
-    void _getOpticalChanges();
 
     /** Get epsilon and mua coefficients */
     void _get_mua_epsilon();

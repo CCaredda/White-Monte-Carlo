@@ -103,9 +103,6 @@ Process::Process(QObject *parent)
     qDebug()<<"Read epsilon";
     _get_mua_epsilon();
 
-    qDebug()<<"Read optical changes";
-    //get Optical changes
-    _getOpticalChanges();
 }
 
 
@@ -318,8 +315,8 @@ void Process::_setWavelength(int w)
 }
 
 
-/** Get optical changes */
-void Process::_getOpticalChanges()
+/** Read optical changes */
+void Process::ReadOpticalChanges(QString dir)
 {
     //init optical changes
     _M_optical_changes.clear();
@@ -341,7 +338,8 @@ void Process::_getOpticalChanges()
         //Size(Chromophores, time)
         Mat temp;
 
-        _M_optical_changes_data_ready = _M_optical_changes_data_ready && _M_loadData.ReadArray(QString(PROPATH)+"/optical_changes/"+_M_class_names[i]+".txt",temp);
+//        _M_optical_changes_data_ready = _M_optical_changes_data_ready && _M_loadData.ReadArray(QString(PROPATH)+"/optical_changes/"+_M_class_names[i]+".txt",temp);
+        _M_optical_changes_data_ready = _M_optical_changes_data_ready && _M_loadData.ReadArray(dir+"/"+_M_class_names[i]+".txt",temp);
 
         // Check data
         if (temp.empty())
@@ -381,6 +379,7 @@ void Process::_get_mua_epsilon()
     _M_mua_eps_data_ready = _M_mua_eps_data_ready && _M_loadData.ReadVector(QString(PROPATH)+"/../spectra/mua_Fat.txt",_M_mua_Fat);
     _M_mua_eps_data_ready = _M_mua_eps_data_ready && _M_loadData.ReadVector(QString(PROPATH)+"/../spectra/mua_H2O.txt",_M_mua_H2O);
 
+
     qDebug()<<"Mua and eps data ready"<<_M_mua_eps_data_ready;
 }
 /** Set simulation directory
@@ -411,7 +410,8 @@ void Process::setSimulationDir(QString s)
         dir.mkdir(_M_saving_dir);
 
 //    this->start();
-    _Load_Simulation_Data(_M_wavelength_to_process[_M_id_wavelength_to_process]);
+    if(_M_optical_changes_data_ready && _M_mua_eps_data_ready)
+        _Load_Simulation_Data(_M_wavelength_to_process[_M_id_wavelength_to_process]);
 
 }
 

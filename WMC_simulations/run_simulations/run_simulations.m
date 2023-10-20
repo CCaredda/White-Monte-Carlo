@@ -4,14 +4,15 @@ close all
 % model_resolution_in_mm = 0;
 model_resolution_in_mm = 0.2;
 
+% Lambdas = 400:10:490;
 Lambdas = 500;
 run_in_cluster = 0;
-nb_repeat = 1;
-nb_photons = 1e2;% 1e6;
+nb_repeat = 10;%50;
+nb_photons = 1e2;%1e6;
 
 out_path = 'output/';
-% in_img_path = '../images/Patient1/';
-in_img_path = '';
+in_img_path = '../images/Patient1/';
+%in_img_path = '';
 
 
 % Add path

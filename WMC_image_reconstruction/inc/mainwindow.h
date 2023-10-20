@@ -30,6 +30,9 @@ private slots:
     /** Click on directory to select simulations output */
     void onDirSimuclicked();
 
+    /** Click to select directory that contains optical changes */
+    void onDirOpticalChangesClicked();
+
     /** New lens design */
     void onNewLensSensorDesign();
 

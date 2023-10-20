@@ -11,6 +11,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     //Open directory that contains results
     connect(ui->_dir_simu,SIGNAL(pressed()),this,SLOT(onDirSimuclicked()));
+    //Disable button to be sure that optical changes are loaded first
+    ui->_dir_simu->setEnabled(false);
+
+    //Open directory that contains optical changes files
+    connect(ui->_dir_optical_changes,SIGNAL(pressed()),this,SLOT(onDirOpticalChangesClicked()));
+
 
     //progressBar
     connect(&_M_process,SIGNAL(processing(QString)),ui->_progress,SLOT(setText(QString)));
@@ -78,6 +84,25 @@ void MainWindow::onDirSimuclicked()
 
 
     //qDebug()<<ui->_mua_GM->get_mua(_M_data.get_mua_W(),_M_data.get_mua_F(),_M_data.get_eps_HbO2(),_M_data.get_eps_Hb(),_M_data.get_eps_oxCCO(),_M_data.get_eps_redCCO());
+}
+
+
+/** Click to select directory that contains optical changes */
+void MainWindow::onDirOpticalChangesClicked()
+{
+    // get directory
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
+                                                 PROPATH,
+                                                 QFileDialog::ShowDirsOnly
+                                                 | QFileDialog::DontResolveSymlinks);
+
+    // Check if directory is not empty
+    if (dir == "")
+        return;
+
+    ui->_dir_simu->setEnabled(true);
+    ui->_dir_optical_changes_path->setText(dir);
+    _M_process.ReadOpticalChanges(dir);
 }
 
 

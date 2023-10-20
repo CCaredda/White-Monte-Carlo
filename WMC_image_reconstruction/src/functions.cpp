@@ -30,6 +30,7 @@ Mat get_mua(QVector<Mat> &Optical_changes, float mua_W,float mua_F,float eps_HbO
         //Loop over time
         for(int t=0;t<T;t++)
         {
+
             //optical changes (size nb_chromophores; T)
             float W = Optical_changes[n].at<float>(0,t);
             float F = Optical_changes[n].at<float>(1,t);
@@ -37,6 +38,7 @@ Mat get_mua(QVector<Mat> &Optical_changes, float mua_W,float mua_F,float eps_HbO
             float C_Hb = Optical_changes[n].at<float>(3,t);
             float C_oxCCO = Optical_changes[n].at<float>(4,t);
             float C_redCCO = Optical_changes[n].at<float>(5,t);
+
 
             // Compute mua and convert it into mm-1
             mua.at<float>(n,t) = 0.1 * (W*mua_W + F*mua_F +
