@@ -38,12 +38,23 @@ def EqualizeHist(img,mask):
     return np.dstack([r,g,b])
 
 
+##Get image resolution
+x1 = 966
+y1 = 344
+x2 = 958
+y2 = 257
+
+l_px = np.sqrt((x1-x2)**2 + (y1-y2)**2)
+
+reso_mm = 10/l_px
+print(reso_mm)
+
 
 ## Process K-MEans or thresholding
 plt.close('all')
 
 reduce_ROI = False
-crop_img = False
+crop_img = True
 use_greyscale = True
 use_Kmeans = False
 
@@ -58,12 +69,14 @@ K = 10 #Nb of class use by KMeans
 directory_path = "/home/caredda/DVP/simulation/CREATIS-UCL-White-Monte-Carlo-Framework/WMC_simulations/"
 
 # Load image
-path = directory_path+"images/Patient2/"
+path = directory_path+"images/Patient3/"
 img = cv.imread(path+"initial_img.png")
 mask = cv.imread(path+"mask.png",cv.IMREAD_GRAYSCALE)
 
 if (os.path.isfile(path+"mask_activity.png")):
     mask_act_temp = cv.imread(path+"mask_activity.png")
+    if mask_act_temp.ndim ==3:
+        mask_act_temp = cv.cvtColor(mask_act_temp,cv.COLOR_BGR2GRAY)
 else:
     mask_act_temp = 255*np.ones(mask.shape)
 
@@ -75,14 +88,14 @@ if reduce_ROI:
 
     mask = mask[y:y+h,x:x+w]
     img = img[y:y+h,x:x+w,:]
-    mask_act_temp = mask_act_temp[y:y+h,x:x+w,:]
+    mask_act_temp = mask_act_temp[y:y+h,x:x+w]
 
 #Crop image
 if crop_img:
     r1=0
     r2=mask.shape[0]
     c1 = 149
-    c2 = 823
+    c2 = 705
     mask = mask[r1:r2,c1:c2]
     img = img[r1:r2,c1:c2]
     mask_act_temp = mask_act_temp[r1:r2,c1:c2]
@@ -232,8 +245,7 @@ if use_Kmeans:
 
 ## Select functional brain areas
 
-if mask_act_temp.ndim ==3:
-    mask_act_temp = cv.cvtColor(mask_act_temp,cv.COLOR_BGR2GRAY)
+
 mask_activation = np.zeros(mask_act_temp.shape)
 mask_activation[mask_act_temp==0] = 255
 mask_activation = mask_activation.astype(np.uint8)
@@ -276,10 +288,8 @@ plt.show()
 
 ##
 
-cMap = ListedColormap(['grey', 'red', 'magenta','green','yellow','white'])
-label = np.array(["Grey matter","Large blood vessel","Capillaries","Activated grey matter","Activated large vessel","Activated capillaries"])
-index = np.linspace(1 + 1/label.shape[0] ,6-1/label.shape[0],6)
 
+#Mask output
 mask_output = np.ones(mask.shape)
 
 mask_output[mask_large_vessels>0] = 2
@@ -289,23 +299,49 @@ mask_output[mask_activated_grey_matter>0] = 4
 mask_output[mask_activated_large_vessels>0] = 5
 mask_output[mask_activated_capillaries>0] = 6
 
-plt.close('all')
-plt.figure()
-plt.imshow(cv.cvtColor(img,cv.COLOR_BGR2RGB))
+#Mask output display
+mask_output_display = 127*np.ones((mask.shape[0],mask.shape[1],3))
+#Large blood vessels (red)
+mask_output_display[(mask_large_vessels == 255),0] = 0
+mask_output_display[(mask_large_vessels == 255),1] = 0
+mask_output_display[(mask_large_vessels == 255),2] = 255
+#Capillaries (magenta)
+mask_output_display[(mask_capillaries == 255),0] = 255
+mask_output_display[(mask_capillaries == 255),1] = 0
+mask_output_display[(mask_capillaries == 255),2] = 255
+#Activated grey matter (green)
+mask_output_display[(mask_activated_grey_matter == 255),0] = 0
+mask_output_display[(mask_activated_grey_matter == 255),1] = 255
+mask_output_display[(mask_activated_grey_matter == 255),2] = 0
+#Activated large vessels (yellow)
+mask_output_display[(mask_activated_large_vessels == 255),0] = 0
+mask_output_display[(mask_activated_large_vessels == 255),1] = 255
+mask_output_display[(mask_activated_large_vessels == 255),2] = 255
+#Activated capillaries (white)
+mask_output_display[(mask_activated_capillaries == 255),0] = 255
+mask_output_display[(mask_activated_capillaries == 255),1] = 255
+mask_output_display[(mask_activated_capillaries == 255),2] = 255
 
-plt.figure()
-plt.imshow(output)
 
-plt.figure()
-heatmap = plt.imshow(mask_output,cmap = cMap)
+# cMap = ListedColormap(['grey', 'red', 'magenta','green','yellow','white'])
+# label = np.array(["Grey matter","Large blood vessel","Capillaries","Activated grey matter","Activated large vessel","Activated capillaries"])
+# index = np.linspace(1 + 1/label.shape[0] ,6-1/label.shape[0],6)
 
-cbar = plt.colorbar(heatmap)
-for i in range(label.shape[0]):
-    cbar.ax.text(.5, index[i], label[i], ha='left', va='center')
-cbar.ax.get_yaxis().labelpad = 15
-cbar.ax.get_yaxis().set_ticks([])
-
-plt.show()
+# plt.close('all')
+# plt.figure()
+# plt.imshow(cv.cvtColor(img,cv.COLOR_BGR2RGB))
+#
+#
+# plt.figure()
+# heatmap = plt.imshow(mask_output,cmap = cMap)
+#
+# cbar = plt.colorbar(heatmap)
+# for i in range(label.shape[0]):
+#     cbar.ax.text(.5, index[i], label[i], ha='left', va='center')
+# cbar.ax.get_yaxis().labelpad = 15
+# cbar.ax.get_yaxis().set_ticks([])
+#
+# plt.show()
 
 
 
@@ -318,7 +354,9 @@ cv.imwrite(path+"mask_activated_large_vessels.png",mask_activated_large_vessels/
 cv.imwrite(path+"mask_capillaries.png",mask_capillaries/255)
 cv.imwrite(path+"mask_activated_capillaries.png",mask_activated_capillaries/255)
 
-# cv.imwrite(path+"mask_segmentation.png",mask_output)
+cv.imwrite(path+"mask_segmentation.png",mask_output)
+cv.imwrite(path+"mask_segmentation_display.png",mask_output_display)
+
 
 # plt.figure()
 # plt.imshow(mask_output)
