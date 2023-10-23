@@ -45,7 +45,7 @@ Process::Process(QObject *parent)
 
     //Wavelenfth to process
     _M_wavelength_to_process.clear();
-    for(int i=500;i<910;i+=10)
+    for(int i=400;i<1010;i+=10)
         _M_wavelength_to_process.push_back(i);
 
 
