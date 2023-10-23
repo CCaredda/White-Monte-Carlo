@@ -8,3 +8,8 @@ The columns represent chromophore changes over time (Delimiter have to be space)
 5 C_oxCCO in (Mol)
 6 C_redCCO in (Mol)
 
+
+Fantini, Sergio. "Dynamic model for the tissue concentration and oxygen saturation of hemoglobin in relation to blood volume, flow velocity, and oxygen consumption: Implications for functional neuroimaging and coherent hemodynamics spectroscopy (CHS)." Neuroimage 85 (2014): 202-221.
+SatO2 in capillary : 0.74
+SatO2 in arteries : 0.98
+
