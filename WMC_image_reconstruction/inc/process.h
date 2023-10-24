@@ -38,9 +38,12 @@ public:
      *  @param w wavelength that is required to be anlyzed (in nm) */
     void setWavelength(int w);
 
+    /** Set wavelength range (for multi wavelength reconstruction)
+     *  within the range [start:stop] by steps of step. */
+    void setWavelengthRange(int start,int end, int step);
+
     /** Read optical changes */
     void ReadOpticalChanges(QString dir);
-
 
 
 protected:

@@ -103,6 +103,8 @@ Details</h2>
 </ul>
 <h1><a class="anchor" id="sec_guide"></a>
 User guide</h1>
+<h2><a class="anchor" id="sec_optical_changes"></a>
+1) Model optical changes</h2>
 <p>This software aims to reconstruct hypercubes : images of diffuse reflectance and mean path length for N wavelengths. It is also possible to generate T hypercubes for modeling optical changes over time such as:</p><ul>
 <li>Hemodynamic and metabolic responses following cerebral activity</li>
 <li>Hemodynamic changes due to heartbeat and respiratory</li>
@@ -123,7 +125,21 @@ User guide</h1>
 <li>Line 5 C_oxCCO in (Mol)</li>
 <li>Line 6 C_redCCO in (Mol)</li>
 </ul>
-<p>The columns represent chromophore changes over time (Delimiters have to be space) </p>
+<p>The columns represent chromophore changes over time (Delimiters have to be space). The matlab script "compute_optical_changes.m" can be used to automatically generate the txt files.</p>
+<h2><a class="anchor" id="sec_Qt"></a>
+1) Data reconstruction using the C++ software</h2>
+<p>a) Open the Qt project (open project file "Process_WMC_reconstruction.pro")</p>
+<p>b) Compile using Release mode</p>
+<p>c) Use the software for data reconstruction</p>
+<ul>
+<li>If the box "Display reconstruction (1 wavelength)" is checked, only one wavelength will be reconstructed (choose the wavelength)</li>
+<li>If the box is unchecked, several wavelengths will be reconstructed (choose the wavelengths)</li>
+<li>Choose the binning, tick the box "Lens and sensor" if you want to model optics. Otherwise, data will be reconstructed at the surface of the tissue volume.</li>
+<li>Load the optical changes files</li>
+<li>Load the directory that contains the simulation results (.zip files)</li>
+</ul>
+<p>Results will be written in txt files in a folder "results". For each wavelength, two files will be created (mean path and diffuse reflectance).</p>
+<p>d) Use the python script "create_Hypercubes_from_txt.py" to compute the Hypercubes and save it in .npz file </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->

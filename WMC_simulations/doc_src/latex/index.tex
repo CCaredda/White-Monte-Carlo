@@ -12,6 +12,8 @@ This software has been developed for the European project Hyperprobe which aims 
 Author\+: Charly Caredda Contact\+: \href{mailto:caredda.c@gmail.com}{\texttt{ caredda.\+c@gmail.\+com}}\hypertarget{index_install_sec}{}\doxysection{Installation}\label{index_install_sec}
 This program has be tested under Fedora 38 and Ubuntu. Problem may occur under other operating system. This program is coded in Python and Matlab. Matlab and Python need to be installed.
 
+The matlab software MCXLab need to be downloaded\+: \href{https://mcx.space/wiki/?Get}{\texttt{ https\+://mcx.\+space/wiki/?\+Get}} Please download the latest version.
+
 For Python, several libraries need to be installed\+:
 
 
@@ -23,7 +25,6 @@ The software is separated in three parts\+:
 \begin{DoxyItemize}
 \item Image segmentation
 \item White Monte Carlo simulations
-\item 
 \end{DoxyItemize}\hypertarget{index_img_seg}{}\doxysubsection{1) Image segmentation}\label{index_img_seg}
 To simulate the light propagation within the brain tissue, a model of brain tissue needs to be created. A real RGB image of brain exposed cortex is taken as the input. This image is then segmented into six classes using the python script\+: \char`\"{}manual\+\_\+segmentation.\+py\char`\"{}\+:
 \begin{DoxyItemize}
@@ -35,7 +36,14 @@ To simulate the light propagation within the brain tissue, a model of brain tiss
 \item Activated capillaries
 \end{DoxyItemize}
 
-The results of this segmentation step are written in the folder \char`\"{}images\char`\"{}.\hypertarget{index_sec_simu}{}\doxysubsection{2) Simulations}\label{index_sec_simu}
+The results of this segmentation step are written in the folder \char`\"{}images/\+Patientx\char`\"{}. A folder Patientx needs to created prior to the execution of the python script. It must contains\+:
+\begin{DoxyItemize}
+\item the input image \char`\"{}initial\+\_\+img.\+png\char`\"{}
+\item the mask of the surgical window \char`\"{}mask.\+png\char`\"{}
+\item if you want to model activated areas, a mask need to be created. For this copy the input image \char`\"{}initial\+\_\+img.\+png\char`\"{} into \char`\"{}mask\+\_\+activity.\+png\char`\"{} and color the activated area in red.
+\end{DoxyItemize}
+
+Some variables in the script need to be changed (data path and other variables)\hypertarget{index_sec_simu}{}\doxysubsection{2) Simulations}\label{index_sec_simu}
 In the folder \char`\"{}run\+\_\+simulations\char`\"{} several scripts can be used to process white Monte Carlo simulations\+:
 
 a) \char`\"{}run\+\_\+simulations.\+m\char`\"{} This script is used to compute White Monte Carlo simulations. This script can be executed on a cluster. For this purpose, the bash script \char`\"{}run\+\_\+simulations.\+sh\char`\"{} need to be used.
@@ -58,10 +66,6 @@ The outputs are\+:
 \item zip file for each simulated wavelength. A zip file contain 4 txt files (partial path length, position of exiting photons, angle of exiting photons, tissue optical properties at the considered wavelength).
 \item mat and txt file that contain simulation information
 \end{DoxyItemize}
-
-b) \char`\"{}process\+\_\+\+Hypercubes.\+m\char`\"{}
-
-This script can be used to reconstruct hypercubes (diffuse reflectance and mean path length images) after the execution of script a) \char`\"{}run\+\_\+simulations.\+m\char`\"{} !!!! Caution !!!! This script can only be executed when using a small number of photons. Otherwise please use the C++ software.
 
 b) \char`\"{}process\+\_\+\+Hypercubes.\+m\char`\"{}
 

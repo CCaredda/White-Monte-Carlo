@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['label_5fbv_0',['label_BV',['../manual__segmentation_8py.html#a9003334d75a76591c25a68f02a4a66d8',1,'manual_segmentation']]]
+  ['mask_5factivation_0',['mask_activation',['../manual__segmentation_8py.html#aaaf77531ba1b44cd06d539834abb1bcb',1,'manual_segmentation']]]
 ];

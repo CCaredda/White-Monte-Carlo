@@ -42,6 +42,8 @@ Then install python libraries:
 
 
 \section sec_guide User guide
+
+\subsection sec_optical_changes 1) Model optical changes
 This software aims to reconstruct hypercubes : images of diffuse reflectance and mean path length for N wavelengths.
 It is also possible to generate T hypercubes for modeling optical changes over time such as:
 - Hemodynamic and metabolic responses following cerebral activity
@@ -64,9 +66,26 @@ For these six files, each line correspond to the temporal evolution of each chro
 - Line 5 C_oxCCO in (Mol)
 - Line 6 C_redCCO in (Mol)
 
-The columns represent chromophore changes over time (Delimiters have to be space)
+The columns represent chromophore changes over time (Delimiters have to be space). The matlab script "compute_optical_changes.m" can be used to automatically generate the txt files.
 
 
+\subsection sec_Qt 1) Data reconstruction using the C++ software
+
+a) Open the Qt project (open project file "Process_WMC_reconstruction.pro")
+
+b) Compile using Release mode
+
+c) Use the software for data reconstruction
+
+- If the box "Display reconstruction (1 wavelength)" is checked, only one wavelength will be reconstructed (choose the wavelength)
+- If the box is unchecked, several wavelengths will be reconstructed (choose the wavelengths)
+- Choose the binning, tick the box "Lens and sensor" if you want to model optics. Otherwise, data will be reconstructed at the surface of the tissue volume.
+- Load the optical changes files
+- Load the directory that contains the simulation results (.zip files)
+
+Results will be written in txt files in a folder "results". For each wavelength, two files will be created (mean path and diffuse reflectance).
+
+d) Use the python script "create_Hypercubes_from_txt.py" to compute the Hypercubes and save it in .npz file
 
 
  

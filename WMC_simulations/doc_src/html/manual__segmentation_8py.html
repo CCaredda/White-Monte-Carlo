@@ -87,9 +87,52 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.Eq
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
+<tr class="memitem:af829e5bb67603821516c611c94125fe7"><td class="memItemLeft" align="right" valign="top"><a id="af829e5bb67603821516c611c94125fe7" name="af829e5bb67603821516c611c94125fe7"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.x1</b> = 966</td></tr>
+<tr class="memdesc:af829e5bb67603821516c611c94125fe7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get image resolution. <br /></td></tr>
+<tr class="separator:af829e5bb67603821516c611c94125fe7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ea51d2f8518623e58cd78e2ea45672a"><td class="memItemLeft" align="right" valign="top"><a id="a7ea51d2f8518623e58cd78e2ea45672a" name="a7ea51d2f8518623e58cd78e2ea45672a"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.y1</b> = 344</td></tr>
+<tr class="separator:a7ea51d2f8518623e58cd78e2ea45672a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49af524a18145b5d6f02ce620adad307"><td class="memItemLeft" align="right" valign="top"><a id="a49af524a18145b5d6f02ce620adad307" name="a49af524a18145b5d6f02ce620adad307"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.x2</b> = 958</td></tr>
+<tr class="separator:a49af524a18145b5d6f02ce620adad307"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74772c09e1770d22dff2a590eac59259"><td class="memItemLeft" align="right" valign="top"><a id="a74772c09e1770d22dff2a590eac59259" name="a74772c09e1770d22dff2a590eac59259"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.y2</b> = 257</td></tr>
+<tr class="separator:a74772c09e1770d22dff2a590eac59259"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71078a414f6f23d3d9110c69bba8b813"><td class="memItemLeft" align="right" valign="top"><a id="a71078a414f6f23d3d9110c69bba8b813" name="a71078a414f6f23d3d9110c69bba8b813"></a>
+np&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.l_px</b> = np.sqrt((x1-x2)**2 + (y1-y2)**2)</td></tr>
+<tr class="separator:a71078a414f6f23d3d9110c69bba8b813"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90732403abba674197ff807312246312"><td class="memItemLeft" align="right" valign="top"><a id="a90732403abba674197ff807312246312" name="a90732403abba674197ff807312246312"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.reso_mm</b> = 10/l_px</td></tr>
+<tr class="separator:a90732403abba674197ff807312246312"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6865de14e7078ac26fcffaf65065567b"><td class="memItemLeft" align="right" valign="top"><a id="a6865de14e7078ac26fcffaf65065567b" name="a6865de14e7078ac26fcffaf65065567b"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.reduce_ROI</b> = True</td></tr>
+<tr class="memdesc:a6865de14e7078ac26fcffaf65065567b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process K-MEans or thresholding. <br /></td></tr>
+<tr class="separator:a6865de14e7078ac26fcffaf65065567b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a372b5af5bf609dbd37b7f9c8676739ac"><td class="memItemLeft" align="right" valign="top"><a id="a372b5af5bf609dbd37b7f9c8676739ac" name="a372b5af5bf609dbd37b7f9c8676739ac"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.crop_img</b> = False</td></tr>
+<tr class="separator:a372b5af5bf609dbd37b7f9c8676739ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa42e39be955ce42e8a2e58b19605d293"><td class="memItemLeft" align="right" valign="top"><a id="aa42e39be955ce42e8a2e58b19605d293" name="aa42e39be955ce42e8a2e58b19605d293"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.use_greyscale</b> = False</td></tr>
+<tr class="separator:aa42e39be955ce42e8a2e58b19605d293"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada72db7cdd1dd752cc5559bd26b73a99"><td class="memItemLeft" align="right" valign="top"><a id="ada72db7cdd1dd752cc5559bd26b73a99" name="ada72db7cdd1dd752cc5559bd26b73a99"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.use_Kmeans</b> = True</td></tr>
+<tr class="separator:ada72db7cdd1dd752cc5559bd26b73a99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a539d075e60b430a9501b82209d71f3b3"><td class="memItemLeft" align="right" valign="top"><a id="a539d075e60b430a9501b82209d71f3b3" name="a539d075e60b430a9501b82209d71f3b3"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.block_size</b> = 71</td></tr>
+<tr class="separator:a539d075e60b430a9501b82209d71f3b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0bbed3594412582fbf0f3c3d1228849"><td class="memItemLeft" align="right" valign="top"><a id="ac0bbed3594412582fbf0f3c3d1228849" name="ac0bbed3594412582fbf0f3c3d1228849"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.size_small_vessels</b> = 7</td></tr>
+<tr class="separator:ac0bbed3594412582fbf0f3c3d1228849"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a642867f314eeca340cef037893910935"><td class="memItemLeft" align="right" valign="top"><a id="a642867f314eeca340cef037893910935" name="a642867f314eeca340cef037893910935"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.min_area</b> = 100</td></tr>
+<tr class="separator:a642867f314eeca340cef037893910935"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a954037e161c0712aff6c522ac68c9ceb"><td class="memItemLeft" align="right" valign="top"><a id="a954037e161c0712aff6c522ac68c9ceb" name="a954037e161c0712aff6c522ac68c9ceb"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.K</b> = 10</td></tr>
+<tr class="separator:a954037e161c0712aff6c522ac68c9ceb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1ddfbbb8d0a84e04a35bd2dd447757ea"><td class="memItemLeft" align="right" valign="top"><a id="a1ddfbbb8d0a84e04a35bd2dd447757ea" name="a1ddfbbb8d0a84e04a35bd2dd447757ea"></a>
 str&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.directory_path</b> = &quot;/home/caredda/DVP/simulation/CREATIS-UCL-White-Monte-Carlo-Framework/WMC_simulations/&quot;</td></tr>
-<tr class="memdesc:a1ddfbbb8d0a84e04a35bd2dd447757ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process K-MEans. <br /></td></tr>
 <tr class="separator:a1ddfbbb8d0a84e04a35bd2dd447757ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd576bd2051c4f89e94404ddd6d9a7fa"><td class="memItemLeft" align="right" valign="top"><a id="acd576bd2051c4f89e94404ddd6d9a7fa" name="acd576bd2051c4f89e94404ddd6d9a7fa"></a>
 str&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.path</b> = directory_path+&quot;images/Patient1/&quot;</td></tr>
@@ -100,6 +143,12 @@ cv&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.img
 <tr class="memitem:a2e526c18e8ee0328b6750f61cbd9d676"><td class="memItemLeft" align="right" valign="top"><a id="a2e526c18e8ee0328b6750f61cbd9d676" name="a2e526c18e8ee0328b6750f61cbd9d676"></a>
 cv&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.mask</b> = cv.imread(path+&quot;mask.png&quot;,cv.IMREAD_GRAYSCALE)</td></tr>
 <tr class="separator:a2e526c18e8ee0328b6750f61cbd9d676"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abed5e7055b38da99058db628588b64c1"><td class="memItemLeft" align="right" valign="top"><a id="abed5e7055b38da99058db628588b64c1" name="abed5e7055b38da99058db628588b64c1"></a>
+cv&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.mask_act_temp</b> = cv.imread(path+&quot;mask_activity.png&quot;)</td></tr>
+<tr class="separator:abed5e7055b38da99058db628588b64c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a777251874c853331a1dee118bba388f2"><td class="memItemLeft" align="right" valign="top"><a id="a777251874c853331a1dee118bba388f2" name="a777251874c853331a1dee118bba388f2"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.else</b> :</td></tr>
+<tr class="separator:a777251874c853331a1dee118bba388f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9eef376722345701a2812300918e1a81"><td class="memItemLeft" align="right" valign="top"><a id="a9eef376722345701a2812300918e1a81" name="a9eef376722345701a2812300918e1a81"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.contours</b></td></tr>
 <tr class="separator:a9eef376722345701a2812300918e1a81"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -118,9 +167,30 @@ cv&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.mas
 <tr class="memitem:a665d4fd5d24c04dc1bcff1e4810fdb04"><td class="memItemLeft" align="right" valign="top"><a id="a665d4fd5d24c04dc1bcff1e4810fdb04" name="a665d4fd5d24c04dc1bcff1e4810fdb04"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.h</b></td></tr>
 <tr class="separator:a665d4fd5d24c04dc1bcff1e4810fdb04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9cce36c7bacdb5f2c25c4062769e608e"><td class="memItemLeft" align="right" valign="top"><a id="a9cce36c7bacdb5f2c25c4062769e608e" name="a9cce36c7bacdb5f2c25c4062769e608e"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.r1</b> = 0</td></tr>
+<tr class="separator:a9cce36c7bacdb5f2c25c4062769e608e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32e113c5de439c4758a190e438d6213d"><td class="memItemLeft" align="right" valign="top"><a id="a32e113c5de439c4758a190e438d6213d" name="a32e113c5de439c4758a190e438d6213d"></a>
+cv&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.r2</b> = mask.shape[0]</td></tr>
+<tr class="separator:a32e113c5de439c4758a190e438d6213d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4bce6e14061ca819ee6dd3c2602e5166"><td class="memItemLeft" align="right" valign="top"><a id="a4bce6e14061ca819ee6dd3c2602e5166" name="a4bce6e14061ca819ee6dd3c2602e5166"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.c1</b> = 149</td></tr>
+<tr class="separator:a4bce6e14061ca819ee6dd3c2602e5166"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4610af430ecb905b72f99d1ed9e2e74"><td class="memItemLeft" align="right" valign="top"><a id="aa4610af430ecb905b72f99d1ed9e2e74" name="aa4610af430ecb905b72f99d1ed9e2e74"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.c2</b> = 705</td></tr>
+<tr class="separator:aa4610af430ecb905b72f99d1ed9e2e74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a13fb82955d8e43e16d02f1f4c63a8ffd"><td class="memItemLeft" align="right" valign="top"><a id="a13fb82955d8e43e16d02f1f4c63a8ffd" name="a13fb82955d8e43e16d02f1f4c63a8ffd"></a>
 cv&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.img_proc</b> = img</td></tr>
 <tr class="separator:a13fb82955d8e43e16d02f1f4c63a8ffd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf484adf8e86f26688269bfd0478bf21"><td class="memItemLeft" align="right" valign="top"><a id="abf484adf8e86f26688269bfd0478bf21" name="abf484adf8e86f26688269bfd0478bf21"></a>
+cv&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.img_Grey</b> = cv.cvtColor(img_proc,cv.COLOR_BGR2GRAY)</td></tr>
+<tr class="separator:abf484adf8e86f26688269bfd0478bf21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c46b17daebfa095033796ce97303fa3"><td class="memItemLeft" align="right" valign="top"><a id="a3c46b17daebfa095033796ce97303fa3" name="a3c46b17daebfa095033796ce97303fa3"></a>
+np&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.coord</b> = np.where(mask==255)</td></tr>
+<tr class="separator:a3c46b17daebfa095033796ce97303fa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa687014d2baa590aa685b8dc86b2ca18"><td class="memItemLeft" align="right" valign="top"><a id="aa687014d2baa590aa685b8dc86b2ca18" name="aa687014d2baa590aa685b8dc86b2ca18"></a>
+cv&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.Z</b> = img_Grey[coord]</td></tr>
+<tr class="separator:aa687014d2baa590aa685b8dc86b2ca18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a85b009c02c70e83b8ca347ba8370f54a"><td class="memItemLeft" align="right" valign="top"><a id="a85b009c02c70e83b8ca347ba8370f54a" name="a85b009c02c70e83b8ca347ba8370f54a"></a>
 np&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.r</b> = np.copy(img_proc[:,:,0])</td></tr>
 <tr class="separator:a85b009c02c70e83b8ca347ba8370f54a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -130,9 +200,6 @@ np&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.g</
 <tr class="memitem:a3dbfcfee7764554e9e05b19c17a68b56"><td class="memItemLeft" align="right" valign="top"><a id="a3dbfcfee7764554e9e05b19c17a68b56" name="a3dbfcfee7764554e9e05b19c17a68b56"></a>
 np&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.b</b> = np.copy(img_proc[:,:,2])</td></tr>
 <tr class="separator:a3dbfcfee7764554e9e05b19c17a68b56"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c46b17daebfa095033796ce97303fa3"><td class="memItemLeft" align="right" valign="top"><a id="a3c46b17daebfa095033796ce97303fa3" name="a3c46b17daebfa095033796ce97303fa3"></a>
-np&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.coord</b> = np.where(mask==255)</td></tr>
-<tr class="separator:a3c46b17daebfa095033796ce97303fa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8538f5639827278f4ccec88fccb3c3fd"><td class="memItemLeft" align="right" valign="top"><a id="a8538f5639827278f4ccec88fccb3c3fd" name="a8538f5639827278f4ccec88fccb3c3fd"></a>
 np&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.r_pixels</b> = r[coord]</td></tr>
 <tr class="separator:a8538f5639827278f4ccec88fccb3c3fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -142,27 +209,39 @@ np&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.g_p
 <tr class="memitem:ae618db5ebdffbcc193d470fe1fa9df87"><td class="memItemLeft" align="right" valign="top"><a id="ae618db5ebdffbcc193d470fe1fa9df87" name="ae618db5ebdffbcc193d470fe1fa9df87"></a>
 np&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.b_pixels</b> = b[coord]</td></tr>
 <tr class="separator:ae618db5ebdffbcc193d470fe1fa9df87"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9dcbcd8997dce596d32ecfb75c5f297e"><td class="memItemLeft" align="right" valign="top"><a id="a9dcbcd8997dce596d32ecfb75c5f297e" name="a9dcbcd8997dce596d32ecfb75c5f297e"></a>
-np&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.Z</b> = np.squeeze(np.dstack([r_pixels,g_pixels,b_pixels]))</td></tr>
-<tr class="separator:a9dcbcd8997dce596d32ecfb75c5f297e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a954037e161c0712aff6c522ac68c9ceb"><td class="memItemLeft" align="right" valign="top"><a id="a954037e161c0712aff6c522ac68c9ceb" name="a954037e161c0712aff6c522ac68c9ceb"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.K</b> = 10</td></tr>
-<tr class="separator:a954037e161c0712aff6c522ac68c9ceb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acb57af960bcf1d4cd9e45850e69b9b31"><td class="memItemLeft" align="right" valign="top"><a id="acb57af960bcf1d4cd9e45850e69b9b31" name="acb57af960bcf1d4cd9e45850e69b9b31"></a>
 tuple&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.criteria</b> = (cv.TERM_CRITERIA_EPS + cv.TERM_CRITERIA_MAX_ITER, 500, 1.0)</td></tr>
 <tr class="separator:acb57af960bcf1d4cd9e45850e69b9b31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a26e7f5923a84fa75687004f0e6110539"><td class="memItemLeft" align="right" valign="top"><a id="a26e7f5923a84fa75687004f0e6110539" name="a26e7f5923a84fa75687004f0e6110539"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.ret</b></td></tr>
 <tr class="separator:a26e7f5923a84fa75687004f0e6110539"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a07ca90cacb669226205da54239b23da3"><td class="memItemLeft" align="right" valign="top"><a id="a07ca90cacb669226205da54239b23da3" name="a07ca90cacb669226205da54239b23da3"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.label</b> = np.array([&quot;Grey matter&quot;,&quot;Large blood vessel&quot;,&quot;Capillaries&quot;,&quot;Activated grey matter&quot;,&quot;Activated large vessel&quot;,&quot;Activated capillaries&quot;])</td></tr>
-<tr class="separator:a07ca90cacb669226205da54239b23da3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7966473f18c48f133267bfbeb4788cdd"><td class="memItemLeft" align="right" valign="top"><a id="a7966473f18c48f133267bfbeb4788cdd" name="a7966473f18c48f133267bfbeb4788cdd"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.label</b></td></tr>
+<tr class="separator:a7966473f18c48f133267bfbeb4788cdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff952f9f051193dc583d96dd205f4729"><td class="memItemLeft" align="right" valign="top"><a id="aff952f9f051193dc583d96dd205f4729" name="aff952f9f051193dc583d96dd205f4729"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.center</b></td></tr>
 <tr class="separator:aff952f9f051193dc583d96dd205f4729"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acab4af60b6a4828b32ecf53ae49f3695"><td class="memItemLeft" align="right" valign="top"><a id="acab4af60b6a4828b32ecf53ae49f3695" name="acab4af60b6a4828b32ecf53ae49f3695"></a>
 np&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.output</b> = np.zeros(mask.shape)</td></tr>
 <tr class="separator:acab4af60b6a4828b32ecf53ae49f3695"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab336f1e8f1cc17cb252e99b5061fc3c9"><td class="memItemLeft" align="right" valign="top"><a id="ab336f1e8f1cc17cb252e99b5061fc3c9" name="ab336f1e8f1cc17cb252e99b5061fc3c9"></a>
+cv&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.img_thresh</b> = cv.adaptiveThreshold(img_Grey,255,cv.ADAPTIVE_THRESH_GAUSSIAN_C,cv.THRESH_BINARY_INV,block_size,0)</td></tr>
+<tr class="separator:ab336f1e8f1cc17cb252e99b5061fc3c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6af1bebe8a87bf1f38e3daaa5f9ee6f1"><td class="memItemLeft" align="right" valign="top"><a id="a6af1bebe8a87bf1f38e3daaa5f9ee6f1" name="a6af1bebe8a87bf1f38e3daaa5f9ee6f1"></a>
+cv&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.kernel</b> = cv.getStructuringElement(cv.MORPH_ELLIPSE,(size_small_vessels,size_small_vessels))</td></tr>
+<tr class="separator:a6af1bebe8a87bf1f38e3daaa5f9ee6f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf088029634dd24d5b723f9fc795b19f"><td class="memItemLeft" align="right" valign="top"><a id="abf088029634dd24d5b723f9fc795b19f" name="abf088029634dd24d5b723f9fc795b19f"></a>
+cv&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.temp</b> = cv.morphologyEx(img_thresh, cv.MORPH_OPEN, kernel)</td></tr>
+<tr class="separator:abf088029634dd24d5b723f9fc795b19f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7b6b1879ef3263fe9eb90a758c49849"><td class="memItemLeft" align="right" valign="top"><a id="ac7b6b1879ef3263fe9eb90a758c49849" name="ac7b6b1879ef3263fe9eb90a758c49849"></a>
+np&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.mask_large_vessels</b> = np.zeros(temp.shape)</td></tr>
+<tr class="separator:ac7b6b1879ef3263fe9eb90a758c49849"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b24d76d25c74624c7290c6b8e642788"><td class="memItemLeft" align="right" valign="top"><a id="a2b24d76d25c74624c7290c6b8e642788" name="a2b24d76d25c74624c7290c6b8e642788"></a>
+np&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.mask_capillaries</b> = np.bitwise_xor(img_thresh,mask_large_vessels)</td></tr>
+<tr class="separator:a2b24d76d25c74624c7290c6b8e642788"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2e127d871fb22158ce6cd600910891b"><td class="memItemLeft" align="right" valign="top"><a id="af2e127d871fb22158ce6cd600910891b" name="af2e127d871fb22158ce6cd600910891b"></a>
+np&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.mask_GM</b> = np.bitwise_and(np.bitwise_not(mask_large_vessels),np.bitwise_not(mask_capillaries))</td></tr>
+<tr class="separator:af2e127d871fb22158ce6cd600910891b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9003334d75a76591c25a68f02a4a66d8"><td class="memItemLeft" align="right" valign="top"><a id="a9003334d75a76591c25a68f02a4a66d8" name="a9003334d75a76591c25a68f02a4a66d8"></a>
 np&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.label_BV</b> = np.array([9,3])</td></tr>
 <tr class="memdesc:a9003334d75a76591c25a68f02a4a66d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">identify label of large blood vessels and capillaries <br /></td></tr>
@@ -170,34 +249,12 @@ np&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.lab
 <tr class="memitem:ae5134f29c9b8c8c7290e4c1402d8257e"><td class="memItemLeft" align="right" valign="top"><a id="ae5134f29c9b8c8c7290e4c1402d8257e" name="ae5134f29c9b8c8c7290e4c1402d8257e"></a>
 np&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.label_capillaries</b> = np.array([2])</td></tr>
 <tr class="separator:ae5134f29c9b8c8c7290e4c1402d8257e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac7b6b1879ef3263fe9eb90a758c49849"><td class="memItemLeft" align="right" valign="top"><a id="ac7b6b1879ef3263fe9eb90a758c49849" name="ac7b6b1879ef3263fe9eb90a758c49849"></a>
-np&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.mask_large_vessels</b> = np.zeros(mask.shape)</td></tr>
-<tr class="separator:ac7b6b1879ef3263fe9eb90a758c49849"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6af1bebe8a87bf1f38e3daaa5f9ee6f1"><td class="memItemLeft" align="right" valign="top"><a id="a6af1bebe8a87bf1f38e3daaa5f9ee6f1" name="a6af1bebe8a87bf1f38e3daaa5f9ee6f1"></a>
-cv&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.kernel</b> = cv.getStructuringElement(cv.MORPH_ELLIPSE,(3,3))</td></tr>
-<tr class="separator:a6af1bebe8a87bf1f38e3daaa5f9ee6f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af812b7ba1e07b3593600e8cfb44a8135"><td class="memItemLeft" align="right" valign="top"><a id="af812b7ba1e07b3593600e8cfb44a8135" name="af812b7ba1e07b3593600e8cfb44a8135"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.area_min</b> = 101</td></tr>
 <tr class="separator:af812b7ba1e07b3593600e8cfb44a8135"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2b24d76d25c74624c7290c6b8e642788"><td class="memItemLeft" align="right" valign="top"><a id="a2b24d76d25c74624c7290c6b8e642788" name="a2b24d76d25c74624c7290c6b8e642788"></a>
-np&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.mask_capillaries</b> = np.zeros(mask.shape)</td></tr>
-<tr class="separator:a2b24d76d25c74624c7290c6b8e642788"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2360e594bf3635c35ff26de94766076"><td class="memItemLeft" align="right" valign="top"><a id="ae2360e594bf3635c35ff26de94766076" name="ae2360e594bf3635c35ff26de94766076"></a>
-np&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.mask_GM</b> = np.bitwise_and(np.bitwise_not(mask_large_vessels),np.bitwise_not(mask_capillaries))</td></tr>
-<tr class="separator:ae2360e594bf3635c35ff26de94766076"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac45c03c1498c72c1c4c11dc457351cb1"><td class="memItemLeft" align="right" valign="top"><a id="ac45c03c1498c72c1c4c11dc457351cb1" name="ac45c03c1498c72c1c4c11dc457351cb1"></a>
-np&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.rows</b> = np.array([198, 56, 187, 336])</td></tr>
-<tr class="memdesc:ac45c03c1498c72c1c4c11dc457351cb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select functional brain areas. <br /></td></tr>
-<tr class="separator:ac45c03c1498c72c1c4c11dc457351cb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5061fff3a4c228cdd90efde0caf7d384"><td class="memItemLeft" align="right" valign="top"><a id="a5061fff3a4c228cdd90efde0caf7d384" name="a5061fff3a4c228cdd90efde0caf7d384"></a>
-np&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.cols</b> = np.array([101, 231, 236, 143])</td></tr>
-<tr class="separator:a5061fff3a4c228cdd90efde0caf7d384"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3ad5587adb2e85dc1d9a9875b83e46db"><td class="memItemLeft" align="right" valign="top"><a id="a3ad5587adb2e85dc1d9a9875b83e46db" name="a3ad5587adb2e85dc1d9a9875b83e46db"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.radius</b> = 30</td></tr>
-<tr class="separator:a3ad5587adb2e85dc1d9a9875b83e46db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaaf77531ba1b44cd06d539834abb1bcb"><td class="memItemLeft" align="right" valign="top"><a id="aaaf77531ba1b44cd06d539834abb1bcb" name="aaaf77531ba1b44cd06d539834abb1bcb"></a>
-np&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.mask_activation</b> = np.zeros(mask.shape)</td></tr>
-<tr class="memdesc:aaaf77531ba1b44cd06d539834abb1bcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create segmentation mask. <br /></td></tr>
+np&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.mask_activation</b> = np.zeros(mask_act_temp.shape)</td></tr>
+<tr class="memdesc:aaaf77531ba1b44cd06d539834abb1bcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select functional brain areas. <br /></td></tr>
 <tr class="separator:aaaf77531ba1b44cd06d539834abb1bcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5eefa5f9bc65288278f20c8f93ebded0"><td class="memItemLeft" align="right" valign="top"><a id="a5eefa5f9bc65288278f20c8f93ebded0" name="a5eefa5f9bc65288278f20c8f93ebded0"></a>
 np&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.mask_activated_grey_matter</b> = np.bitwise_and(mask_activation,mask_GM)</td></tr>
@@ -208,30 +265,12 @@ np&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.mas
 <tr class="memitem:ac9bac13879cae76bf12f294a891599c0"><td class="memItemLeft" align="right" valign="top"><a id="ac9bac13879cae76bf12f294a891599c0" name="ac9bac13879cae76bf12f294a891599c0"></a>
 np&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.mask_activated_capillaries</b> = np.bitwise_and(mask_activation,mask_capillaries)</td></tr>
 <tr class="separator:ac9bac13879cae76bf12f294a891599c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab8d042160d8b32230b2a98ae8b374dc0"><td class="memItemLeft" align="right" valign="top"><a id="ab8d042160d8b32230b2a98ae8b374dc0" name="ab8d042160d8b32230b2a98ae8b374dc0"></a>
-ListedColormap&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.cMap</b> = ListedColormap(['grey', 'red', 'magenta','green','yellow','white'])</td></tr>
-<tr class="separator:ab8d042160d8b32230b2a98ae8b374dc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a774de400f06a2452f5e85013192d0b"><td class="memItemLeft" align="right" valign="top"><a id="a2a774de400f06a2452f5e85013192d0b" name="a2a774de400f06a2452f5e85013192d0b"></a>
-np&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.index</b> = np.linspace(1 + 1/label.shape[0] ,6-1/label.shape[0],6)</td></tr>
-<tr class="separator:a2a774de400f06a2452f5e85013192d0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4362088c9faf41bac8eba7d79214fe56"><td class="memItemLeft" align="right" valign="top"><a id="a4362088c9faf41bac8eba7d79214fe56" name="a4362088c9faf41bac8eba7d79214fe56"></a>
 np&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.mask_output</b> = np.ones(mask.shape)</td></tr>
 <tr class="separator:a4362088c9faf41bac8eba7d79214fe56"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a6838b3bb476b27e28c2d55aa04d47d"><td class="memItemLeft" align="right" valign="top"><a id="a2a6838b3bb476b27e28c2d55aa04d47d" name="a2a6838b3bb476b27e28c2d55aa04d47d"></a>
-plt&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.heatmap</b> = plt.imshow(mask_output,cmap = cMap)</td></tr>
-<tr class="separator:a2a6838b3bb476b27e28c2d55aa04d47d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a451209b667c913d4ccb874967417ed5f"><td class="memItemLeft" align="right" valign="top"><a id="a451209b667c913d4ccb874967417ed5f" name="a451209b667c913d4ccb874967417ed5f"></a>
-plt&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.cbar</b> = plt.colorbar(heatmap)</td></tr>
-<tr class="separator:a451209b667c913d4ccb874967417ed5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5db98b8361b70abe49816463ac3ff07b"><td class="memItemLeft" align="right" valign="top"><a id="a5db98b8361b70abe49816463ac3ff07b" name="a5db98b8361b70abe49816463ac3ff07b"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.ha</b></td></tr>
-<tr class="separator:a5db98b8361b70abe49816463ac3ff07b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4dec606652019a986b6aee4355fc364c"><td class="memItemLeft" align="right" valign="top"><a id="a4dec606652019a986b6aee4355fc364c" name="a4dec606652019a986b6aee4355fc364c"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.va</b></td></tr>
-<tr class="separator:a4dec606652019a986b6aee4355fc364c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f10df46fea840d48afbed851081b10b"><td class="memItemLeft" align="right" valign="top"><a id="a8f10df46fea840d48afbed851081b10b" name="a8f10df46fea840d48afbed851081b10b"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.labelpad</b></td></tr>
-<tr class="separator:a8f10df46fea840d48afbed851081b10b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f396df4d474e1f2b72803546905d32b"><td class="memItemLeft" align="right" valign="top"><a id="a7f396df4d474e1f2b72803546905d32b" name="a7f396df4d474e1f2b72803546905d32b"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>manual_segmentation.mask_output_display</b> = 127*np.ones((mask.shape[0],mask.shape[1],3))</td></tr>
+<tr class="separator:a7f396df4d474e1f2b72803546905d32b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Python script to segment RGB image of brain cortex into six classes: </p>

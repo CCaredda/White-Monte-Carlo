@@ -295,6 +295,17 @@ void Process::setWavelength(int w)
     this->start();
 }
 
+/** Set wavelength range (for multi wavelength reconstruction)
+ *  within the range [start:stop] by steps of step. */
+void Process::setWavelengthRange(int start,int end, int step)
+{
+    _M_wavelength_to_process.clear();
+    for(int i=start;i<end+step;i+=step)
+        _M_wavelength_to_process.push_back(i);
+}
+
+
+
 /** Set Wavelength (in nm) */
 void Process::_setWavelength(int w)
 {

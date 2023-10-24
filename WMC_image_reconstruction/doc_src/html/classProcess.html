@@ -112,6 +112,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a84a2a573ead3f28649e66951af984f44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c535f78c1dd552d620394aabec119da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classProcess.html#a2c535f78c1dd552d620394aabec119da">setWavelength</a> (int w)</td></tr>
 <tr class="separator:a2c535f78c1dd552d620394aabec119da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a802e798ba055315025755a43a98c1feb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classProcess.html#a802e798ba055315025755a43a98c1feb">ReadOpticalChanges</a> (QString dir)</td></tr>
+<tr class="separator:a802e798ba055315025755a43a98c1feb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -139,12 +141,10 @@ Private Member Functions</h2></td></tr>
 <tr class="separator:a1bc1561a95dc609471cd5961934b54a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af4f3eaf8d2ea971ce688ffa91aebb433"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classProcess.html#af4f3eaf8d2ea971ce688ffa91aebb433">_Load_Simulation_Data</a> (int w)</td></tr>
 <tr class="separator:af4f3eaf8d2ea971ce688ffa91aebb433"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a98cd9c532c911eb1c9596b2f68f80a78"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classProcess.html#a98cd9c532c911eb1c9596b2f68f80a78">_getOpticalChanges</a> ()</td></tr>
-<tr class="separator:a98cd9c532c911eb1c9596b2f68f80a78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa9a2638e3f1d0b72c8a3a70178e16316"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classProcess.html#aa9a2638e3f1d0b72c8a3a70178e16316">_get_mua_epsilon</a> ()</td></tr>
 <tr class="separator:aa9a2638e3f1d0b72c8a3a70178e16316"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a51fbccc06951ea0b7969009991230664"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classProcess.html#a51fbccc06951ea0b7969009991230664">_Create_Diffuse_reflectance_Pathlength_Img</a> (const Mat &amp;mua, int w)</td></tr>
-<tr class="separator:a51fbccc06951ea0b7969009991230664"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b4fe864ac72ad5f0c5eb0a27e8d7d1d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classProcess.html#a4b4fe864ac72ad5f0c5eb0a27e8d7d1d">_Create_Diffuse_reflectance_Pathlength_Img</a> (const Mat &amp;mua, int w, int t)</td></tr>
+<tr class="separator:a4b4fe864ac72ad5f0c5eb0a27e8d7d1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a55d3276f25585ee46f212361b99d1bbc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classProcess.html#a55d3276f25585ee46f212361b99d1bbc">_Create_Diffuse_reflectance_Pathlength_Img_With_Lens</a> (const Mat &amp;mua, int w)</td></tr>
 <tr class="separator:a55d3276f25585ee46f212361b99d1bbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a017987aab2d4d2e25795e2483a09f688"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classProcess.html#a017987aab2d4d2e25795e2483a09f688">_get_photon_pos_after_lens</a> (Mat *p)</td></tr>
@@ -234,8 +234,8 @@ Private Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a51fbccc06951ea0b7969009991230664" name="a51fbccc06951ea0b7969009991230664"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a51fbccc06951ea0b7969009991230664">&#9670;&#160;</a></span>_Create_Diffuse_reflectance_Pathlength_Img()</h2>
+<a id="a4b4fe864ac72ad5f0c5eb0a27e8d7d1d" name="a4b4fe864ac72ad5f0c5eb0a27e8d7d1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b4fe864ac72ad5f0c5eb0a27e8d7d1d">&#9670;&#160;</a></span>_Create_Diffuse_reflectance_Pathlength_Img()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -253,7 +253,13 @@ Private Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>w</em>&#160;</td>
+          <td class="paramname"><em>w</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>t</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -271,6 +277,7 @@ Private Attributes</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">mua</td><td>matrix of absorption changes (in mm-1). Size: number of class x time </td></tr>
     <tr><td class="paramname">w</td><td>wavelength (in nm) </td></tr>
+    <tr><td class="paramname">t</td><td>temporal index </td></tr>
   </table>
   </dd>
 </dl>
@@ -401,32 +408,6 @@ Private Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a id="a98cd9c532c911eb1c9596b2f68f80a78" name="a98cd9c532c911eb1c9596b2f68f80a78"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a98cd9c532c911eb1c9596b2f68f80a78">&#9670;&#160;</a></span>_getOpticalChanges()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Process::_getOpticalChanges </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Get optical changes </p>
 
 </div>
 </div>
@@ -730,6 +711,25 @@ Private Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a802e798ba055315025755a43a98c1feb" name="a802e798ba055315025755a43a98c1feb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a802e798ba055315025755a43a98c1feb">&#9670;&#160;</a></span>ReadOpticalChanges()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Process::ReadOpticalChanges </td>
+          <td>(</td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>dir</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Read optical changes </p>
 
 </div>
 </div>

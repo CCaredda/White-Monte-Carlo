@@ -34,6 +34,7 @@ Then install python libraries\+:
 \begin{DoxyItemize}
 \item pip install opencv-\/python numpy matplotlib
 \end{DoxyItemize}\hypertarget{index_sec_guide}{}\doxysection{User guide}\label{index_sec_guide}
+\hypertarget{index_sec_optical_changes}{}\doxysubsection{1) Model optical changes}\label{index_sec_optical_changes}
 This software aims to reconstruct hypercubes \+: images of diffuse reflectance and mean path length for N wavelengths. It is also possible to generate T hypercubes for modeling optical changes over time such as\+:
 \begin{DoxyItemize}
 \item Hemodynamic and metabolic responses following cerebral activity
@@ -60,4 +61,22 @@ For these six files, each line correspond to the temporal evolution of each chro
 \item Line 6 C\+\_\+red\+CCO in (Mol)
 \end{DoxyItemize}
 
-The columns represent chromophore changes over time (Delimiters have to be space) 
+The columns represent chromophore changes over time (Delimiters have to be space). The matlab script \char`\"{}compute\+\_\+optical\+\_\+changes.\+m\char`\"{} can be used to automatically generate the txt files.\hypertarget{index_sec_Qt}{}\doxysubsection{1) Data reconstruction using the C++ software}\label{index_sec_Qt}
+a) Open the Qt project (open project file \char`\"{}\+Process\+\_\+\+WMC\+\_\+reconstruction.\+pro\char`\"{})
+
+b) Compile using Release mode
+
+c) Use the software for data reconstruction
+
+
+\begin{DoxyItemize}
+\item If the box \char`\"{}\+Display reconstruction (1 wavelength)\char`\"{} is checked, only one wavelength will be reconstructed (choose the wavelength)
+\item If the box is unchecked, several wavelengths will be reconstructed (choose the wavelengths)
+\item Choose the binning, tick the box \char`\"{}\+Lens and sensor\char`\"{} if you want to model optics. Otherwise, data will be reconstructed at the surface of the tissue volume.
+\item Load the optical changes files
+\item Load the directory that contains the simulation results (.zip files)
+\end{DoxyItemize}
+
+Results will be written in txt files in a folder \char`\"{}results\char`\"{}. For each wavelength, two files will be created (mean path and diffuse reflectance).
+
+d) Use the python script \char`\"{}create\+\_\+\+Hypercubes\+\_\+from\+\_\+txt.\+py\char`\"{} to compute the Hypercubes and save it in .npz file 

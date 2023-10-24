@@ -30,6 +30,8 @@ void \mbox{\hyperlink{classProcess_aadec7aa2dc78661c60ce00674b18573b}{set\+Simul
 void \mbox{\hyperlink{classProcess_a84a2a573ead3f28649e66951af984f44}{new\+Lens\+Sensor\+Design}} (\mbox{\hyperlink{struct__lens__sensor}{\+\_\+lens\+\_\+sensor}} \&lens)
 \item 
 void \mbox{\hyperlink{classProcess_a2c535f78c1dd552d620394aabec119da}{set\+Wavelength}} (int w)
+\item 
+void \mbox{\hyperlink{classProcess_a802e798ba055315025755a43a98c1feb}{Read\+Optical\+Changes}} (QString dir)
 \end{DoxyCompactItemize}
 \doxysubsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
@@ -58,11 +60,9 @@ void \mbox{\hyperlink{classProcess_a1bc1561a95dc609471cd5961934b54a0}{\+\_\+set\
 \item 
 void \mbox{\hyperlink{classProcess_af4f3eaf8d2ea971ce688ffa91aebb433}{\+\_\+\+Load\+\_\+\+Simulation\+\_\+\+Data}} (int w)
 \item 
-void \mbox{\hyperlink{classProcess_a98cd9c532c911eb1c9596b2f68f80a78}{\+\_\+get\+Optical\+Changes}} ()
-\item 
 void \mbox{\hyperlink{classProcess_aa9a2638e3f1d0b72c8a3a70178e16316}{\+\_\+get\+\_\+mua\+\_\+epsilon}} ()
 \item 
-void \mbox{\hyperlink{classProcess_a51fbccc06951ea0b7969009991230664}{\+\_\+\+Create\+\_\+\+Diffuse\+\_\+reflectance\+\_\+\+Pathlength\+\_\+\+Img}} (const Mat \&mua, int w)
+void \mbox{\hyperlink{classProcess_a4b4fe864ac72ad5f0c5eb0a27e8d7d1d}{\+\_\+\+Create\+\_\+\+Diffuse\+\_\+reflectance\+\_\+\+Pathlength\+\_\+\+Img}} (const Mat \&mua, int w, int t)
 \item 
 void \mbox{\hyperlink{classProcess_a55d3276f25585ee46f212361b99d1bbc}{\+\_\+\+Create\+\_\+\+Diffuse\+\_\+reflectance\+\_\+\+Pathlength\+\_\+\+Img\+\_\+\+With\+\_\+\+Lens}} (const Mat \&mua, int w)
 \item 
@@ -135,17 +135,19 @@ bool \mbox{\hyperlink{classProcess_a714dc9f41793cbbace450b0cdebcde79}{\+\_\+\+M\
 Constructor of the class 
 
 \doxysubsection{Member Function Documentation}
-\mbox{\Hypertarget{classProcess_a51fbccc06951ea0b7969009991230664}\label{classProcess_a51fbccc06951ea0b7969009991230664}} 
+\mbox{\Hypertarget{classProcess_a4b4fe864ac72ad5f0c5eb0a27e8d7d1d}\label{classProcess_a4b4fe864ac72ad5f0c5eb0a27e8d7d1d}} 
 \index{Process@{Process}!\_Create\_Diffuse\_reflectance\_Pathlength\_Img@{\_Create\_Diffuse\_reflectance\_Pathlength\_Img}}
 \index{\_Create\_Diffuse\_reflectance\_Pathlength\_Img@{\_Create\_Diffuse\_reflectance\_Pathlength\_Img}!Process@{Process}}
 \doxysubsubsection{\texorpdfstring{\_Create\_Diffuse\_reflectance\_Pathlength\_Img()}{\_Create\_Diffuse\_reflectance\_Pathlength\_Img()}}
-{\footnotesize\ttfamily void Process\+::\+\_\+\+Create\+\_\+\+Diffuse\+\_\+reflectance\+\_\+\+Pathlength\+\_\+\+Img (\begin{DoxyParamCaption}\item[{const Mat \&}]{mua,  }\item[{int}]{w }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+{\footnotesize\ttfamily void Process\+::\+\_\+\+Create\+\_\+\+Diffuse\+\_\+reflectance\+\_\+\+Pathlength\+\_\+\+Img (\begin{DoxyParamCaption}\item[{const Mat \&}]{mua,  }\item[{int}]{w,  }\item[{int}]{t }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
 calculate diffuse reflectance pathlength img without lens and sensor optics. Images are reconstructed at the tissue surface 
 \begin{DoxyParams}{Parameters}
 {\em mua} & matrix of absorption changes (in mm-\/1). Size\+: number of class x time \\
 \hline
 {\em w} & wavelength (in nm) \\
+\hline
+{\em t} & temporal index \\
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{classProcess_a55d3276f25585ee46f212361b99d1bbc}\label{classProcess_a55d3276f25585ee46f212361b99d1bbc}} 
@@ -184,13 +186,7 @@ get output pos on sensor after lens
 \mbox{\texttt{ out}}  & {\em p} & pointer on matrix that contanins the position of exiting photons after the lens \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{classProcess_a98cd9c532c911eb1c9596b2f68f80a78}\label{classProcess_a98cd9c532c911eb1c9596b2f68f80a78}} 
-\index{Process@{Process}!\_getOpticalChanges@{\_getOpticalChanges}}
-\index{\_getOpticalChanges@{\_getOpticalChanges}!Process@{Process}}
-\doxysubsubsection{\texorpdfstring{\_getOpticalChanges()}{\_getOpticalChanges()}}
-{\footnotesize\ttfamily void Process\+::\+\_\+get\+Optical\+Changes (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
-
-Get optical changes \mbox{\Hypertarget{classProcess_af4f3eaf8d2ea971ce688ffa91aebb433}\label{classProcess_af4f3eaf8d2ea971ce688ffa91aebb433}} 
+\mbox{\Hypertarget{classProcess_af4f3eaf8d2ea971ce688ffa91aebb433}\label{classProcess_af4f3eaf8d2ea971ce688ffa91aebb433}} 
 \index{Process@{Process}!\_Load\_Simulation\_Data@{\_Load\_Simulation\_Data}}
 \index{\_Load\_Simulation\_Data@{\_Load\_Simulation\_Data}!Process@{Process}}
 \doxysubsubsection{\texorpdfstring{\_Load\_Simulation\_Data()}{\_Load\_Simulation\_Data()}}
@@ -271,7 +267,13 @@ Emit signal to infotm the GUI the processing status
 {\em msg} & string that contains the status \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{classProcess_acdf7bcf538af186407b9f679745f484b}\label{classProcess_acdf7bcf538af186407b9f679745f484b}} 
+\mbox{\Hypertarget{classProcess_a802e798ba055315025755a43a98c1feb}\label{classProcess_a802e798ba055315025755a43a98c1feb}} 
+\index{Process@{Process}!ReadOpticalChanges@{ReadOpticalChanges}}
+\index{ReadOpticalChanges@{ReadOpticalChanges}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{ReadOpticalChanges()}{ReadOpticalChanges()}}
+{\footnotesize\ttfamily void Process\+::\+Read\+Optical\+Changes (\begin{DoxyParamCaption}\item[{QString}]{dir }\end{DoxyParamCaption})}
+
+Read optical changes \mbox{\Hypertarget{classProcess_acdf7bcf538af186407b9f679745f484b}\label{classProcess_acdf7bcf538af186407b9f679745f484b}} 
 \index{Process@{Process}!requestLensSensorModeling@{requestLensSensorModeling}}
 \index{requestLensSensorModeling@{requestLensSensorModeling}!Process@{Process}}
 \doxysubsubsection{\texorpdfstring{requestLensSensorModeling}{requestLensSensorModeling}}

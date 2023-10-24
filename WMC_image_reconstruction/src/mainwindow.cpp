@@ -29,10 +29,19 @@ MainWindow::MainWindow(QWidget *parent)
 
     //Process single wavelength
     ui->_process_single_lambda->setChecked(true);
-    connect(ui->_process_single_lambda,SIGNAL(clicked(bool)),&_M_process,SLOT(onrequestSingleLambda(bool)));
-    //wavelength
+    on_process_single_lambdaClicked(true);
+    connect(ui->_process_single_lambda,SIGNAL(clicked(bool)),this,SLOT(on_process_single_lambdaClicked(bool)));
+
+    //wavelength (1 wavelength processing)
     ui->_wavelength->setText("500");
     connect(ui->_wavelength,SIGNAL(returnPressed()),this,SLOT(onNewWavelength()));
+
+    //Wavelength (multiple wavelength processing)
+    ui->_w_start->setText("400");
+    ui->_w_end->setText("1000");
+    connect(ui->_w_start,SIGNAL(returnPressed()),this,SLOT(onNewWavelengthRange()));
+    connect(ui->_w_end,SIGNAL(returnPressed()),this,SLOT(onNewWavelengthRange()));
+
 
     //Lens system
     ui->_model_lens->setChecked(false);
@@ -55,13 +64,35 @@ MainWindow::MainWindow(QWidget *parent)
     ui->_sensor_height_px->setText(QString::number(6*0.8));
     connect(ui->_sensor_width_px,SIGNAL(returnPressed()),this,SLOT(onNewLensSensorDesign()));
 
-
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+/** CLick on display reconstruction (process 1 wavlength or several ones)*/
+void MainWindow::on_process_single_lambdaClicked(bool v)
+{
+    //Send info to process class
+    _M_process.onrequestSingleLambda(v);
+
+    //Update GUI
+    if(v)
+    {
+        ui->_widget_single_wavelength->show();
+        ui->_widget_multiple_wavelength->hide();
+    }
+    else
+    {
+        ui->_widget_single_wavelength->hide();
+        ui->_widget_multiple_wavelength->show();
+    }
+}
+
+
+
+
 
 
 //Dir clicked
@@ -131,5 +162,62 @@ void MainWindow::onNewLensSensorDesign()
 void MainWindow::onNewWavelength()
 {
     int w =ui->_wavelength->text().toInt();
+
+    if(ui->_wavelength->text()[ui->_wavelength->text().size()-1] != "0")
+    {
+        w -= QString(ui->_wavelength->text()[ui->_wavelength->text().size()-1]).toInt();
+        ui->_wavelength->setText(QString::number(w));
+    }
+    if(w<400)
+    {
+        w = 400;
+        ui->_wavelength->setText(QString::number(w));
+    }
+    if(w>1000)
+    {
+        w = 1000;
+        ui->_wavelength->setText(QString::number(w));
+    }
     _M_process.setWavelength(w);
+}
+
+
+/** New wavelength range (for multiple wavelength processing */
+void MainWindow::onNewWavelengthRange()
+{
+    int w_start = ui->_w_start->text().toInt();
+    int w_end = ui->_w_end->text().toInt();
+
+    //Check w_stat values
+    if(ui->_w_start->text()[ui->_w_start->text().size()-1] != "0")
+    {
+        w_start -= QString(ui->_w_start->text()[ui->_w_start->text().size()-1]).toInt();
+        ui->_w_start->setText(QString::number(w_start));
+    }
+    if(w_start<400)
+    {
+        w_start = 400;
+        ui->_w_start->setText(QString::number(w_start));
+    }
+
+    //Check w_end
+    if(ui->_w_end->text()[ui->_w_end->text().size()-1] != "0")
+    {
+        w_end -= QString(ui->_w_end->text()[ui->_w_end->text().size()-1]).toInt();
+        ui->_w_start->setText(QString::number(w_start));
+    }
+    if(w_end>1000)
+    {
+        w_end = 1000;
+        ui->_w_end->setText(QString::number(w_start));
+    }
+
+    if(w_start>w_end)
+    {
+        w_start = 400;
+        ui->_w_start->setText(QString::number(w_start));
+    }
+
+    _M_process.setWavelengthRange(w_start,w_end,10);
+
 }

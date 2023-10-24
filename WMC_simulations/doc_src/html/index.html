@@ -84,6 +84,7 @@ Introduction</h1>
 <h1><a class="anchor" id="install_sec"></a>
 Installation</h1>
 <p>This program has be tested under Fedora 38 and Ubuntu. Problem may occur under other operating system. This program is coded in Python and Matlab. Matlab and Python need to be installed.</p>
+<p>The matlab software MCXLab need to be downloaded: <a href="https://mcx.space/wiki/?Get">https://mcx.space/wiki/?Get</a> Please download the latest version.</p>
 <p>For Python, several libraries need to be installed:</p>
 <ul>
 <li>sudo dnf install python3-pip python3-pyqt5</li>
@@ -94,7 +95,6 @@ User guide</h1>
 <p>The software is separated in three parts:</p><ul>
 <li>Image segmentation</li>
 <li>White Monte Carlo simulations</li>
-<li></li>
 </ul>
 <h2><a class="anchor" id="img_seg"></a>
 1) Image segmentation</h2>
@@ -106,7 +106,12 @@ User guide</h1>
 <li>Activated large blood vessels</li>
 <li>Activated capillaries</li>
 </ul>
-<p>The results of this segmentation step are written in the folder "images".</p>
+<p>The results of this segmentation step are written in the folder "images/Patientx". A folder Patientx needs to created prior to the execution of the python script. It must contains:</p><ul>
+<li>the input image "initial_img.png"</li>
+<li>the mask of the surgical window "mask.png"</li>
+<li>if you want to model activated areas, a mask need to be created. For this copy the input image "initial_img.png" into "mask_activity.png" and color the activated area in red.</li>
+</ul>
+<p>Some variables in the script need to be changed (data path and other variables)</p>
 <h2><a class="anchor" id="sec_simu"></a>
 2) Simulations</h2>
 <p>In the folder "run_simulations" several scripts can be used to process white Monte Carlo simulations:</p>
@@ -125,8 +130,6 @@ User guide</h1>
 <li>zip file for each simulated wavelength. A zip file contain 4 txt files (partial path length, position of exiting photons, angle of exiting photons, tissue optical properties at the considered wavelength).</li>
 <li>mat and txt file that contain simulation information</li>
 </ul>
-<p>b) "process_Hypercubes.m"</p>
-<p>This script can be used to reconstruct hypercubes (diffuse reflectance and mean path length images) after the execution of script a) "run_simulations.m" !!!! Caution !!!! This script can only be executed when using a small number of photons. Otherwise please use the C++ software.</p>
 <p>b) "process_Hypercubes.m"</p>
 <p>This script can be used to reconstruct hypercubes (diffuse reflectance and mean path length images) after the execution of script a) "run_simulations.m" !!!! Caution !!!! This script can only be executed when using a small number of photons. Otherwise please use the C++ software.</p>
 <p>c) "run_simu_and_process_Hypercubes.m"</p>

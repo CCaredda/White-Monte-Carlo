@@ -37,7 +37,6 @@ For Python, several libraries need to be installed:
 The software is separated in three parts:
 - Image segmentation
 - White Monte Carlo simulations
-- 
 
 
 \subsection img_seg 1) Image segmentation
@@ -51,8 +50,13 @@ A real RGB image of brain exposed cortex is taken as the input. This image is th
 - Activated large blood vessels
 - Activated capillaries
 
-The results of this segmentation step are written in the folder "images".
+The results of this segmentation step are written in the folder "images/Patientx".
+A folder Patientx needs to created prior to the execution of the python script. It must contains:
+- the input image "initial_img.png"
+- the mask of the surgical window "mask.png"
+- if you want to model activated areas, a mask need to be created. For this copy the input image "initial_img.png" into "mask_activity.png" and color the activated area in red.
 
+Some variables in the script need to be changed (data path and other variables)
 
 \subsection sec_simu 2) Simulations
 
@@ -81,16 +85,10 @@ b) "process_Hypercubes.m"
 This script can be used to reconstruct hypercubes (diffuse reflectance and mean path length images) after the execution of script a) "run_simulations.m"
 !!!! Caution !!!! This script can only be executed when using a small number of photons. Otherwise please use the C++ software.
 
-b) "process_Hypercubes.m"
-
-This script can be used to reconstruct hypercubes (diffuse reflectance and mean path length images) after the execution of script a) "run_simulations.m"
-!!!! Caution !!!! This script can only be executed when using a small number of photons. Otherwise please use the C++ software.
-
 c) "run_simu_and_process_Hypercubes.m"
 
 This script can be used to simulate light propagation in tissue and reconstruct hypercubes (diffuse reflectance and mean path length images).
 !!!! Caution !!!! This script can only be executed when using a small number of photons. Otherwise please use the C++ software.
-
  
 
 

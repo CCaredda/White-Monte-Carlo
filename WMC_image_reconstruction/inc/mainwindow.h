@@ -27,6 +27,7 @@ public:
     ~MainWindow();
 
 private slots:
+
     /** Click on directory to select simulations output */
     void onDirSimuclicked();
 
@@ -38,6 +39,13 @@ private slots:
 
     /** New Wavelength */
     void onNewWavelength();
+
+    /** New wavelength range (for multiple wavelength processing */
+    void onNewWavelengthRange();
+
+    /** CLick on display reconstruction (process 1 wavlength or several ones)*/
+    void on_process_single_lambdaClicked(bool);
+
 
 private:
     Ui::MainWindow *ui;
