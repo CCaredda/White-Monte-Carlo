@@ -18,6 +18,7 @@ LoadData::~LoadData()
 void LoadData::run()
 {
     qDebug()<<"LoadData In run";
+    _M_data_status = false; //Init to false (data not loaded)
     _M_data_status = ReadArrayPointer();
     _M_data_status = ((*_M_data).empty()) ? false : _M_data_status;
 
