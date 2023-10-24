@@ -14,7 +14,7 @@ type = "surface"
 t = 0
 
 #binning
-binning = 1
+binning = 4
 
 #Load data
 data = np.load(path+"Hypercube_surface_binning_"+str(binning)+"_t_"+str(t)+".npz")
@@ -23,7 +23,7 @@ Mean_path = data['Mean_path']
 Wavelength = data['wavelength']
 
 # display data
-w = np.array([500,900])
+w = np.array([500,600])
 
 plt.close('all')
 plt.figure()
@@ -42,4 +42,13 @@ for i in range(np.size(w)):
     plt.title(str(w[i])+" nm")
     id_w = np.where((Wavelength - w[i]) == 0)[0][0]
     plt.imshow(Mean_path[:,:,id_w])
+plt.show()
+
+
+pt = [67,96]
+plt.figure()
+plt.subplot(121)
+plt.plot(Wavelength,Diffuse_reflectance[pt[0],pt[1],:])
+plt.subplot(122)
+plt.plot(Wavelength,Mean_path[pt[0],pt[1],:])
 plt.show()

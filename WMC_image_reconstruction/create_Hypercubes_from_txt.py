@@ -5,6 +5,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy import interpolate
 
+# path that contains the results
+path = "/home/caredda/DVP/simulation/output_mcxlab/output_Patient1/results/"
 
 # Temporal vector
 time = 0
@@ -13,16 +15,22 @@ time = 0
 type = "surface"
 
 #Binning
-binning = 1
+binning = 4
 
 #Wavelength
-wavelength = np.arange(400,1010,10)
-w_interp = np.arange(400,1001)
+w_start = 400
+w_end = 1000
+wavelength = np.arange(w_start,w_end+10,10)
+w_interp = np.arange(w_start,w_end+1)
 
-# path that contains the results
-path = "/home/caredda/DVP/simulation/output_mcxlab/output_Patient1/results/"
+#get resolution
+reso = 1
+info = np.genfromtxt(path+"../cst.txt",dtype='str')
+for i in range(info.shape[0]):
+    if(info[i,0] == "unitinmm"):
+        reso = float(info[i,1])
 
-
+reso = binning*reso
 
 for t in range(np.size(time)):
     #Init hypercuve
@@ -51,7 +59,8 @@ for t in range(np.size(time)):
     np.savez(path+"Hypercube_"+type+"_binning_"+str(binning)+"_t_"+str(t),
             Diffuse_reflectance = Diffuse_reflectance,
             Mean_path = Mean_path,
-            wavelength = w_interp)
+            wavelength = w_interp,
+            resolution_in_mm = reso)
 
 
 

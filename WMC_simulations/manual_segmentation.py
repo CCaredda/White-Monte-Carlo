@@ -53,10 +53,10 @@ print(reso_mm)
 ## Process K-MEans or thresholding
 plt.close('all')
 
-reduce_ROI = False
-crop_img = True
-use_greyscale = True
-use_Kmeans = False
+reduce_ROI = True
+crop_img = False
+use_greyscale = False
+use_Kmeans = True
 
 block_size = 71 #Block size used for adaptive thresholding
 size_small_vessels = 7 #Size small vessels
@@ -69,7 +69,7 @@ K = 10 #Nb of class use by KMeans
 directory_path = "/home/caredda/DVP/simulation/CREATIS-UCL-White-Monte-Carlo-Framework/WMC_simulations/"
 
 # Load image
-path = directory_path+"images/Patient3/"
+path = directory_path+"images/Patient1/"
 img = cv.imread(path+"initial_img.png")
 mask = cv.imread(path+"mask.png",cv.IMREAD_GRAYSCALE)
 
@@ -198,8 +198,8 @@ else: # Use adaptive thresholding
 
 if use_Kmeans:
     #Define Labels
-    label_BV = np.array([6,8])
-    label_capillaries = np.array([4])
+    label_BV = np.array([9,3])
+    label_capillaries = np.array([2])
 
 
     # Mask lage blood vessels
