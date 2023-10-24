@@ -6,8 +6,8 @@ compute_Static = 1;
 %Large blood vessel
 SatO2_LBV = 0.98;
 C_HbT_Blood = 2325e-6;
-C_HbO2_LBV = SatO2_LBV*SatO2_LBV;
-C_Hb_LBV = (1-SatO2_LBV)*SatO2_LBV;
+C_HbO2_LBV = SatO2_LBV*C_HbT_Blood;
+C_Hb_LBV = (1-SatO2_LBV)*C_HbT_Blood;
 C_oxCCO_LBV = 0;
 C_redCCO_LBV = 0;
 F_Fat_LBV = 0;
@@ -15,8 +15,8 @@ F_Water_LBV = 0;
 
 %Capillaries
 SatO2_cap = 0.75;
-C_HbO2_cap = SatO2_cap*SatO2_LBV;
-C_Hb_cap = (1-SatO2_cap)*SatO2_LBV;
+C_HbO2_cap = SatO2_cap*C_HbT_Blood;
+C_Hb_cap = (1-SatO2_cap)*C_HbT_Blood;
 C_oxCCO_cap = 0;
 C_redCCO_cap = 0;
 F_Fat_cap = 0;

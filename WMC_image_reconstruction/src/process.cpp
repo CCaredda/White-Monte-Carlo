@@ -332,7 +332,7 @@ void Process::ReadOpticalChanges(QString dir)
         // 2: C_HbO2 in Mol
         // 3: C_Hb in Mol
         // 4: C_oxCCO in Mol
-        // 5: C_redCCO in Mo
+        // 5: C_redCCO in Mol
 //        QVector<QVector<float> > temp;
 
         //Size(Chromophores, time)
