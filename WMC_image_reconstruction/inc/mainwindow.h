@@ -44,7 +44,7 @@ private slots:
     void onNewWavelengthRange();
 
     /** CLick on display reconstruction (process 1 wavlength or several ones)*/
-    void on_process_single_lambdaClicked(bool);
+    void on_processSingleLambdaClicked(bool);
 
 
 private:

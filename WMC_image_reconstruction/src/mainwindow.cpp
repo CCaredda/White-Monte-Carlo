@@ -29,8 +29,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     //Process single wavelength
     ui->_process_single_lambda->setChecked(true);
-    on_process_single_lambdaClicked(true);
-    connect(ui->_process_single_lambda,SIGNAL(clicked(bool)),this,SLOT(on_process_single_lambdaClicked(bool)));
+    connect(ui->_process_single_lambda,SIGNAL(clicked(bool)),this,SLOT(on_processSingleLambdaClicked(bool)));
+    on_processSingleLambdaClicked(true);
 
     //wavelength (1 wavelength processing)
     ui->_wavelength->setText("500");
@@ -72,7 +72,7 @@ MainWindow::~MainWindow()
 }
 
 /** CLick on display reconstruction (process 1 wavlength or several ones)*/
-void MainWindow::on_process_single_lambdaClicked(bool v)
+void MainWindow::on_processSingleLambdaClicked(bool v)
 {
     //Send info to process class
     _M_process.onrequestSingleLambda(v);
@@ -163,7 +163,7 @@ void MainWindow::onNewWavelength()
 {
     int w =ui->_wavelength->text().toInt();
 
-    if(ui->_wavelength->text()[ui->_wavelength->text().size()-1] != "0")
+    if(QString(ui->_wavelength->text()[ui->_wavelength->text().size()-1]) != "0")
     {
         w -= QString(ui->_wavelength->text()[ui->_wavelength->text().size()-1]).toInt();
         ui->_wavelength->setText(QString::number(w));
@@ -189,7 +189,7 @@ void MainWindow::onNewWavelengthRange()
     int w_end = ui->_w_end->text().toInt();
 
     //Check w_stat values
-    if(ui->_w_start->text()[ui->_w_start->text().size()-1] != "0")
+    if(QString(ui->_w_start->text()[ui->_w_start->text().size()-1]) != "0")
     {
         w_start -= QString(ui->_w_start->text()[ui->_w_start->text().size()-1]).toInt();
         ui->_w_start->setText(QString::number(w_start));
@@ -201,7 +201,7 @@ void MainWindow::onNewWavelengthRange()
     }
 
     //Check w_end
-    if(ui->_w_end->text()[ui->_w_end->text().size()-1] != "0")
+    if(QString(ui->_w_end->text()[ui->_w_end->text().size()-1]) != "0")
     {
         w_end -= QString(ui->_w_end->text()[ui->_w_end->text().size()-1]).toInt();
         ui->_w_start->setText(QString::number(w_start));
