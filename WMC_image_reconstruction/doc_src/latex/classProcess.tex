@@ -31,6 +31,8 @@ void \mbox{\hyperlink{classProcess_a84a2a573ead3f28649e66951af984f44}{new\+Lens\
 \item 
 void \mbox{\hyperlink{classProcess_a2c535f78c1dd552d620394aabec119da}{set\+Wavelength}} (int w)
 \item 
+void \mbox{\hyperlink{classProcess_a01e32d904067876317b996c5bfba2499}{set\+Wavelength\+Range}} (int start, int end, int step)
+\item 
 void \mbox{\hyperlink{classProcess_a802e798ba055315025755a43a98c1feb}{Read\+Optical\+Changes}} (QString dir)
 \end{DoxyCompactItemize}
 \doxysubsection*{Protected Member Functions}
@@ -307,7 +309,13 @@ set Wavelength to analyze
 {\em w} & wavelength that is required to be anlyzed (in nm) \\
 \hline
 \end{DoxyParams}
+\mbox{\Hypertarget{classProcess_a01e32d904067876317b996c5bfba2499}\label{classProcess_a01e32d904067876317b996c5bfba2499}} 
+\index{Process@{Process}!setWavelengthRange@{setWavelengthRange}}
+\index{setWavelengthRange@{setWavelengthRange}!Process@{Process}}
+\doxysubsubsection{\texorpdfstring{setWavelengthRange()}{setWavelengthRange()}}
+{\footnotesize\ttfamily void Process\+::set\+Wavelength\+Range (\begin{DoxyParamCaption}\item[{int}]{start,  }\item[{int}]{end,  }\item[{int}]{step }\end{DoxyParamCaption})}
 
+Set wavelength range (for multi wavelength reconstruction) within the range \mbox{[}start\+:stop\mbox{]} by steps of step. 
 
 \doxysubsection{Member Data Documentation}
 \mbox{\Hypertarget{classProcess_a974e1c51e023c3a65f6c944780730a44}\label{classProcess_a974e1c51e023c3a65f6c944780730a44}} 
