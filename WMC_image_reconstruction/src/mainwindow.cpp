@@ -33,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
     on_processSingleLambdaClicked(true);
 
     //wavelength (1 wavelength processing)
-    ui->_wavelength->setText("500");
+    ui->_wavelength->setText("400");
     connect(ui->_wavelength,SIGNAL(returnPressed()),this,SLOT(onNewWavelength()));
 
     //Wavelength (multiple wavelength processing)
@@ -99,7 +99,7 @@ void MainWindow::on_processSingleLambdaClicked(bool v)
 void MainWindow::onDirSimuclicked()
 {
     // get directory
-    QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Load Simulation results"),
                                                  PROPATH,
                                                  QFileDialog::ShowDirsOnly
                                                  | QFileDialog::DontResolveSymlinks);
@@ -122,8 +122,8 @@ void MainWindow::onDirSimuclicked()
 void MainWindow::onDirOpticalChangesClicked()
 {
     // get directory
-    QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
-                                                 PROPATH,
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Load Optical changes"),
+                                                 QString(PROPATH)+"/optical_changes",
                                                  QFileDialog::ShowDirsOnly
                                                  | QFileDialog::DontResolveSymlinks);
 

@@ -521,15 +521,9 @@ void Process::_Create_Diffuse_reflectance_Pathlength_Img(const Mat &mua,int w,in
     Mat mp,dr;
 
     float reso_x,reso_y;
-    QString name="";
-    QString name_info="";
-
-
 
     if(!_M_lens_sensor.transfer_Matrix.empty() && _M_model_lens_sensor)
     {
-        name = "sensor_"+QString::number(_M_lens_sensor.y_sensor_mm)+"_"+QString::number(_M_lens_sensor.x_sensor_mm)+"mm"+QString::number(w)+"_t_"+QString::number(t)+".txt";;
-
         //Get position on sensor after lens
         Mat *p = new Mat(*_M_p.getData());
 
@@ -546,9 +540,6 @@ void Process::_Create_Diffuse_reflectance_Pathlength_Img(const Mat &mua,int w,in
     }
     else
     {
-        //name output file
-        name = "surface_"+QString::number(w)+"_binning_"+QString::number(_M_binning)+"_t_"+QString::number(t)+".txt";
-
         //Area of detector
         reso_x = _M_binning*_M_info_simus.unit_in_mm;
         reso_y = _M_binning*_M_info_simus.unit_in_mm;
@@ -565,24 +556,52 @@ void Process::_Create_Diffuse_reflectance_Pathlength_Img(const Mat &mua,int w,in
 
 
 //    qDebug()<<"Write images";
-    WriteFloatImg(_M_saving_dir+"/mp_"+name,mp);
-    WriteFloatImg(_M_saving_dir+"/dr_"+name,dr);
+    WriteFloatImg(_M_saving_dir+"/mp_"+QString::number(w)+"_t_"+QString::number(t)+".txt",mp);
+    WriteFloatImg(_M_saving_dir+"/dr_"+QString::number(w)+"_t_"+QString::number(t)+".txt",dr);
 
     //Write info
-    QFile file(_M_saving_dir+"/info_out_"+name_info+".txt");
+    QFile file(_M_saving_dir+"/info_out.txt");
     if(!file.exists())
     {
         file.close();
         QVector<QString> info;
-        info.push_back("reso x (mm): "+QString::number(reso_x));
-        info.push_back("reso y (mm): "+QString::number(reso_y));
+
+        //Simulation info
+        info.push_back("Nb_photons "+QString::number(_M_info_simus.nb_photons));
+        info.push_back("Nb_repetitions "+QString::number(_M_info_simus.repetions));
+        info.push_back("Resolution_tissue_mm "+QString::number(_M_info_simus.unit_in_mm));
+        info.push_back("Tissue_rows "+QString::number(_M_info_simus.modelled_volume_rows));
+        info.push_back("Tissue_cols "+QString::number(_M_info_simus.modelled_volume_cols));
+
+        //Reconstruction info
+        info.push_back("Binning "+QString::number(_M_binning));
+        info.push_back("Reconstructed_image_rows "+QString::number(_M_info_simus.modelled_volume_rows));
+        info.push_back("Reconstructed_image_cols "+QString::number(_M_info_simus.modelled_volume_cols));
+        info.push_back("Reconstructed_image_reso_x_mm "+QString::number(reso_x));
+        info.push_back("Reconstructed_image_reso_y_mm "+QString::number(reso_y));
+
         if(_M_model_lens_sensor)
         {
-            info.push_back("focal length (mm): "+QString::number(_M_lens_sensor.f0_mm));
-            info.push_back("working distance (mm): "+QString::number(_M_lens_sensor.working_distance_mm));
+            info.push_back("Reconstruction_on_sensor 1");
+            //Lens info
+            info.push_back("focal_length_mm "+QString::number(_M_lens_sensor.f0_mm));
+            info.push_back("working_distance_mm "+QString::number(_M_lens_sensor.working_distance_mm));
+            info.push_back("Lens_distance_to_sensor_mm "+QString::number(_M_lens_sensor.distance_to_sensor));
+
+            //Sensor
+            info.push_back("x_sensor_mm "+QString::number(_M_lens_sensor.x_sensor_mm));
+            info.push_back("y_sensor_mm "+QString::number(_M_lens_sensor.y_sensor_mm));
+            info.push_back("x_sensor_px "+QString::number(_M_lens_sensor.x_sensor_px));
+            info.push_back("y_sensor_px "+QString::number(_M_lens_sensor.y_sensor_px));
+            info.push_back("sensor_reso_x_mm "+QString::number(_M_lens_sensor.sensor_reso_x));
+            info.push_back("sensor_reso_y_mm "+QString::number(_M_lens_sensor.sensor_reso_y));
+        }
+        else
+        {
+            info.push_back("Reconstruction_on_surface 1");
         }
 
-        WriteInfo(_M_saving_dir+"/info_out_"+name_info+".txt",info);
+        WriteInfo(_M_saving_dir+"/info_out.txt",info);
     }
 
 
