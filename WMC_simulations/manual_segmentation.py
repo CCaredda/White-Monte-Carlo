@@ -39,10 +39,10 @@ def EqualizeHist(img,mask):
 
 
 ##Get image resolution
-x1 = 966
-y1 = 344
-x2 = 958
-y2 = 257
+x1 = 200
+y1 = 372
+x2 = 272
+y2 = 496
 
 l_px = np.sqrt((x1-x2)**2 + (y1-y2)**2)
 
@@ -53,25 +53,31 @@ print(reso_mm)
 ## Process K-MEans or thresholding
 plt.close('all')
 
-reduce_ROI = True
-crop_img = False
+reduce_ROI = False
+crop_img = True
 use_greyscale = False
-use_Kmeans = True
+use_Kmeans = False
 
 block_size = 71 #Block size used for adaptive thresholding
 size_small_vessels = 7 #Size small vessels
 min_area = 100 #remove blobs having area less than min_area
 K = 10 #Nb of class use by KMeans
 
+saturated_pixel_val = 170 #Value of saturated pixels
 
+erode_mask_size = 21
 
 #Change this
 directory_path = "/home/caredda/DVP/simulation/CREATIS-UCL-White-Monte-Carlo-Framework/WMC_simulations/"
 
 # Load image
-path = directory_path+"images/Patient1/"
+path = directory_path+"images/Patient5/"
 img = cv.imread(path+"initial_img.png")
 mask = cv.imread(path+"mask.png",cv.IMREAD_GRAYSCALE)
+
+#Erode mask to remove non biological tissue
+kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE,(erode_mask_size,erode_mask_size))
+mask = cv.morphologyEx(mask, cv.MORPH_ERODE, kernel)
 
 if (os.path.isfile(path+"mask_activity.png")):
     mask_act_temp = cv.imread(path+"mask_activity.png")
@@ -92,10 +98,10 @@ if reduce_ROI:
 
 #Crop image
 if crop_img:
-    r1=0
+    r1=138
     r2=mask.shape[0]
-    c1 = 149
-    c2 = 705
+    c1 = 0
+    c2 = mask.shape[1]
     mask = mask[r1:r2,c1:c2]
     img = img[r1:r2,c1:c2]
     mask_act_temp = mask_act_temp[r1:r2,c1:c2]
@@ -152,8 +158,18 @@ if use_Kmeans:
 
 else: # Use adaptive thresholding
 
+    #get saturated pixels
+    ret,img_sat = cv.threshold(img_Grey,saturated_pixel_val,255,cv.THRESH_BINARY,255)
+    kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE,(size_small_vessels,size_small_vessels))
+    img_sat = cv.morphologyEx(img_sat, cv.MORPH_CLOSE, kernel)
+    img_sat = np.bitwise_and(mask,img_sat)
+    img_sat = np.bitwise_not(img_sat)
+
+
+    #Adaptive thresholding
     img_thresh = cv.adaptiveThreshold(img_Grey,255,cv.ADAPTIVE_THRESH_GAUSSIAN_C,cv.THRESH_BINARY_INV,block_size,0)
     img_thresh = np.bitwise_and(mask,img_thresh)
+    img_thresh = np.bitwise_and(img_sat,img_thresh)
 
     #Remove small vessels
     kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE,(size_small_vessels,size_small_vessels))
@@ -188,6 +204,10 @@ else: # Use adaptive thresholding
     plt.imshow(mask_large_vessels)
     plt.subplot(224)
     plt.imshow(mask_capillaries)
+    plt.show()
+
+    plt.figure()
+    plt.imshow(img_sat)
     plt.show()
 
 
