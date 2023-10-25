@@ -3,6 +3,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+import cv2 as cv
 from scipy import interpolate
 import scipy.io
 
@@ -22,25 +23,38 @@ for Patient in array_Patient:
 
     #get resolution
     info = np.genfromtxt(path+"info_out.txt",dtype='str')
+    for i in range(info.shape[0]):
+        if info[i,0] == "Reconstructed_image_rows":
+            output_rows = int(info[i,1])
+        if info[i,0] == "Reconstructed_image_cols":
+            output_cols = int(info[i,1])
+        if info[i,0] == "Binning":
+            Binning = int(info[i,1])
 
     #Get modelled volume
     struct = scipy.io.loadmat(path+"../cst.mat")
     info_model = struct['info_model']
     vol = info_model[0][0][0][0][0][11]
-    print(vol.shape)
+
+    #Get segmentation map (with binning)
+    img_seg = vol[0:Binning*output_rows:Binning,0:Binning*output_cols:Binning,0]
+    img_seg = img_seg - 1 #sart the label from 0 ->nb class -1
+
+    # plt.imshow(img_seg)
+    # plt.show()
 
 
     for t in range(np.size(time)):
-        #Init hypercuve
-        temp = np.loadtxt(path+"dr_"+str(wavelength[0])+"_t_0.txt")
-        dr = np.zeros((temp.shape[0],temp.shape[1],np.size(wavelength)))
-        mp = np.zeros((temp.shape[0],temp.shape[1],np.size(wavelength)))
-
+        #Init hypercube
+        dr = np.zeros((output_rows,output_cols,np.size(wavelength)))
+        mp = np.zeros((output_rows,output_cols,np.size(wavelength)))
 
 
         for w in range(np.size(wavelength)):
+            # Remove first and last row/column
             dr[:,:,w] = np.loadtxt(path+"dr_"+str(wavelength[w])+"_t_"+str(t)+".txt")
             mp[:,:,w] = np.loadtxt(path+"mp_"+str(wavelength[w])+"_t_"+str(t)+".txt")
+
 
         #interpolate
         Diffuse_reflectance = np.zeros((dr.shape[0],dr.shape[1],np.size(w_interp)))
@@ -54,12 +68,14 @@ for Patient in array_Patient:
                 f = interpolate.interp1d(wavelength,mp[x,y,:], kind='cubic')
                 Mean_path[x,y,:] = f(w_interp)
 
+        #Save results
         np.savez(path+Patient+"_Hypercube_t_"+str(t),
                 Diffuse_reflectance = Diffuse_reflectance,
                 Mean_path = Mean_path,
                 wavelength = w_interp,
                 info = info,
-                volume_modelled = vol)
+                volume_modelled = vol,
+                Segmented_tissue = img_seg)
 
 
 

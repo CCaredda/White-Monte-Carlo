@@ -521,6 +521,7 @@ void Process::_Create_Diffuse_reflectance_Pathlength_Img(const Mat &mua,int w,in
     Mat mp,dr;
 
     float reso_x,reso_y;
+    int out_img_rows,out_img_cols;
 
     if(!_M_lens_sensor.transfer_Matrix.empty() && _M_model_lens_sensor)
     {
@@ -535,7 +536,12 @@ void Process::_Create_Diffuse_reflectance_Pathlength_Img(const Mat &mua,int w,in
         reso_y = _M_lens_sensor.sensor_reso_y;
         float area = reso_x*reso_y;
 
-        get_Diffuse_reflectance_Pathlength(1,_M_info_simus.nb_photons,_M_info_simus.repetions,mua, _M_lens_sensor.x_sensor_px, _M_lens_sensor.y_sensor_px,
+        //Define output image size
+        out_img_rows = _M_lens_sensor.x_sensor_px;
+        out_img_cols = _M_lens_sensor.y_sensor_px;
+
+
+        get_Diffuse_reflectance_Pathlength(1,_M_info_simus.nb_photons,_M_info_simus.repetions,mua, out_img_rows, out_img_cols,
                                            area,_M_info_simus.unit_in_mm,_M_ppath.getData(), p, dr, mp);
     }
     else
@@ -546,8 +552,8 @@ void Process::_Create_Diffuse_reflectance_Pathlength_Img(const Mat &mua,int w,in
         float area = reso_x*reso_y;
 
         //Define output image size
-        int out_img_rows = floor(_M_info_simus.modelled_volume_rows/_M_binning)+1;
-        int out_img_cols = floor(_M_info_simus.modelled_volume_cols/_M_binning)+1;
+        out_img_rows = floor(_M_info_simus.modelled_volume_rows/_M_binning);
+        out_img_cols = floor(_M_info_simus.modelled_volume_cols/_M_binning);
 
         get_Diffuse_reflectance_Pathlength(_M_binning,_M_info_simus.nb_photons,_M_info_simus.repetions,mua, out_img_rows, out_img_cols,
                                            area,_M_info_simus.unit_in_mm,_M_ppath.getData(), _M_p.getData(), dr, mp);
@@ -575,8 +581,8 @@ void Process::_Create_Diffuse_reflectance_Pathlength_Img(const Mat &mua,int w,in
 
         //Reconstruction info
         info.push_back("Binning "+QString::number(_M_binning));
-        info.push_back("Reconstructed_image_rows "+QString::number(_M_info_simus.modelled_volume_rows));
-        info.push_back("Reconstructed_image_cols "+QString::number(_M_info_simus.modelled_volume_cols));
+        info.push_back("Reconstructed_image_rows "+QString::number(out_img_rows));
+        info.push_back("Reconstructed_image_cols "+QString::number(out_img_cols));
         info.push_back("Reconstructed_image_reso_x_mm "+QString::number(reso_x));
         info.push_back("Reconstructed_image_reso_y_mm "+QString::number(reso_y));
 

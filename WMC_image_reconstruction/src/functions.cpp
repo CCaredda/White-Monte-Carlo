@@ -285,7 +285,7 @@ void get_Diffuse_reflectance_Pathlength(int binning,int nb_photons,int repetitio
 
     //Remove first, last columns and rows
 //    qDebug()<<"rect";
-    Rect rect(1,1,out_img_cols-2,out_img_rows-2);
-    mp = mp(rect);
-    dr = dr(rect);
+//    Rect rect(1,1,out_img_cols-2,out_img_rows-2);
+//    mp = mp(rect);
+//    dr = dr(rect);
 }
