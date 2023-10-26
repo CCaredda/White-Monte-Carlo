@@ -6,8 +6,9 @@ model_resolution_in_mm = 0;
 % Lambdas = 400:10:490;
 Lambdas = 400;
 run_in_cluster = 0;
-nb_repeat = 1;%50;
-nb_photons = 1e2;%1e6;
+nb_repeat = 1;%50; %Nb of repetitions used in MCX
+simu_repeat = 3; %Larger number of repeat (avoid Matlab crash due to large txt files)
+nb_photons = 10;%1e6;
 
 out_path = 'output/';
 in_img_path = '../images/Patient1/';
@@ -40,7 +41,7 @@ info_model = process_model_info(nb_photons,nb_repeat,in_img_path,model_resolutio
 save(strcat(out_path,'cst.mat'),'info_model');
 f = fopen(strcat(out_path,'cst.txt'),'w');
 fprintf(f,'%s %d\n','nb_photons ',nb_photons);
-fprintf(f,'%s %d\n','repetitions ',nb_repeat);
+fprintf(f,'%s %d\n','repetitions ',nb_repeat*simu_repeat);
 fprintf(f,'%s %f\n','unitinmm ',info_model.cfg.unitinmm);
 fprintf(f,'%s %d\n','vol_rows ',size(info_model.cfg.vol,1));
 fprintf(f,'%s %d\n','vol_cols ',size(info_model.cfg.vol,2));
@@ -51,40 +52,31 @@ Optical_prop = process_optical_properties(Lambdas);
 
 % process simulations
 for l=1:length(Lambdas)
-    disp(strcat("Similation lambda ",num2str(Lambdas(l))))
-    output_det = process_simulations(squeeze(Optical_prop(l,:,:)),info_model.cfg);
-
-    % %  % detector output
-    % % output_det.ppath = detphoton.ppath; % cummulative path lengths in each medium (partial pathlength) one need to multiply cfg.unitinmm with ppath to convert it to mm.
-    % % output_det.p = detphoton.p; % exit position when cfg.issaveexit=1
-    % % output_det.v = detphoton.v; % exit direction, when cfg.issaveexit=1
-    % % output_det.prop = detphoton.prop;
+    disp(strcat("Simulation lambda ",num2str(Lambdas(l))))
     
-    % save output
-    disp('Save results')
-    % writematrix(output_det.ppath,strcat(out_path,'ppath_',num2str(Lambdas(l)),'.txt'),'Delimiter',' ');
-    % writematrix(output_det.p,strcat(out_path,'p_',num2str(Lambdas(l)),'.txt'),'Delimiter',' ');
-    % writematrix(output_det.v,strcat(out_path,'v_',num2str(Lambdas(l)),'.txt'),'Delimiter',' ');
-    writematrix(output_det.prop,strcat(out_path,'prop_',num2str(Lambdas(l)),'.txt'),'Delimiter',' ');
+    for s=1:simu_repeat
+        % %  % detector output
+        % % output_det.ppath = detphoton.ppath; % cummulative path lengths in each medium (partial pathlength) one need to multiply cfg.unitinmm with ppath to convert it to mm.
+        % % output_det.p = detphoton.p; % exit position when cfg.issaveexit=1
+        % % output_det.v = detphoton.v; % exit direction, when cfg.issaveexit=1
+        % % output_det.prop = detphoton.prop;
+        output_det = process_simulations(squeeze(Optical_prop(l,:,:)),info_model.cfg);
 
-    %Write with fprinf (do not use writematrix, matlab cannot handle large
-    %files
-    f_ppath = fopen(strcat(out_path,'ppath_',num2str(Lambdas(l)),'.txt'),'w');
-    f_p = fopen(strcat(out_path,'p_',num2str(Lambdas(l)),'.txt'),'w');
-    f_v = fopen(strcat(out_path,'v_',num2str(Lambdas(l)),'.txt'),'w');
-    
-    for i=1:size(output_det.p,1)
-        fprintf(f_ppath,'%s %s %s %s %s %s\n',output_det.ppath(i,1),output_det.ppath(i,2),output_det.ppath(i,3),output_det.ppath(i,4),output_det.ppath(i,5),output_det.ppath(i,6));
-        fprintf(f_p,'%s %s %s\n',output_det.p(i,1),output_det.p(i,2),output_det.p(i,3));
-        fprintf(f_v,'%s %s %s\n',output_det.v(i,1),output_det.v(i,2),output_det.v(i,3));
+        % save output
+        disp('Save results')
+        if(s == 1)
+            writematrix(output_det.ppath,strcat(out_path,'ppath_',num2str(Lambdas(l)),'.txt'),'Delimiter',' ');
+            writematrix(output_det.p,strcat(out_path,'p_',num2str(Lambdas(l)),'.txt'),'Delimiter',' ');
+            writematrix(output_det.v,strcat(out_path,'v_',num2str(Lambdas(l)),'.txt'),'Delimiter',' ');
+            writematrix(output_det.prop,strcat(out_path,'prop_',num2str(Lambdas(l)),'.txt'),'Delimiter',' ');
+        else
+            writematrix(output_det.ppath,strcat(out_path,'ppath_',num2str(Lambdas(l)),'.txt'),'Delimiter',' ','WriteMode','append');
+            writematrix(output_det.p,strcat(out_path,'p_',num2str(Lambdas(l)),'.txt'),'Delimiter',' ','WriteMode','append');
+            writematrix(output_det.v,strcat(out_path,'v_',num2str(Lambdas(l)),'.txt'),'Delimiter',' ','WriteMode','append');
+        end
+        clear output_det;
     end
-    fclose(f_ppath);
-    fclose(f_p);
-    fclose(f_v);
-
-    % clear output
-    clear output_det flux;
-
+    
     % Zip files
     disp('Zip results')
     cd(out_path);
