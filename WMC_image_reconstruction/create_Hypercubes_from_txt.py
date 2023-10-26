@@ -7,6 +7,7 @@ import cv2 as cv
 from scipy import interpolate
 import scipy.io
 
+
 # path that contains the results
 array_Patient = np.array(["Patient1"])
 for Patient in array_Patient:
@@ -78,5 +79,55 @@ for Patient in array_Patient:
                 Segmented_tissue = img_seg)
 
 
+
+##
+
+
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+from skimage.restoration import denoise_nl_means, estimate_sigma
+
+
+path = path = "/home/caredda/DVP/simulation/output_mcxlab/output_Patient1_repeat_100/results3/"
+dr = np.loadtxt(path+"dr_400_t_0.txt")
+dr[np.isnan(dr)] = 0
+mp = np.loadtxt(path+"mp_400_t_0.txt")
+mp[np.isnan(mp)] = 0
+
+
+patch_kw = dict(patch_size=5,      # 5x5 patches
+                patch_distance=6,  # 13x13 search area
+                channel_axis=-1)
+
+h = 0.6
+
+# denoise dr
+# Graphics processing units-accelerated adaptive nonlocal means filter for denoising three-dimensional Monte Carlo photon transport simulations
+sigma_est = np.mean(estimate_sigma(dr, channel_axis=-1))
+dr = np.expand_dims(dr, axis=2)
+dr_denoise = denoise_nl_means(dr, h=h * sigma_est, sigma=sigma_est,
+                                 fast_mode=True, **patch_kw)
+
+# denoise mp
+sigma_est = np.mean(estimate_sigma(mp, channel_axis=-1))
+mp = np.expand_dims(mp, axis=2)
+mp_denoise = denoise_nl_means(mp, h=h * sigma_est, sigma=sigma_est,
+                                 fast_mode=True, **patch_kw)
+
+plt.close('all')
+plt.figure()
+plt.subplot(121)
+plt.imshow(dr)
+plt.subplot(122)
+plt.imshow(dr_denoise)
+plt.show()
+
+plt.figure()
+plt.subplot(121)
+plt.imshow(mp)
+plt.subplot(122)
+plt.imshow(mp_denoise)
+plt.show()
 
 
