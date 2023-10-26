@@ -8,6 +8,50 @@ from scipy import interpolate
 import scipy.io
 from skimage.restoration import denoise_nl_means, estimate_sigma
 
+def level_A(z_min, z_med, z_max, z_xy, S_xy, S_max):
+    if(z_min < z_med < z_max):
+        return level_B(z_min, z_med, z_max, z_xy, S_xy, S_max)
+    else:
+        S_xy += 2 #increase the size of S_xy to the next odd value.
+        if(S_xy <= S_max): #repeat process
+            return level_A(z_min, z_med, z_max, z_xy, S_xy, S_max)
+        else:
+            return z_med
+
+
+
+def level_B(z_min, z_med, z_max, z_xy, S_xy, S_max):
+    if(z_min < z_xy < z_max):
+        return z_xy
+    else:
+        return z_med
+
+
+
+def amf(image, initial_window, max_window):
+    """runs the Adaptive Median Filter proess on an image"""
+    xlength, ylength = image.shape #get the shape of the image.
+
+    z_min, z_med, z_max, z_xy = 0, 0, 0, 0
+    S_max = max_window
+    S_xy = initial_window #dynamically to grow
+
+    output_image = image.copy()
+
+    for row in range(S_xy, xlength-S_xy-1):
+        for col in range(S_xy, ylength-S_xy-1):
+            filter_window = image[row - S_xy : row + S_xy + 1, col - S_xy : col + S_xy + 1] #filter window
+            target = filter_window.reshape(-1) #make 1-dimensional
+            z_min = np.min(target) #min of intensity values
+            z_max = np.max(target) #max of intensity values
+            z_med = np.median(target) #median of intensity values
+            z_xy = image[row, col] #current intensity
+
+            #Level A & B
+            new_intensity = level_A(z_min, z_med, z_max, z_xy, S_xy, S_max)
+            output_image[row, col] = new_intensity
+    return output_image
+
 
 #Non local mean filter patch
 patch_kw = dict(patch_size=5,      # 5x5 patches
@@ -15,6 +59,9 @@ patch_kw = dict(patch_size=5,      # 5x5 patches
                 channel_axis=-1)
 
 h = 0.6
+
+big_win_med = 7
+
 
 # path that contains the results
 array_Patient = np.array(["Patient1"])
@@ -69,6 +116,7 @@ for Patient in array_Patient:
             #apply denoising
             temp = denoise_nl_means(dr, h=h * sigma_est, sigma=sigma_est,
                                  fast_mode=True, **patch_kw)
+            temp = amf(temp,3,big_win_med)
             dr[:,:,w] = temp
 
 
@@ -81,6 +129,7 @@ for Patient in array_Patient:
             #apply denoising
             temp = denoise_nl_means(dr, h=h * sigma_est, sigma=sigma_est,
                                  fast_mode=True, **patch_kw)
+            temp = amf(temp,3,big_win_med)
             mp[:,:,w] = temp
 
 
@@ -116,7 +165,58 @@ import matplotlib.pyplot as plt
 from skimage.restoration import denoise_nl_means, estimate_sigma
 
 
-path = path = "/home/caredda/DVP/simulation/output_mcxlab/output_Patient1_repeat_100/results3/"
+
+
+
+def level_A(z_min, z_med, z_max, z_xy, S_xy, S_max):
+    if(z_min < z_med < z_max):
+        return level_B(z_min, z_med, z_max, z_xy, S_xy, S_max)
+    else:
+        S_xy += 2 #increase the size of S_xy to the next odd value.
+        if(S_xy <= S_max): #repeat process
+            return level_A(z_min, z_med, z_max, z_xy, S_xy, S_max)
+        else:
+            return z_med
+
+
+
+def level_B(z_min, z_med, z_max, z_xy, S_xy, S_max):
+    if(z_min < z_xy < z_max):
+        return z_xy
+    else:
+        return z_med
+
+
+
+def amf(image, initial_window, max_window):
+    """runs the Adaptive Median Filter proess on an image"""
+    xlength, ylength = image.shape #get the shape of the image.
+
+    z_min, z_med, z_max, z_xy = 0, 0, 0, 0
+    S_max = max_window
+    S_xy = initial_window #dynamically to grow
+
+    output_image = image.copy()
+
+    for row in range(S_xy, xlength-S_xy-1):
+        for col in range(S_xy, ylength-S_xy-1):
+            filter_window = image[row - S_xy : row + S_xy + 1, col - S_xy : col + S_xy + 1] #filter window
+            target = filter_window.reshape(-1) #make 1-dimensional
+            z_min = np.min(target) #min of intensity values
+            z_max = np.max(target) #max of intensity values
+            z_med = np.median(target) #median of intensity values
+            z_xy = image[row, col] #current intensity
+
+            #Level A & B
+            new_intensity = level_A(z_min, z_med, z_max, z_xy, S_xy, S_max)
+            output_image[row, col] = new_intensity
+    return output_image
+
+
+
+
+
+path = "/home/caredda/DVP/simulation/output_mcxlab/test_patient1/results5/"
 dr = np.loadtxt(path+"dr_400_t_0.txt")
 dr[np.isnan(dr)] = 0
 mp = np.loadtxt(path+"mp_400_t_0.txt")
@@ -128,6 +228,7 @@ patch_kw = dict(patch_size=5,      # 5x5 patches
                 channel_axis=-1)
 
 h = 0.6
+big_win_med = 7
 
 # denoise dr
 # Graphics processing units-accelerated adaptive nonlocal means filter for denoising three-dimensional Monte Carlo photon transport simulations
@@ -135,26 +236,39 @@ sigma_est = np.mean(estimate_sigma(dr, channel_axis=-1))
 dr = np.expand_dims(dr, axis=2)
 dr_denoise = denoise_nl_means(dr, h=h * sigma_est, sigma=sigma_est,
                                  fast_mode=True, **patch_kw)
+dr_denoise2 = amf(dr_denoise,3,big_win_med)
 
 # denoise mp
 sigma_est = np.mean(estimate_sigma(mp, channel_axis=-1))
 mp = np.expand_dims(mp, axis=2)
 mp_denoise = denoise_nl_means(mp, h=h * sigma_est, sigma=sigma_est,
                                  fast_mode=True, **patch_kw)
+mp_denoise2 = amf(mp_denoise,3,big_win_med)
+
 
 plt.close('all')
 plt.figure()
-plt.subplot(121)
+plt.subplot(231)
+plt.title("dr")
 plt.imshow(dr)
-plt.subplot(122)
+plt.subplot(232)
+plt.title("dr nlmf")
 plt.imshow(dr_denoise)
-plt.show()
+plt.subplot(233)
+plt.title("dr nlmf nlmedian")
+plt.imshow(dr_denoise2)
 
-plt.figure()
-plt.subplot(121)
+
+plt.subplot(234)
+plt.title("mp")
 plt.imshow(mp)
-plt.subplot(122)
+plt.subplot(235)
+plt.title("mp nlmf")
 plt.imshow(mp_denoise)
+plt.subplot(236)
+plt.title("mp nlmf nlmedian")
+plt.imshow(mp_denoise2)
+
 plt.show()
 
 
