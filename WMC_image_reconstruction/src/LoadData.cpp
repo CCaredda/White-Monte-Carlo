@@ -279,7 +279,7 @@ void LoadData::unzipFiles(QString file,QString extract_dir)
     unzipProcess.setArguments(arguments);
 
     unzipProcess.start();
-    unzipProcess.waitForFinished();
+    unzipProcess.waitForFinished(-1);
 
     if (unzipProcess.exitStatus() == QProcess::NormalExit)
         qDebug() << "Extraction successful.";

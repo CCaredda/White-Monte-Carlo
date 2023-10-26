@@ -6,7 +6,15 @@ import matplotlib.pyplot as plt
 import cv2 as cv
 from scipy import interpolate
 import scipy.io
+from skimage.restoration import denoise_nl_means, estimate_sigma
 
+
+#Non local mean filter patch
+patch_kw = dict(patch_size=5,      # 5x5 patches
+                patch_distance=6,  # 13x13 search area
+                channel_axis=-1)
+
+h = 0.6
 
 # path that contains the results
 array_Patient = np.array(["Patient1"])
@@ -52,9 +60,28 @@ for Patient in array_Patient:
 
 
         for w in range(np.size(wavelength)):
-            # Remove first and last row/column
-            dr[:,:,w] = np.loadtxt(path+"dr_"+str(wavelength[w])+"_t_"+str(t)+".txt")
-            mp[:,:,w] = np.loadtxt(path+"mp_"+str(wavelength[w])+"_t_"+str(t)+".txt")
+            # Load diffuse reflectance
+            temp = np.loadtxt(path+"dr_"+str(wavelength[w])+"_t_"+str(t)+".txt")
+            temp[np.isnan(temp)] = 0
+            #Estimate standard deviation
+            sigma_est = np.mean(estimate_sigma(temp, channel_axis=-1))
+            temp = np.expand_dims(temp, axis=2) #expand dimension (to be used be denoise_nl_means)
+            #apply denoising
+            temp = denoise_nl_means(dr, h=h * sigma_est, sigma=sigma_est,
+                                 fast_mode=True, **patch_kw)
+            dr[:,:,w] = temp
+
+
+            #load mean path length
+            temp = np.loadtxt(path+"mp_"+str(wavelength[w])+"_t_"+str(t)+".txt")
+            temp[np.isnan(temp)] = 0
+            #Estimate standard deviation
+            sigma_est = np.mean(estimate_sigma(temp, channel_axis=-1))
+            temp = np.expand_dims(temp, axis=2) #expand dimension (to be used be denoise_nl_means)
+            #apply denoising
+            temp = denoise_nl_means(dr, h=h * sigma_est, sigma=sigma_est,
+                                 fast_mode=True, **patch_kw)
+            mp[:,:,w] = temp
 
 
         #interpolate

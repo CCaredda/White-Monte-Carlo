@@ -38,6 +38,8 @@ function [output_det] = process_simulations(Optical_properties,cfg)
     % mua_act_LBV    mus_act_LBV    g_act_LBV  n_act_LBV ; ...
     % mua_act_Cap    mus_act_Cap    g_act_Cap  n_act_Cap];
 
+    % Random seed to obtain different results when running multiple simulations for the same input parameters
+    cfg.seed = randi([0,99999],1);
     
     % calculate the fluence and partial path lengths
     [flux,output_det]=mcxlab(cfg); 
