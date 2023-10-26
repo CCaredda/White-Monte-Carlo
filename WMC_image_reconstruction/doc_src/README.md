@@ -38,7 +38,7 @@ To install Boost from the sources, follow the guide here: https://www.boost.org/
 
 Then install python libraries:
 
-- pip install opencv-python numpy matplotlib scipy
+- pip install opencv-python numpy matplotlib scipy scikit-image
 
 
 \section sec_guide User guide

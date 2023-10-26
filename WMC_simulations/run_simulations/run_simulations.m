@@ -1,13 +1,12 @@
 clear
 close all
 
-% model_resolution_in_mm = 0;
-model_resolution_in_mm = 0.2;
+model_resolution_in_mm = 0;
 
 % Lambdas = 400:10:490;
-Lambdas = 500;
+Lambdas = 400;
 run_in_cluster = 0;
-nb_repeat = 10;%50;
+nb_repeat = 1;%50;
 nb_photons = 1e2;%1e6;
 
 out_path = 'output/';
@@ -23,6 +22,8 @@ if run_in_cluster == 1
 else
     addpath('/home/caredda/Soft/mcx/utils');
     addpath('/home/caredda/Soft/mcxlab')
+    % addpath('/home/admin/Software/mcx-linux-x86_64-v2023/mcx/utils');
+    % addpath('/home/admin/Software/mcxlab-linux-x86_64-v2023/mcxlab');  
 end
 
 
@@ -58,16 +59,28 @@ for l=1:length(Lambdas)
     % % output_det.p = detphoton.p; % exit position when cfg.issaveexit=1
     % % output_det.v = detphoton.v; % exit direction, when cfg.issaveexit=1
     % % output_det.prop = detphoton.prop;
-    % 
-    % 
+    
     % save output
     disp('Save results')
-    %writematrix(output_det.nscat,strcat(out_path,'nscat_',num2str(Lambdas(l)),'.txt'),'Delimiter',' ');
-    writematrix(output_det.ppath,strcat(out_path,'ppath_',num2str(Lambdas(l)),'.txt'),'Delimiter',' ');
-    writematrix(output_det.p,strcat(out_path,'p_',num2str(Lambdas(l)),'.txt'),'Delimiter',' ');
-    writematrix(output_det.v,strcat(out_path,'v_',num2str(Lambdas(l)),'.txt'),'Delimiter',' ');
+    % writematrix(output_det.ppath,strcat(out_path,'ppath_',num2str(Lambdas(l)),'.txt'),'Delimiter',' ');
+    % writematrix(output_det.p,strcat(out_path,'p_',num2str(Lambdas(l)),'.txt'),'Delimiter',' ');
+    % writematrix(output_det.v,strcat(out_path,'v_',num2str(Lambdas(l)),'.txt'),'Delimiter',' ');
     writematrix(output_det.prop,strcat(out_path,'prop_',num2str(Lambdas(l)),'.txt'),'Delimiter',' ');
 
+    %Write with fprinf (do not use writematrix, matlab cannot handle large
+    %files
+    f_ppath = fopen(strcat(out_path,'ppath_',num2str(Lambdas(l)),'.txt'),'w');
+    f_p = fopen(strcat(out_path,'p_',num2str(Lambdas(l)),'.txt'),'w');
+    f_v = fopen(strcat(out_path,'v_',num2str(Lambdas(l)),'.txt'),'w');
+    
+    for i=1:size(output_det.p,1)
+        fprintf(f_ppath,'%s %s %s %s %s %s\n',output_det.ppath(i,1),output_det.ppath(i,2),output_det.ppath(i,3),output_det.ppath(i,4),output_det.ppath(i,5),output_det.ppath(i,6));
+        fprintf(f_p,'%s %s %s\n',output_det.p(i,1),output_det.p(i,2),output_det.p(i,3));
+        fprintf(f_v,'%s %s %s\n',output_det.v(i,1),output_det.v(i,2),output_det.v(i,3));
+    end
+    fclose(f_ppath);
+    fclose(f_p);
+    fclose(f_v);
 
     % clear output
     clear output_det flux;

@@ -71,7 +71,7 @@ erode_mask_size = 21
 directory_path = "/home/caredda/DVP/simulation/CREATIS-UCL-White-Monte-Carlo-Framework/WMC_simulations/"
 
 # Load image
-path = directory_path+"images/Patient5/"
+path = directory_path+"images/Patient4/"
 img = cv.imread(path+"initial_img.png")
 mask = cv.imread(path+"mask.png",cv.IMREAD_GRAYSCALE)
 
@@ -98,6 +98,12 @@ if reduce_ROI:
 
 #Crop image
 if crop_img:
+    # #Patient3
+    # r1=0
+    # r2=mask.shape[0]
+    # c1 = 190
+    # c2 = 805
+    #Patient4
     r1=138
     r2=mask.shape[0]
     c1 = 0
@@ -306,7 +312,7 @@ plt.imshow(mask_activated_capillaries)
 plt.show()
 
 
-##
+## Write output
 
 
 #Mask output
@@ -376,6 +382,7 @@ cv.imwrite(path+"mask_activated_capillaries.png",mask_activated_capillaries/255)
 
 cv.imwrite(path+"mask_segmentation.png",mask_output)
 cv.imwrite(path+"mask_segmentation_display.png",mask_output_display)
+
 
 
 # plt.figure()
