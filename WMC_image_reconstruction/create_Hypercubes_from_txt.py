@@ -114,7 +114,7 @@ for Patient in array_Patient:
             sigma_est = np.mean(estimate_sigma(temp, channel_axis=-1))
             temp = np.expand_dims(temp, axis=2) #expand dimension (to be used be denoise_nl_means)
             #apply denoising
-            temp = denoise_nl_means(dr, h=h * sigma_est, sigma=sigma_est,
+            temp = denoise_nl_means(temp, h=h * sigma_est, sigma=sigma_est,
                                  fast_mode=True, **patch_kw)
             temp = amf(temp,3,big_win_med)
             dr[:,:,w] = temp
@@ -127,7 +127,7 @@ for Patient in array_Patient:
             sigma_est = np.mean(estimate_sigma(temp, channel_axis=-1))
             temp = np.expand_dims(temp, axis=2) #expand dimension (to be used be denoise_nl_means)
             #apply denoising
-            temp = denoise_nl_means(dr, h=h * sigma_est, sigma=sigma_est,
+            temp = denoise_nl_means(temp, h=h * sigma_est, sigma=sigma_est,
                                  fast_mode=True, **patch_kw)
             temp = amf(temp,3,big_win_med)
             mp[:,:,w] = temp
