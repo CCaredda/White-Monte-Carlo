@@ -39,22 +39,21 @@ def EqualizeHist(img,mask):
 
 
 ##Get image resolution
-x1 = 200
-y1 = 372
-x2 = 272
-y2 = 496
+x1 = 165
+y1 = 414
+x2 = 198
+y2 = 529
 
 l_px = np.sqrt((x1-x2)**2 + (y1-y2)**2)
 
 reso_mm = 10/l_px
 print(reso_mm)
 
-
 ## Process K-MEans or thresholding
 plt.close('all')
 
 reduce_ROI = False
-crop_img = True
+crop_img = False
 use_greyscale = False
 use_Kmeans = False
 
@@ -65,13 +64,13 @@ K = 10 #Nb of class use by KMeans
 
 saturated_pixel_val = 170 #Value of saturated pixels
 
-erode_mask_size = 21
+erode_mask_size = 51
 
 #Change this
 directory_path = "/home/caredda/DVP/simulation/CREATIS-UCL-White-Monte-Carlo-Framework/WMC_simulations/"
 
 # Load image
-path = directory_path+"images/Patient5/"
+path = directory_path+"images/Patient6/"
 img = cv.imread(path+"initial_img.png")
 mask = cv.imread(path+"mask.png",cv.IMREAD_GRAYSCALE)
 

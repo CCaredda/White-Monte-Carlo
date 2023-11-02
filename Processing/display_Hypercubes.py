@@ -6,10 +6,10 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 #Patient
-Patient = "Patient2"
+Patient = "Patient4"
 
 #Path
-path = "/home/caredda/DVP/simulation/output_mcxlab/results/"
+path = "/home/caredda/DVP/simulation/output_mcxlab/"
 
 #time
 t = 0
@@ -47,8 +47,8 @@ for i in range(w.shape[0]):
     plt.show()
 
 
-pt_BV = [42,37]
-pt_GM = [19,56]
+pt_BV = [50,82]
+pt_GM = [92,119]
 
 
 plt.figure()
