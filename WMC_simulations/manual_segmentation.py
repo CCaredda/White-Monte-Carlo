@@ -39,10 +39,10 @@ def EqualizeHist(img,mask):
 
 
 ##Get image resolution
-x1 = 165
-y1 = 414
-x2 = 198
-y2 = 529
+x1 = 155
+y1 = 419
+x2 = 192
+y2 = 532
 
 l_px = np.sqrt((x1-x2)**2 + (y1-y2)**2)
 
@@ -70,7 +70,7 @@ erode_mask_size = 51
 directory_path = "/home/caredda/DVP/simulation/CREATIS-UCL-White-Monte-Carlo-Framework/WMC_simulations/"
 
 # Load image
-path = directory_path+"images/Patient6/"
+path = directory_path+"images/Patient7/"
 img = cv.imread(path+"initial_img.png")
 mask = cv.imread(path+"mask.png",cv.IMREAD_GRAYSCALE)
 
