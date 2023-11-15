@@ -5,11 +5,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
+
+
+
 #Patient
 Patient = "Patient4"
 
 #Path
-path = "/home/caredda/DVP/simulation/output_mcxlab/"
+path = "/home/caredda/DVP/Deep_Learning/data_simulations/raw/"
 
 #time
 t = 0
@@ -21,33 +24,38 @@ Mean_path = data['Mean_path']
 Wavelength = data['wavelength']
 
 # display data
-w = np.array([500,800])
+w = np.array([500,900])
+
+
+
 
 plt.close('all')
+plt.figure()
 for i in range(w.shape[0]):
+    plt.subplot(w.shape[0],2,i*2+1)
     id_w = np.where((Wavelength - w[i]) == 0)[0][0]
-    plt.figure()
-    plt.suptitle(str(w[i])+" nm")
-    plt.subplot(121)
+
     ax = plt.gca()
-    ax.set_title("Diffuse reflectance")
-    im = ax.imshow(Diffuse_reflectance[:,:,id_w])
+    ax.set_title("Diffuse reflectance ("+str(w[i])+ "nm)")
+    im = ax.imshow(Diffuse_reflectance[:,:,id_w],vmin = 0, vmax = Diffuse_reflectance[:,:,id_w].max())
     divider = make_axes_locatable(ax)
     cax = divider.append_axes("right", size="5%", pad=0.05)
-    plt.colorbar(im, cax=cax)
+    cb = plt.colorbar(im, cax=cax)
+    cb.set_label("$mm^{-2}$")
 
-    plt.subplot(122)
+    plt.subplot(w.shape[0],2,i*2+2)
     ax = plt.gca()
-    ax.set_title("Mean path")
-    im = ax.imshow(Mean_path[:,:,id_w])
+    ax.set_title("Mean path ("+str(w[i])+ "nm)")
+    im = ax.imshow(Mean_path[:,:,id_w],vmin = 0, vmax = Mean_path[:,:,id_w].max())
     divider = make_axes_locatable(ax)
     cax = divider.append_axes("right", size="5%", pad=0.05)
-    plt.colorbar(im, cax=cax)
+    cb = plt.colorbar(im, cax=cax)
+    cb.set_label("mm")
 
-    plt.show()
+plt.show()
 
 
-pt_BV = [50,82]
+pt_BV = [65,218]
 pt_GM = [92,119]
 
 
@@ -91,4 +99,28 @@ plt.title("Mean path length")
 plt.plot(Wavelength,100*cv_mp)
 plt.xlabel("Wavelength (nm)")
 plt.ylabel("cv (%)")
+plt.show()
+
+
+## test dpf
+path =  "/home/caredda/DVP/simulation/CREATIS-UCL-White-Monte-Carlo-Framework/spectra/"
+wavelength = np.loadtxt(path+"lambda.txt")
+eps_Hb = np.loadtxt(path+"eps_Hb.txt")
+eps_HbO2 = np.loadtxt(path+"eps_HbO2.txt")
+mua_H2O = np.loadtxt(path+"mua_H2O.txt")
+mua_Fat = np.loadtxt(path+"mua_Fat.txt")
+
+W = 0.73
+F = 0.1
+C_HbO2 = 6.5325e-05
+C_Hb = 2.1775e-05
+
+mua = (W*mua_H2O + F*mua_Fat + np.log(10)*C_Hb*eps_Hb + np.log(10)*C_HbO2*eps_HbO2 )
+musP = (40.8 * (wavelength/500)**(-3.089))
+
+dpf = 0.5*np.sqrt(3*musP/mua)
+
+plt.close('all')
+plt.figure()
+plt.plot(wavelength,dpf)
 plt.show()
