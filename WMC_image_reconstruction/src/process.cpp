@@ -263,13 +263,9 @@ bool Process::_Process(int w)
     int T = mua.cols;
 
     //For loop over time
-    #pragma omp parallel
-    {
-//        int nb_thread = omp_get_num_threads();
-        #pragma omp for
-        for(int t=0;t<T;t++)
-            _Create_Diffuse_reflectance_Pathlength_Img(mua.col(t),w,t);
-    }
+    for(int t=0;t<T;t++)
+        _Create_Diffuse_reflectance_Pathlength_Img(mua.col(t),w,t);
+
 
     emit processing("Process terminated in "+QString::number(timer.elapsed()/1000)+"s");
 
