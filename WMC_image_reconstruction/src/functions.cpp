@@ -189,7 +189,7 @@ void getTransferMatrix(_lens_sensor &system)
  *  @param binning binning of the detector for image reconstruction (integer)
  *  @param nb_photons Number of photons used for the simulations
  *  @param repetitions Number of repetions used for the simulations
- *  @param mua Absorpiton coeffcient (in mm-1, calculated with get_mua function
+ *  @param mua Absorpiton coeffcient (in mm-1, calculated with get_mua function)
  *  @param out_img_rows Number of rows of the reconstructed image
  *  @param out_img_cols Number of cols of the reconstructed image
  *  @param area_detector Area of the detector in mm-2
@@ -197,10 +197,11 @@ void getTransferMatrix(_lens_sensor &system)
  *  @param ppath pointer on partial path length data (in mm) pointer on matrix of dimension (number of detected photons x nb of classes +1)
  *  @param p pointer on exiting photons positions (in pixel units) pointer on matrix of dimension (number of detected photons x 3 (x;y;z) positions)
  *  @returns dr output matrix that contains the reconstructed diffuse reflectance (in mm-2). Dimension out_img_rows x out_img_cols
- *  @returns mp output matrix that contains the reconstructed mean path length (in mm). Dimension out_img_rows x out_img_cols*/
+ *  @returns mp output matrix that contains the reconstructed mean path length (in mm). Dimension out_img_rows x out_img_cols
+ *  @returns ppl output vector of matrices that containes the partial path length images for each class of tissue */
 
 void get_Diffuse_reflectance_Pathlength(int binning,int nb_photons,int repetitions, const Mat &mua, int out_img_rows, int out_img_cols,
-                                        float area_detector,float unit_tissue_in_mm,Mat *ppath, Mat *p,Mat &dr, Mat &mp)
+                                        float area_detector,float unit_tissue_in_mm,Mat *ppath, Mat *p,Mat &dr, Mat &mp, QVector<Mat> &ppl)
 {
 //    qDebug()<<"Get diffuse reflectance and pathlength";
 //    qDebug()<<"get_Diffuse_reflectance_Pathlength mua "<<mua.at<float>(0,0);
@@ -221,9 +222,17 @@ void get_Diffuse_reflectance_Pathlength(int binning,int nb_photons,int repetitio
     //Init mean path and diffuse reflectance img
     mp = Mat::zeros(out_img_rows,out_img_cols,CV_32FC1);
     dr = Mat::zeros(out_img_rows,out_img_cols,CV_32FC1);
+    ppl.clear();
+    for(int i=0;i<mua.rows;i++)
+        ppl.push_back(Mat::zeros(out_img_rows,out_img_cols,CV_32FC1));
+
 
     //sum of weights
     Mat sum_weights = Mat::zeros(mp.size(),CV_32FC1);
+    QVector<Mat> sum_weights_per_tissue;
+    for(int i=0;i<mua.rows;i++)
+        sum_weights_per_tissue.push_back(Mat::zeros(mp.size(),CV_32FC1));
+
 
 
     //Loop over detected photons
@@ -266,6 +275,19 @@ void get_Diffuse_reflectance_Pathlength(int binning,int nb_photons,int repetitio
 
             mp.at<float>(row_id,col_id) += temp;
 
+            //Compute partial path length
+            for(int n=0;n<mua.rows;n++)
+            {
+                //Calculate weight for photon i and tissue n
+                double w = exp(-mua.at<float>(n,0)*ppath->at<float>(i,n)*unit_tissue_in_mm);
+                sum_weights_per_tissue[n].at<float>(row_id,col_id) += w;
+
+                //Calculate ppl of photon i and tissue n
+                temp = float(ppath->at<float>(i,n)*unit_tissue_in_mm*weight);
+                temp = (isnan(temp) || isinf(temp)) ? 0 : temp;
+                ppl[n].at<float>(row_id,col_id) += temp;
+            }
+
         }
 //    }
 
@@ -279,7 +301,13 @@ void get_Diffuse_reflectance_Pathlength(int binning,int nb_photons,int repetitio
         for(int r=0;r<out_img_rows;r++)
         {
             for(int c=0;c<out_img_cols;c++)
+            {
                 mp.at<float>(r,c) /= sum_weights.at<float>(r,c);
+                for(int n=0;n<mua.rows;n++)
+                {
+                    ppl[n].at<float>(r,c) /= sum_weights_per_tissue[n].at<float>(r,c);
+                }
+            }
         }
     }
 
@@ -289,3 +317,5 @@ void get_Diffuse_reflectance_Pathlength(int binning,int nb_photons,int repetitio
 //    mp = mp(rect);
 //    dr = dr(rect);
 }
+
+

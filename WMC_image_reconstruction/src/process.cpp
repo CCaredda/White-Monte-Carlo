@@ -515,6 +515,7 @@ void Process::_Create_Diffuse_reflectance_Pathlength_Img(const Mat &mua,int w,in
 
     //outputs
     Mat mp,dr;
+    QVector <Mat> ppl;
 
     float reso_x,reso_y;
     int out_img_rows,out_img_cols;
@@ -538,7 +539,7 @@ void Process::_Create_Diffuse_reflectance_Pathlength_Img(const Mat &mua,int w,in
 
 
         get_Diffuse_reflectance_Pathlength(1,_M_info_simus.nb_photons,_M_info_simus.repetions,mua, out_img_rows, out_img_cols,
-                                           area,_M_info_simus.unit_in_mm,_M_ppath.getData(), p, dr, mp);
+                                           area,_M_info_simus.unit_in_mm,_M_ppath.getData(), p, dr, mp, ppl);
     }
     else
     {
@@ -552,7 +553,7 @@ void Process::_Create_Diffuse_reflectance_Pathlength_Img(const Mat &mua,int w,in
         out_img_cols = floor(_M_info_simus.modelled_volume_cols/_M_binning);
 
         get_Diffuse_reflectance_Pathlength(_M_binning,_M_info_simus.nb_photons,_M_info_simus.repetions,mua, out_img_rows, out_img_cols,
-                                           area,_M_info_simus.unit_in_mm,_M_ppath.getData(), _M_p.getData(), dr, mp);
+                                           area,_M_info_simus.unit_in_mm,_M_ppath.getData(), _M_p.getData(), dr, mp, ppl);
     }
 
 
@@ -560,6 +561,9 @@ void Process::_Create_Diffuse_reflectance_Pathlength_Img(const Mat &mua,int w,in
 //    qDebug()<<"Write images";
     WriteFloatImg(_M_saving_dir+"/mp_"+QString::number(w)+"_t_"+QString::number(t)+".txt",mp);
     WriteFloatImg(_M_saving_dir+"/dr_"+QString::number(w)+"_t_"+QString::number(t)+".txt",dr);
+
+    for(int n=0;n<mua.rows;n++)
+        WriteFloatImg(_M_saving_dir+"/mp_tissue_"+QString::number(n)+"_"+QString::number(w)+"_t_"+QString::number(t)+".txt",ppl[n]);
 
     //Write info
     QFile file(_M_saving_dir+"/info_out.txt");

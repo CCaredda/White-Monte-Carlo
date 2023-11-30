@@ -34,7 +34,7 @@ For Python, several libraries need to be installed:
 \section sec_guide User guide
 
 
-The software is separated in three parts:
+The software is separated in two parts:
 - Image segmentation
 - White Monte Carlo simulations
 
@@ -54,7 +54,7 @@ The results of this segmentation step are written in the folder "images/Patientx
 A folder Patientx needs to created prior to the execution of the python script. It must contains:
 - the input image "initial_img.png"
 - the mask of the surgical window "mask.png"
-- if you want to model activated areas, a mask need to be created. For this copy the input image "initial_img.png" into "mask_activity.png" and color the activated area in red.
+- if you want to model activated areas, a mask need to be created. For this copy the input image "initial_img.png" into "mask_activity.png" and color the activated area in black.
 
 Some variables in the script need to be changed (data path and other variables)
 

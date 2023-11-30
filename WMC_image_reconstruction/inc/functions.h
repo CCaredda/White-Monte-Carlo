@@ -108,9 +108,11 @@ void getImagePlan(_lens_sensor &system);
  *  @param ppath pointer on partial path length data (in mm) pointer on matrix of dimension (number of detected photons x nb of classes +1)
  *  @param p pointer on exiting photons positions (in pixel units) pointer on matrix of dimension (number of detected photons x 3 (x;y;z) positions)
  *  @returns dr output matrix that contains the reconstructed diffuse reflectance (in mm-2). Dimension out_img_rows x out_img_cols
- *  @returns mp output matrix that contains the reconstructed mean path length (in mm). Dimension out_img_rows x out_img_cols*/
+ *  @returns mp output matrix that contains the reconstructed mean path length (in mm). Dimension out_img_rows x out_img_cols
+ *  @returns ppl output vector of matrices that containes the partial path length images for each class of tissue */
+
 void get_Diffuse_reflectance_Pathlength(int binning, int nb_photons, int repetitions, const Mat &mua, int out_img_rows, int out_img_cols,
-                                        float area_detector, float unit_tissue_in_mm, Mat *ppath, Mat *p, Mat &dr, Mat &mp);
+                                        float area_detector, float unit_tissue_in_mm, Mat *ppath, Mat *p, Mat &dr, Mat &mp, QVector<Mat> &ppl);
 
 
 #endif // FUNCTIONS_H

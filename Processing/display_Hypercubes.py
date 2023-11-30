@@ -9,12 +9,12 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 
 #Patient
-# Patient = "Patient4"
-Patient = "Synthetic_data"
+Patient = "Patient4"
+# Patient = "Synthetic_data"
 
 #Path
-# path = "/home/caredda/DVP/Deep_Learning/data_simulations/raw/"
-path = "/home/caredda/DVP/Deep_Learning/data_simulations/synthetic/"
+path = "/home/caredda/DVP/Deep_Learning/data_simulations/raw/"
+# path = "/home/caredda/DVP/Deep_Learning/data_simulations/synthetic/"
 #time
 t = 0
 

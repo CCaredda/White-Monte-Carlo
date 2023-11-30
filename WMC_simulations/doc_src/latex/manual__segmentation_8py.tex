@@ -15,16 +15,16 @@ def {\bfseries manual\+\_\+segmentation.\+Equalize\+Hist} (img, mask)
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\Hypertarget{manual__segmentation_8py_af829e5bb67603821516c611c94125fe7}\label{manual__segmentation_8py_af829e5bb67603821516c611c94125fe7}} 
-int {\bfseries manual\+\_\+segmentation.\+x1} = 200
+int {\bfseries manual\+\_\+segmentation.\+x1} = 155
 \begin{DoxyCompactList}\small\item\em Get image resolution. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{manual__segmentation_8py_a7ea51d2f8518623e58cd78e2ea45672a}\label{manual__segmentation_8py_a7ea51d2f8518623e58cd78e2ea45672a}} 
-int {\bfseries manual\+\_\+segmentation.\+y1} = 372
+int {\bfseries manual\+\_\+segmentation.\+y1} = 419
 \item 
 \mbox{\Hypertarget{manual__segmentation_8py_a49af524a18145b5d6f02ce620adad307}\label{manual__segmentation_8py_a49af524a18145b5d6f02ce620adad307}} 
-int {\bfseries manual\+\_\+segmentation.\+x2} = 272
+int {\bfseries manual\+\_\+segmentation.\+x2} = 192
 \item 
 \mbox{\Hypertarget{manual__segmentation_8py_a74772c09e1770d22dff2a590eac59259}\label{manual__segmentation_8py_a74772c09e1770d22dff2a590eac59259}} 
-int {\bfseries manual\+\_\+segmentation.\+y2} = 496
+int {\bfseries manual\+\_\+segmentation.\+y2} = 532
 \item 
 \mbox{\Hypertarget{manual__segmentation_8py_a71078a414f6f23d3d9110c69bba8b813}\label{manual__segmentation_8py_a71078a414f6f23d3d9110c69bba8b813}} 
 np {\bfseries manual\+\_\+segmentation.\+l\+\_\+px} = np.\+sqrt((x1-\/x2)$\ast$$\ast$2 + (y1-\/y2)$\ast$$\ast$2)
@@ -36,7 +36,7 @@ int {\bfseries manual\+\_\+segmentation.\+reso\+\_\+mm} = 10/l\+\_\+px
 bool {\bfseries manual\+\_\+segmentation.\+reduce\+\_\+\+ROI} = False
 \begin{DoxyCompactList}\small\item\em Process K-\/\+MEans or thresholding. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{manual__segmentation_8py_a372b5af5bf609dbd37b7f9c8676739ac}\label{manual__segmentation_8py_a372b5af5bf609dbd37b7f9c8676739ac}} 
-bool {\bfseries manual\+\_\+segmentation.\+crop\+\_\+img} = True
+bool {\bfseries manual\+\_\+segmentation.\+crop\+\_\+img} = False
 \item 
 \mbox{\Hypertarget{manual__segmentation_8py_aa42e39be955ce42e8a2e58b19605d293}\label{manual__segmentation_8py_aa42e39be955ce42e8a2e58b19605d293}} 
 bool {\bfseries manual\+\_\+segmentation.\+use\+\_\+greyscale} = False
@@ -60,13 +60,13 @@ int {\bfseries manual\+\_\+segmentation.\+K} = 10
 int {\bfseries manual\+\_\+segmentation.\+saturated\+\_\+pixel\+\_\+val} = 170
 \item 
 \mbox{\Hypertarget{manual__segmentation_8py_a983aa79c0464725422491849f66da9f1}\label{manual__segmentation_8py_a983aa79c0464725422491849f66da9f1}} 
-int {\bfseries manual\+\_\+segmentation.\+erode\+\_\+mask\+\_\+size} = 21
+int {\bfseries manual\+\_\+segmentation.\+erode\+\_\+mask\+\_\+size} = 51
 \item 
 \mbox{\Hypertarget{manual__segmentation_8py_a1ddfbbb8d0a84e04a35bd2dd447757ea}\label{manual__segmentation_8py_a1ddfbbb8d0a84e04a35bd2dd447757ea}} 
 str {\bfseries manual\+\_\+segmentation.\+directory\+\_\+path} = \char`\"{}/home/caredda/DVP/simulation/CREATIS-\/UCL-\/White-\/Monte-\/Carlo-\/Framework/WMC\+\_\+simulations/\char`\"{}
 \item 
 \mbox{\Hypertarget{manual__segmentation_8py_acd576bd2051c4f89e94404ddd6d9a7fa}\label{manual__segmentation_8py_acd576bd2051c4f89e94404ddd6d9a7fa}} 
-str {\bfseries manual\+\_\+segmentation.\+path} = directory\+\_\+path+\char`\"{}images/Patient5/\char`\"{}
+str {\bfseries manual\+\_\+segmentation.\+path} = directory\+\_\+path+\char`\"{}images/Patient7/\char`\"{}
 \item 
 \mbox{\Hypertarget{manual__segmentation_8py_acef0b65c3095b8b0064f3ad8958f3dc4}\label{manual__segmentation_8py_acef0b65c3095b8b0064f3ad8958f3dc4}} 
 cv {\bfseries manual\+\_\+segmentation.\+img} = cv.\+imread(path+\char`\"{}initial\+\_\+img.\+png\char`\"{})
@@ -199,7 +199,7 @@ np {\bfseries manual\+\_\+segmentation.\+mask\+\_\+activated\+\_\+capillaries} =
 \item 
 \mbox{\Hypertarget{manual__segmentation_8py_a4362088c9faf41bac8eba7d79214fe56}\label{manual__segmentation_8py_a4362088c9faf41bac8eba7d79214fe56}} 
 np {\bfseries manual\+\_\+segmentation.\+mask\+\_\+output} = np.\+ones(mask.\+shape)
-\item 
+\begin{DoxyCompactList}\small\item\em Write output. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{manual__segmentation_8py_a7f396df4d474e1f2b72803546905d32b}\label{manual__segmentation_8py_a7f396df4d474e1f2b72803546905d32b}} 
 int {\bfseries manual\+\_\+segmentation.\+mask\+\_\+output\+\_\+display} = 127$\ast$np.\+ones((mask.\+shape\mbox{[}0\mbox{]},mask.\+shape\mbox{[}1\mbox{]},3))
 \end{DoxyCompactItemize}

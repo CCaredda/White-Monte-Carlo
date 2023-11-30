@@ -3,12 +3,11 @@ close all
 
 model_resolution_in_mm = 0;
 
-% Lambdas = 400:10:490;
-Lambdas = 400;
+Lambdas = 400:10:1000;
 run_in_cluster = 0;
-nb_repeat = 1;%50; %Nb of repetitions used in MCX
-simu_repeat = 3; %Larger number of repeat (avoid Matlab crash due to large txt files)
-nb_photons = 10;%1e6;
+nb_repeat = 50; %Nb of repetitions used in MCX
+simu_repeat = 1; %Larger number of repeat (avoid Matlab crash due to large txt files)
+nb_photons = 1e6;
 
 out_path = 'output/';
 in_img_path = '../images/Patient1/';
