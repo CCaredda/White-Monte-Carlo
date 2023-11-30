@@ -75,7 +75,6 @@ for Patient in array_Patient:
     w_start = 400
     w_end = 1000
     wavelength = np.arange(w_start,w_end+10,10)
-    w_interp = np.arange(w_start,w_end+1)
 
     #get resolution
     info = np.genfromtxt(path+"info_out.txt",dtype='str')
@@ -104,6 +103,7 @@ for Patient in array_Patient:
         #Init hypercube
         dr = np.zeros((output_rows,output_cols,np.size(wavelength)))
         mp = np.zeros((output_rows,output_cols,np.size(wavelength)))
+        ppl = np.zeros((output_rows,output_cols,np.size(wavelength),6))
 
 
         for w in range(np.size(wavelength)):
@@ -116,7 +116,7 @@ for Patient in array_Patient:
             #apply denoising
             temp = denoise_nl_means(temp, h=h * sigma_est, sigma=sigma_est,
                                  fast_mode=True, **patch_kw)
-            temp = amf(temp,3,big_win_med)
+            # temp = amf(temp,3,big_win_med)
             dr[:,:,w] = temp
 
 
@@ -129,27 +129,32 @@ for Patient in array_Patient:
             #apply denoising
             temp = denoise_nl_means(temp, h=h * sigma_est, sigma=sigma_est,
                                  fast_mode=True, **patch_kw)
-            temp = amf(temp,3,big_win_med)
+            # temp = amf(temp,3,big_win_med)
             mp[:,:,w] = temp
 
 
-        #interpolate
-        Diffuse_reflectance = np.zeros((dr.shape[0],dr.shape[1],np.size(w_interp)))
-        Mean_path = np.zeros((dr.shape[0],dr.shape[1],np.size(w_interp)))
+            #load ppl
+            for p in range(6):
+                temp = np.loadtxt(path+"mp_tissue_"+str(p)+"_"+str(wavelength[w])+"_t_"+str(t)+".txt")
+                temp[np.isnan(temp)] = 0
+                #Estimate standard deviation
+                sigma_est = np.mean(estimate_sigma(temp, channel_axis=-1))
+                temp = np.expand_dims(temp, axis=2) #expand dimension (to be used be denoise_nl_means)
+                #apply denoising
+                temp = denoise_nl_means(temp, h=h * sigma_est, sigma=sigma_est,
+                                    fast_mode=True, **patch_kw)
+                # temp = amf(temp,3,big_win_med)
+                ppl[:,:,w,p] = temp
 
-        for x in range(dr.shape[0]):
-            for y in range(dr.shape[1]):
-                f = interpolate.interp1d(wavelength,dr[x,y,:], kind='cubic')
-                Diffuse_reflectance[x,y,:] = f(w_interp)
 
-                f = interpolate.interp1d(wavelength,mp[x,y,:], kind='cubic')
-                Mean_path[x,y,:] = f(w_interp)
+
 
         #Save results
         np.savez(path+Patient+"_Hypercube_t_"+str(t),
-                Diffuse_reflectance = Diffuse_reflectance,
-                Mean_path = Mean_path,
-                wavelength = w_interp,
+                Diffuse_reflectance = dr,
+                Mean_path = mp,
+                wavelength = wavelength,
+                ppl = ppl,
                 info = info,
                 volume_modelled = vol,
                 Segmented_tissue = img_seg)
