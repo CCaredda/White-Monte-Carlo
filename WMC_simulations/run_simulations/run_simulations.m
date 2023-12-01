@@ -10,7 +10,7 @@ simu_repeat = 1; %Larger number of repeat (avoid Matlab crash due to large txt f
 nb_photons = 1e6;
 
 out_path = 'output/';
-in_img_path = '../images/Patient1/';
+in_img_path = '../images/Synthetic_img_no_activated_areas/';
 %in_img_path = '';
 
 
