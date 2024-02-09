@@ -1,9 +1,18 @@
-function [optical_prop] = process_optical_properties(Lambdas)
+function [optical_prop] = process_optical_properties(Lambdas,White_MC)
+    
     %Compute optical properties for the different classes
     %INPUT:
     %Lambda: wavelength (nm)
+    %White_MC : Boolean (white monte Carlo)
     %Output:
     %optical_prop: vector of optical properties size(length(Lambdas),7,4))
+
+
+    % Check number of inputs.
+    if nargin == 1
+        White_MC = true;
+    end
+
 
     %%-----------------------------------------------------------------
     %% Compute optical properties Grey matter (GM)
@@ -19,8 +28,14 @@ function [optical_prop] = process_optical_properties(Lambdas)
     mus_GM  = 0.1*(musP/(1-g_GM)); %Convert in mm-1
 
     %Absorption coefficient (in mm-1) (Zerors: White Monte Carlo)
-    mua_GM = zeros(size(mus_GM)); %White Monte Carlo
-        
+    if White_MC == true
+        mua_GM = zeros(size(mus_GM)); %White Monte Carlo
+    else
+        mua_GM = get_mua_values(Lambdas,22.1e-6,65.1e-6,0.7,0.1,5e-6,1e-6); %1
+    end
+
+          
+    
     
     %%-----------------------------------------------------------------
     %% Compute optical properties Large Blood vessels (LBV)
@@ -36,8 +51,11 @@ function [optical_prop] = process_optical_properties(Lambdas)
     mus_LBV  = 0.1*(musP / (1-g_LBV)); %Convert in mm-1
     
     %Absorption coefficient (in mm-1) (Zerors: White Monte Carlo)
-    mua_LBV = zeros(size(mus_LBV)); %White Monte Carlo
-    
+    if White_MC == true
+        mua_LBV = zeros(size(mus_LBV)); %White Monte Carlo
+    else
+        mua_LBV = get_mua_values(Lambdas,125.1e-6,2375.1e-6,0,0,0,0); %2
+    end
     
     %%-----------------------------------------------------------------
     %% Compute optical properties Capillaries (Cap)
@@ -50,8 +68,11 @@ function [optical_prop] = process_optical_properties(Lambdas)
     %Scattering coefficient
     mus_Cap = mus_GM;
     %Absorption coefficient (in mm-1) (Zeros: White Monte Carlo)
-    mua_Cap = zeros(size(mus_Cap)); %White Monte Carlo
-    
+    if White_MC == true
+        mua_Cap = zeros(size(mus_Cap)); %White Monte Carlo
+    else
+        mua_Cap = mua_GM;
+    end
     
     %%-----------------------------------------------------------------
     %% Compute optical properties Activated grey matter (act_GM)
@@ -64,8 +85,11 @@ function [optical_prop] = process_optical_properties(Lambdas)
     %Scattering coefficient
     mus_act_GM = mus_GM;
     %Absorption coefficient (in mm-1) (Zeros: White Monte Carlo)
-    mua_act_GM = zeros(size(mus_act_GM)); %White Monte Carlo
-    
+    if White_MC == true
+        mua_act_GM = zeros(size(mus_act_GM)); %White Monte Carlo
+    else
+        mua_act_GM = mua_GM; %4
+    end
     
     %%-----------------------------------------------------------------
     %% Compute optical properties Activated large blood vessels (act_LBV)
@@ -78,8 +102,11 @@ function [optical_prop] = process_optical_properties(Lambdas)
     %Scattering coefficient
     mus_act_LBV = mus_LBV;
     %Absorption coefficient (in mm-1) (Zeros: White Monte Carlo)
-    mua_act_LBV = zeros(size(mus_act_LBV)); %White Monte Carlo
-    
+    if White_MC == true
+        mua_act_LBV = zeros(size(mus_act_LBV)); %White Monte Carlo
+    else
+        mua_act_LBV = mua_LBV; %5
+    end
     
     %%-----------------------------------------------------------------
     %% Compute optical properties Activated Capillaries (act_Cap)
@@ -92,8 +119,11 @@ function [optical_prop] = process_optical_properties(Lambdas)
     %Scattering coefficient
     mus_act_Cap = mus_Cap;
     %Absorption coefficient (in mm-1) (Zeros: White Monte Carlo)
-    mua_act_Cap = zeros(size(mus_act_Cap)); %White Monte Carlo
-    
+    if White_MC == true
+        mua_act_Cap = zeros(size(mus_act_Cap)); %White Monte Carlo
+    else
+        mua_act_Cap = mua_GM; %6
+    end
     
     clear musP
 
