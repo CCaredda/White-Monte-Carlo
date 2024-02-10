@@ -12,13 +12,13 @@ if run_in_cluster == 1
     addpath('/pbs/home/c/ccaredda/private/mcxlab');
 else
     addpath('/home/caredda/Soft/mcx/utils');
-    addpath('/home/caredda/Soft/mcxlab')
+    addpath('/home/caredda/Soft/mcxlab');
 end
 
 
 
-cfg.nphoton=1e6;  % Number of photons
-cfg.respin=50;     % Repeat the simulation x times
+cfg.nphoton=1e9;  % Number of photons
+cfg.respin=10;%50;     % Repeat the simulation x times
 % cfg.maxdetphoton = 1e6; % Maximum number of photons that can be detected 
 cfg.gpuid=1;     % GPU processing
 cfg.issaveref = 0;      % Save diffuse reflectance
@@ -36,7 +36,7 @@ cfg.unitinmm = 1; %unit in mm
 
 %Volume
 vol_square_size = 60;
-cfg.vol = ones(vol_square_size,vol_square_size,vol_square_size); %grey matter
+cfg.vol = uint8(ones(vol_square_size,vol_square_size,vol_square_size)); %grey matter
 % cfg.vol(:,:,1) = 0; %Air
 
 % Source type
@@ -59,7 +59,8 @@ det_pos = [30 30 0 1]; % radius: 1 mm
 
 
 %Process optical properties
-cfg.prop = process_optical_properties(Lambdas,false);
+cfg.prop = squeeze(process_optical_properties(Lambdas,false));
+
 
  % Random seed to obtain different results when running multiple simulations for the same input parameters
 cfg.seed = randi([0,99999],1);
