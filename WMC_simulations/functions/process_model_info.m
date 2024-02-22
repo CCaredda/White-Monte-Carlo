@@ -20,8 +20,8 @@ function [info_model] = process_model_info(nb_photons,nb_repeat,in_img_path,mode
                                         
     %Acquisition time
     cfg.tstart=0; % Starting time of the simulation (in seconds)
-    cfg.tend=33e-3; % Ending time of the simulation (in seconds)
-    cfg.tstep=33e-3; % Time-gate width of the simulation (in seconds)
+    cfg.tend=1e-9; % Ending time of the simulation (in seconds)
+    cfg.tstep=1e-9; % Time-gate width of the simulation (in seconds)
     
     % Calculate specular reflection if source is outside        
     cfg.isspecular = 1; 
