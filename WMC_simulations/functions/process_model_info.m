@@ -1,4 +1,4 @@
-function [info_model] = process_model_info(nb_photons,nb_repeat,in_img_path,model_resolution_in_mm)
+function [info_model] = process_model_info(nb_photons,nb_repeat,in_img_path,division_factor)
 
     % Number of photons
     cfg.nphoton=nb_photons; 
@@ -56,7 +56,7 @@ function [info_model] = process_model_info(nb_photons,nb_repeat,in_img_path,mode
         disp('Get segmentation');
 
         %Load image and segmentation
-        [img,resolution_xyz] = Load_img_segmentation(in_img_path,model_resolution_in_mm);
+        [img,resolution_xyz] = Load_img_segmentation(in_img_path,division_factor);
     
         % Voxel size in mm
         cfg.unitinmm = resolution_xyz; % Units in mm

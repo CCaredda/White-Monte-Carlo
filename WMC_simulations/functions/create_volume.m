@@ -2,6 +2,7 @@ function [out_vol] = create_volume(img,resolution_xyz,save_diffuse_reflectance)
 
 
     z = round(20/resolution_xyz); %20 mm 
+    z_end_GM_activated = round(10/resolution_xyz); %10 mm 
 
 
     % 1: Grey matter
@@ -41,12 +42,14 @@ function [out_vol] = create_volume(img,resolution_xyz,save_diffuse_reflectance)
         out_vol(vol_temp == 1) = 3;
     end
 
-    % 4: Activated grey matter
+    % 4: Activated grey matter (replicate the 
     if(sum(img.activated_grey_matter(:))>0)
         img_temp = zeros(size(out_vol,1),size(out_vol,2));
         img_temp(round(size(img.large_vessels,1)/16):size(img.large_vessels,1)+round(size(img.large_vessels,1)/16)-1,round(size(img.large_vessels,2)/16):size(img.large_vessels,2)+round(size(img.large_vessels,2)/16)-1) = img.activated_grey_matter;
-        vol_temp=repmat(img_temp,1,1,z); 
-        vol_temp = Create_binary_blobs(vol_temp,start_z);
+        
+        vol_temp=repmat(img_temp,1,1,z_end_GM_activated); 
+        % vol_temp=repmat(img_temp,1,1,z); 
+        % vol_temp = Create_binary_blobs(vol_temp,start_z);
 
         out_vol(vol_temp == 1) = 4;
     end

@@ -1,9 +1,10 @@
-function [mask_segmentation,resolution_xyz] = Load_img_segmentation(path,output_resolution_in_mm)
+function [mask_segmentation,resolution_xyz] = Load_img_segmentation(path,division_factor)
 %Load image segmentation and pixel resolution
 %Input:
 %path: img path
-%output_resolution_in_mm: desired resolution in mm. If 0, use input image
-%resolution
+%division_factor: change the resolution (increase the resolution, decrease
+%the pixel size)
+
 
     %Resolution in x,y and z axes
     if ~ isfile(strcat(path,'resolution.txt'))
@@ -59,18 +60,12 @@ function [mask_segmentation,resolution_xyz] = Load_img_segmentation(path,output_
     end
 
 
-    % Change the resolution 
-    if output_resolution_in_mm > 0 && output_resolution_in_mm>resolution_xyz && floor(output_resolution_in_mm/resolution_xyz)>1   
+    % Change the resolution
+    if division_factor ~= 1
+        resolution_xyz = resolution_xyz/division_factor;
 
-        disp('Resize segmentations');
-        %compute new image size
-        binning = floor(output_resolution_in_mm/resolution_xyz);
-
-        rows = floor(size(mask_segmentation.large_vessels,1)/binning);
-        cols = floor(size(mask_segmentation.large_vessels,2)/binning);
-
-        resolution_xyz = binning*resolution_xyz;
-
+        rows = size(mask_segmentation.large_vessels,1)*division_factor;
+        cols = size(mask_segmentation.large_vessels,2)*division_factor;
 
         % Resize segmentation masks
         mask_segmentation.large_vessels = imresize(mask_segmentation.large_vessels,[rows,cols]);
@@ -79,7 +74,6 @@ function [mask_segmentation,resolution_xyz] = Load_img_segmentation(path,output_
         mask_segmentation.activated_grey_matter = imresize(mask_segmentation.activated_grey_matter,[rows,cols]);
         mask_segmentation.capillaries = imresize(mask_segmentation.capillaries,[rows,cols]);
         mask_segmentation.activated_capillaries = imresize(mask_segmentation.activated_capillaries,[rows,cols]);
-    end 
 
-
+    end
 end

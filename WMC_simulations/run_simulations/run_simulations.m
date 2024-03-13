@@ -1,16 +1,18 @@
 clear
 close all
 
-model_resolution_in_mm = 0;
+% Divide the size of the pixel (increase the resolution)
+division_factor = 2;
+
 
 Lambdas = 400:10:1000;
-run_in_cluster = 0;
+run_in_cluster = 1;
 nb_repeat = 50; %Nb of repetitions used in MCX
 simu_repeat = 1; %Larger number of repeat (avoid Matlab crash due to large txt files)
 nb_photons = 1e6;
 
 out_path = 'output/';
-in_img_path = '../images/Synthetic_img_no_activated_areas/';
+in_img_path = '../images/Synthetic_img/';
 %in_img_path = '';
 
 
@@ -35,7 +37,7 @@ end
 
 
 %Process model info
-info_model = process_model_info(nb_photons,nb_repeat,in_img_path,model_resolution_in_mm);
+info_model = process_model_info(nb_photons,nb_repeat,in_img_path,division_factor);
 
 save(strcat(out_path,'cst.mat'),'info_model');
 f = fopen(strcat(out_path,'cst.txt'),'w');
