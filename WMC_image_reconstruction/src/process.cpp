@@ -103,6 +103,18 @@ Process::Process(QObject *parent)
     qDebug()<<"Read epsilon";
     _get_mua_epsilon();
 
+    qDebug()<<"ep HbO2"<<_M_eps_HbO2.size();
+    qDebug()<<"ep Hb"<<_M_eps_Hb.size();
+    qDebug()<<"ep oxCCO"<<_M_eps_oxCCO.size();
+    qDebug()<<"ep redCCO"<<_M_eps_redCCO.size();
+    qDebug()<<"ep oxCytb"<<_M_eps_oxCytb.size();
+    qDebug()<<"ep redCytb"<<_M_eps_redCytb.size();
+    qDebug()<<"ep oxCytc"<<_M_eps_oxCytc.size();
+    qDebug()<<"ep redCytc"<<_M_eps_redCytc.size();
+    qDebug()<<"mua Fat"<<_M_mua_Fat.size();
+    qDebug()<<"mua H2O"<<_M_mua_H2O.size();
+    qDebug()<<"wave"<<_M_wavelength.size();
+
 }
 
 
@@ -256,7 +268,17 @@ bool Process::_Process(int w)
         return false;
 
     //Calculate mua (size: (size Nb of class; time)) in mm-1
-    Mat mua = get_mua(_M_optical_changes,_M_mua_H2O[_M_id_w],_M_mua_Fat[_M_id_w],_M_eps_HbO2[_M_id_w],_M_eps_Hb[_M_id_w],_M_eps_oxCCO[_M_id_w],_M_eps_redCCO[_M_id_w]);
+    Mat mua = get_mua(_M_optical_changes,
+                      _M_mua_H2O[_M_id_w],
+                      _M_mua_Fat[_M_id_w],
+                      _M_eps_HbO2[_M_id_w],
+                      _M_eps_Hb[_M_id_w],
+                      _M_eps_oxCCO[_M_id_w],
+                      _M_eps_redCCO[_M_id_w],
+                      _M_eps_oxCytb[_M_id_w],
+                      _M_eps_redCytb[_M_id_w],
+                      _M_eps_oxCytc[_M_id_w],
+                      _M_eps_redCytc[_M_id_w]);
 
 
     //Check if data have been correctly loaded
@@ -340,6 +362,10 @@ void Process::ReadOpticalChanges(QString dir)
         // 3: C_Hb in Mol
         // 4: C_oxCCO in Mol
         // 5: C_redCCO in Mol
+        // 6: C_oxCytb in Mol
+        // 7: C_redCytb in Mol
+        // 8: C_oxCytc in Mol
+        // 9: C_redCytc in Mol
 //        QVector<QVector<float> > temp;
 
         //Size(Chromophores, time)
@@ -351,13 +377,15 @@ void Process::ReadOpticalChanges(QString dir)
         // Check data
         if (temp.empty())
         {
+            qDebug()<<"[ReadOpticalChanges] txt file "<<_M_class_names[i]<<" is empty";
             _M_optical_changes_data_ready = false;
             break;
         }
 
-        //Check if the vector contains 6 chromophores
-        if(temp.rows!=6)
+        //Check if the vector contains 10 chromophores
+        if(temp.rows!=10)
         {
+            qDebug()<<"[ReadOpticalChanges] txt file "<<_M_class_names[i]<<" does not have enough rows: "<<temp.rows<<" expected 10";
             _M_optical_changes_data_ready = false;
             break;
         }
@@ -381,6 +409,10 @@ void Process::_get_mua_epsilon()
     _M_mua_eps_data_ready = _M_mua_eps_data_ready && _M_loadData.ReadVector(QString(PROPATH)+"/../spectra/eps_Hb.txt",_M_eps_Hb);
     _M_mua_eps_data_ready = _M_mua_eps_data_ready && _M_loadData.ReadVector(QString(PROPATH)+"/../spectra/eps_oxCCO.txt",_M_eps_oxCCO);
     _M_mua_eps_data_ready = _M_mua_eps_data_ready && _M_loadData.ReadVector(QString(PROPATH)+"/../spectra/eps_redCCO.txt",_M_eps_redCCO);
+    _M_mua_eps_data_ready = _M_mua_eps_data_ready && _M_loadData.ReadVector(QString(PROPATH)+"/../spectra/eps_oxCytc.txt",_M_eps_oxCytc);
+    _M_mua_eps_data_ready = _M_mua_eps_data_ready && _M_loadData.ReadVector(QString(PROPATH)+"/../spectra/eps_redCytc.txt",_M_eps_redCytc);
+    _M_mua_eps_data_ready = _M_mua_eps_data_ready && _M_loadData.ReadVector(QString(PROPATH)+"/../spectra/eps_oxCytb.txt",_M_eps_oxCytb);
+    _M_mua_eps_data_ready = _M_mua_eps_data_ready && _M_loadData.ReadVector(QString(PROPATH)+"/../spectra/eps_redCytb.txt",_M_eps_redCytb);
 
     //Aborption coefficient (in cm-1)
     _M_mua_eps_data_ready = _M_mua_eps_data_ready && _M_loadData.ReadVector(QString(PROPATH)+"/../spectra/mua_Fat.txt",_M_mua_Fat);

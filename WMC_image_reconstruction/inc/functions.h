@@ -72,8 +72,12 @@ typedef struct
  *  @param epsHb Molar extinction coefficient of Hb (in cm-1.mol-1.L)
  *  @param eps_oxCCO Molar extinction coefficient of oxCCO (in cm-1.mol-1.L)
  *  @param eps_redCCO Molar extinction coefficient of redCCO (in cm-1.mol-1.L)
+ *  @param eps_oxCytb Molar extinction coefficient of oxCytb (in cm-1.mol-1.L)
+ *  @param eps_redCytb Molar extinction coefficient of redCytb (in cm-1.mol-1.L)
+ *  @param eps_oxCytc Molar extinction coefficient of oxCytc (in cm-1.mol-1.L)
+ *  @param eps_redCytc Molar extinction coefficient of redCytc (in cm-1.mol-1.L)
  *  @returns Matrix of absorption coefficient (in mm-1) Size: number of class x time */
-Mat get_mua(QVector<Mat> &Optical_changes, float mua_W,float mua_F,float eps_HbO2,float eps_Hb,float eps_oxCCO,float eps_redCCO);
+Mat get_mua(QVector<Mat> &Optical_changes, float mua_W, float mua_F, float eps_HbO2, float eps_Hb, float eps_oxCCO, float eps_redCCO, float eps_oxCytb, float eps_redCytb, float eps_oxCytc, float eps_redCytc);
 
 /** Write a floating point image on hardrive
 @param path path for writing results

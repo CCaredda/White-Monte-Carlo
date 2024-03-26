@@ -7,6 +7,13 @@ The columns represent chromophore changes over time (Delimiter have to be space)
 4 C_Hb in (Mol)
 5 C_oxCCO in (Mol)
 6 C_redCCO in (Mol)
+7 C_oxCytb in (Mol)
+8 C_redCytb in (Mol)
+9 C_oxCytc in (Mol)
+10 C_redCytc in (Mol)
+
+
+Concentration of CCO, Cytc, Cytb : Identification of the optimal wavelengths for optical topography: a photon measurement density function analysis
 
 
 Fantini, Sergio. "Dynamic model for the tissue concentration and oxygen saturation of hemoglobin in relation to blood volume, flow velocity, and oxygen consumption: Implications for functional neuroimaging and coherent hemodynamics spectroscopy (CHS)." Neuroimage 85 (2014): 202-221.

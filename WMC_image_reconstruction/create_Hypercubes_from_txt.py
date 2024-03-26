@@ -64,12 +64,14 @@ big_win_med = 7
 
 
 # path that contains the results
-array_Patient = np.array(["Patient1"])
+array_Patient = np.array(["output_division_factor_1", "output_division_factor_2"])
 for Patient in array_Patient:
-    path = "/home/caredda/DVP/simulation/output_mcxlab/output_"+Patient+"/results/"
+
+    print(Patient)
+    path = "/home/caredda/DVP/Data_simulation/out_synthetic_image/"+Patient+"/results/"
 
     # Temporal vector
-    time = 0
+    time = np.arange(0,5)
 
     #Wavelength
     w_start = 400
@@ -107,6 +109,7 @@ for Patient in array_Patient:
 
 
         for w in range(np.size(wavelength)):
+            # print(w)
             # Load diffuse reflectance
             temp = np.loadtxt(path+"dr_"+str(wavelength[w])+"_t_"+str(t)+".txt")
             temp[np.isnan(temp)] = 0

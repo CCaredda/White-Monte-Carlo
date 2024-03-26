@@ -153,6 +153,17 @@ private:
     /** Molar extinction coefficent of redCO in (mol-1.L.cm-1) */
     QVector<float> _M_eps_redCCO;
 
+    /** Molar extinction coefficent of oxCytc in (mol-1.L.cm-1) */
+    QVector<float> _M_eps_oxCytc;
+
+    /** Molar extinction coefficent of redCytc in (mol-1.L.cm-1) */
+    QVector<float> _M_eps_redCytc;
+
+    /** Molar extinction coefficent of oxCytb in (mol-1.L.cm-1) */
+    QVector<float> _M_eps_oxCytb;
+
+    /** Molar extinction coefficent of redCytb in (mol-1.L.cm-1) */
+    QVector<float> _M_eps_redCytb;
 
     /** Aborption coefficient of Fat (in cm-1) */
     QVector<float> _M_mua_Fat;

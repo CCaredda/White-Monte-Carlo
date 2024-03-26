@@ -13,7 +13,7 @@ Patient = "Patient2"
 # Patient = "Synthetic_data"
 
 #Path
-path = "/home/caredda/DVP/Deep_Learning/data_simulations/raw/"
+path = "/home/caredda/DVP/Data_simulation/raw/"
 # path = "/home/caredda/DVP/Deep_Learning/data_simulations/synthetic/"
 #time
 t = 0
@@ -29,6 +29,9 @@ w = np.array([500,900])
 
 
 cmap = 'plasma'
+
+plt.rcParams.update({'font.size': 18})
+
 
 plt.close('all')
 plt.figure()
@@ -58,6 +61,7 @@ plt.show()
 
 pt_BV = [61,144]
 pt_GM = [41,116]
+
 
 
 plt.figure()
