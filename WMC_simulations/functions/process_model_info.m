@@ -1,4 +1,4 @@
-function [info_model] = process_model_info(nb_photons,nb_repeat,in_img_path,division_factor)
+function [info_model] = process_model_info(nb_photons,nb_repeat,in_img_path,division_factor,model_rect_blood_vessel,inverse_volume_for_display)
 
     % Number of photons
     cfg.nphoton=nb_photons; 
@@ -69,7 +69,11 @@ function [info_model] = process_model_info(nb_photons,nb_repeat,in_img_path,divi
         % 4: Activated grey matter
         % 5: Activated large vessel
         % 6: Activated capillaries
-        cfg.vol = create_volume(img,resolution_xyz,cfg.issaveref);
+        cfg.vol = create_volume(img,resolution_xyz,cfg.issaveref,model_rect_blood_vessel);
+
+        if inverse_volume_for_display
+            cfg.vol = flip(cfg.vol,3);
+        end
     end
 
     clear img;
@@ -124,12 +128,16 @@ function [info_model] = process_model_info(nb_photons,nb_repeat,in_img_path,divi
     disp('Create light source');
     % a uniform planar source outside the volume
     %Source type (homogeneous) a 3D quadrilateral uniform planar source, with three corners specified by srcpos, srcpos+srcparam1(1:3) and srcpos+srcparam2(1:3)
-    cfg.srctype='planar';
-    cfg.srcpos=[0 0 0];
-    cfg.srcparam1=[size(cfg.vol,1) 0 0 0];
-    cfg.srcparam2=[0 size(cfg.vol,2) 0 0];
-    cfg.issrcfrom0=1;
-    cfg.srcdir=[0 0 1];
+
+
+    if inverse_volume_for_display==0
+        cfg.srctype='planar';
+        cfg.srcpos=[0 0 0];
+        cfg.srcparam1=[size(cfg.vol,1) 0 0 0];
+        cfg.srcparam2=[0 size(cfg.vol,2) 0 0];
+        cfg.issrcfrom0=1;
+        cfg.srcdir=[0 0 1];
+    end
 
 
     %%-----------------------------------------------------------------
@@ -139,6 +147,7 @@ function [info_model] = process_model_info(nb_photons,nb_repeat,in_img_path,divi
     %Store info into structure
     info_model.cfg = cfg;
     info_model.resolution_xyz = resolution_xyz;
-
+    info_model.division_factor = division_factor;
+    info_model.model_rect_blood_vessel = model_rect_blood_vessel;
 
 end

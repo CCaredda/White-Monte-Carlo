@@ -2,17 +2,23 @@ clear
 close all
 
 % Divide the size of the pixel (increase the resolution)
-division_factor = 2;
+division_factor = 1;
 
+% model rectangle blood vessel
+model_rect_blood_vessel = 0; % if 0, a pyramidal blood vessel is computed
+
+% inverse volume for display
+inverse_volume_for_display = 0;
 
 Lambdas = 400:10:1000;
-run_in_cluster = 1;
+run_in_cluster = 0;
 nb_repeat = 50; %Nb of repetitions used in MCX
 simu_repeat = 1; %Larger number of repeat (avoid Matlab crash due to large txt files)
 nb_photons = 1e6;
 
 out_path = 'output/';
 in_img_path = '../images/Synthetic_img/';
+% in_img_path = '../images/Patient2/';
 %in_img_path = '';
 
 
@@ -24,6 +30,7 @@ if run_in_cluster == 1
 else
     addpath('/home/caredda/Soft/mcx/utils');
     addpath('/home/caredda/Soft/mcxlab')
+    addpath('/home/caredda/Soft/iso2mesh')
     % addpath('/home/admin/Software/mcx-linux-x86_64-v2023/mcx/utils');
     % addpath('/home/admin/Software/mcxlab-linux-x86_64-v2023/mcxlab');  
 end
@@ -37,7 +44,7 @@ end
 
 
 %Process model info
-info_model = process_model_info(nb_photons,nb_repeat,in_img_path,division_factor);
+info_model = process_model_info(nb_photons,nb_repeat,in_img_path,division_factor,model_rect_blood_vessel,inverse_volume_for_display);
 
 save(strcat(out_path,'cst.mat'),'info_model');
 f = fopen(strcat(out_path,'cst.txt'),'w');
@@ -46,6 +53,9 @@ fprintf(f,'%s %d\n','repetitions ',nb_repeat*simu_repeat);
 fprintf(f,'%s %f\n','unitinmm ',info_model.cfg.unitinmm);
 fprintf(f,'%s %d\n','vol_rows ',size(info_model.cfg.vol,1));
 fprintf(f,'%s %d\n','vol_cols ',size(info_model.cfg.vol,2));
+fprintf(f,'%s %d\n','division_factor ',division_factor);
+fprintf(f,'%s %d\n','model_rect_blood_vessel ',model_rect_blood_vessel);
+
 fclose(f);
 
 %Process optical properties

@@ -70,7 +70,7 @@ erode_mask_size = 51
 directory_path = "/home/caredda/DVP/simulation/CREATIS-UCL-White-Monte-Carlo-Framework/WMC_simulations/"
 
 # Load image
-path = directory_path+"images/Patient2_with_activation/"
+path = directory_path+"images/Patient2/"
 img = cv.imread(path+"initial_img.png")
 mask = cv.imread(path+"mask.png",cv.IMREAD_GRAYSCALE)
 
@@ -170,11 +170,17 @@ else: # Use adaptive thresholding
     img_sat = np.bitwise_and(mask,img_sat)
     img_sat = np.bitwise_not(img_sat)
 
+    cv.imwrite("/home/caredda/temp/img_Grey.png",img_Grey)
+    cv.imwrite("/home/caredda/temp/img_sat.png",img_sat)
+
 
     #Adaptive thresholding
     img_thresh = cv.adaptiveThreshold(img_Grey,255,cv.ADAPTIVE_THRESH_GAUSSIAN_C,cv.THRESH_BINARY_INV,block_size,0)
     img_thresh = np.bitwise_and(mask,img_thresh)
     img_thresh = np.bitwise_and(img_sat,img_thresh)
+
+    cv.imwrite("/home/caredda/temp/img_binary.png",img_thresh)
+
 
     #Remove small vessels
     kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE,(size_small_vessels,size_small_vessels))
@@ -190,15 +196,25 @@ else: # Use adaptive thresholding
 
 
     mask_large_vessels = cv.morphologyEx(mask_large_vessels, cv.MORPH_DILATE, kernel,iterations = 2)
+    mask_large_vessels = cv.morphologyEx(mask_large_vessels, cv.MORPH_CLOSE, kernel,iterations = 2)
+
+
     mask_large_vessels = np.bitwise_and(img_thresh,mask_large_vessels)
+
+    cv.imwrite("/home/caredda/temp/mask_LBV.png",mask_large_vessels)
+
 
     #Detect small vessels
     mask_capillaries = np.bitwise_xor(img_thresh,mask_large_vessels)
 
+
+    cv.imwrite("/home/caredda/temp/mask_SBV.png",mask_capillaries)
+
+
     #mask grey matter
     mask_GM = np.bitwise_and(np.bitwise_not(mask_large_vessels),np.bitwise_not(mask_capillaries))
 
-
+    cv.imwrite("/home/caredda/temp/mask_GM.png",mask_GM)
 
     plt.figure()
     plt.subplot(221)

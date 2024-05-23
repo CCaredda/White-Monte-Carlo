@@ -1,4 +1,4 @@
-function [out_vol] = create_volume(img,resolution_xyz,save_diffuse_reflectance)
+function [out_vol] = create_volume(img,resolution_xyz,save_diffuse_reflectance,model_rect_blood_vessel)
 
 
     z = round(20/resolution_xyz); %20 mm 
@@ -25,8 +25,13 @@ function [out_vol] = create_volume(img,resolution_xyz,save_diffuse_reflectance)
     if(sum(img.large_vessels(:))>0)
         img_temp = zeros(size(out_vol,1),size(out_vol,2));
         img_temp(round(size(img.large_vessels,1)/16):size(img.large_vessels,1)+round(size(img.large_vessels,1)/16)-1,round(size(img.large_vessels,2)/16):size(img.large_vessels,2)+round(size(img.large_vessels,2)/16)-1) = img.large_vessels;
-        vol_temp=repmat(img_temp,1,1,z); 
-        vol_temp = Create_binary_blobs(vol_temp,start_z);
+        vol_temp=repmat(img_temp,1,1,z);
+
+        % if(model_rect_blood_vessel == 0)
+        %     vol_temp = Create_binary_blobs(vol_temp,start_z);
+        % else
+        %     vol_temp = Create_rectangular_vessels(vol_temp);
+        % end
         
         out_vol(vol_temp == 1) = 2;
 

@@ -174,7 +174,10 @@ void getImagePlan(_lens_sensor &system)
 void getTransferMatrix(_lens_sensor &system)
 {
     //Get image plan
-    getImagePlan(system);
+//    getImagePlan(system);
+    float perfect_setting_f0 = 30;
+    float perfect_distance = 400;
+    system.distance_to_sensor = (perfect_distance*perfect_setting_f0)/(perfect_distance - perfect_setting_f0);
 
     //Translation matrix before the lens
     Mat To = Mat::ones(2,2,CV_32FC1);
@@ -283,7 +286,7 @@ void get_Diffuse_reflectance_Pathlength(int binning,int nb_photons,int repetitio
 
             dr.at<float>(row_id,col_id) += temp;
 
-            //Compute mean path length
+            //Compute mean path length (sum on the row of detected photon i: sum on each tissue type)
             temp = float(sum((*ppath).row(i)*unit_tissue_in_mm*weight)[0]);
             temp = (isnan(temp) || isinf(temp)) ? 0 : temp;
 
